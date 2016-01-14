@@ -18,12 +18,17 @@ import java.util.List;
  */
 public class MyLangRecyclerViewAdapter extends RecyclerView.Adapter<MyLangRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Lang> mValues;
+    private List<Lang> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public MyLangRecyclerViewAdapter(List<Lang> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+    }
+
+    public void setLangs(List<Lang> items) {
+        mValues = items;
+        notifyDataSetChanged();
     }
 
     @Override

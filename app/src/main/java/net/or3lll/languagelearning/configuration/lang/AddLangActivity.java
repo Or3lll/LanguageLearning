@@ -15,7 +15,7 @@ public class AddLangActivity extends AppCompatActivity implements AddLangFragmen
     }
 
     @Override
-    public void onFragmentInteraction() {
-
+    public void onLanguageAdded() {
+        finish();
     }
 }
