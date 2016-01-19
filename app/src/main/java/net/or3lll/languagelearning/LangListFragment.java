@@ -21,6 +21,7 @@ import net.or3lll.languagelearning.data.Lang;
 public class LangListFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
+    private MyLangRecyclerViewAdapter langsAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,7 +60,8 @@ public class LangListFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(new MyLangRecyclerViewAdapter(Lang.listAll(Lang.class), mListener));
+        langsAdapter = new MyLangRecyclerViewAdapter(Lang.listAll(Lang.class), mListener);
+        recyclerView.setAdapter(langsAdapter);
 
         return view;
     }
@@ -80,6 +82,12 @@ public class LangListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        langsAdapter.setLangs(Lang.listAll(Lang.class));
     }
 
     /**

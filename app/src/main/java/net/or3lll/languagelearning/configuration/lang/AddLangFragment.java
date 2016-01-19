@@ -17,6 +17,8 @@ import com.google.common.base.CharMatcher;
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -82,6 +84,7 @@ public class AddLangFragment extends Fragment {
             public void onClick(View v) {
                 Lang l = new Lang(nameEdit.getText().toString(), isoCodeEdit.getText().toString());
                 l.save();
+                mListener.onLanguageAdded();
             }
         });
 
@@ -109,19 +112,9 @@ public class AddLangFragment extends Fragment {
         String name = nameEdit.getText().toString();
         String isoCode = isoCodeEdit.getText().toString();
 
-
-        Lang.find(Lang.class, "name = ? or isoCode = ?", name, "fr_FR");
-
-
-
-        int l1 = name.length();
-        int l2 = isoCode.length();
-
-        //if(l1 != 0)
-        //    if(l2 == l2) {
-
-                //return Lang.count (Lang.class, "name = ?", name) == 0;
-        //    }
+        if(name.length() > 0 && isoCode.length() >= 5) {
+            return (Lang.find(Lang.class, "name = ? or iso_Code = ?", name, isoCode).size() == 0);
+        }
 
         return false;
     }
@@ -137,6 +130,6 @@ public class AddLangFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction();
+        void onLanguageAdded();
     }
 }
