@@ -9,6 +9,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <!-- SugarORM configuration -->
         <meta-data
             android:name="DATABASE"
             android:value="words.db" />
@@ -25,13 +27,22 @@
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".JpFrActivity" />
-        <activity android:name=".LangListActivity" />
-        <activity android:name=".configuration.lang.AddLangActivity"></activity>
+
+        <activity android:name=".LangListActivity"
+            android:parentActivityName=".HomeActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+        </activity>
+
+        <activity android:name=".configuration.lang.AddLangActivity"/>
     </application>
 
 </manifest>
