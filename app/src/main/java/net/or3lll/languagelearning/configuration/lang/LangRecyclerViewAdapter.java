@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning;
+package net.or3lll.languagelearning.configuration.lang;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,22 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import net.or3lll.languagelearning.LangListFragment.OnListFragmentInteractionListener;
+import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Lang} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter} that can display a {@link Lang}
  */
-public class MyLangRecyclerViewAdapter extends RecyclerView.Adapter<MyLangRecyclerViewAdapter.ViewHolder> {
+public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerViewAdapter.ViewHolder> {
 
     private List<Lang> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private OnClickListener mListener;
 
-    public MyLangRecyclerViewAdapter(List<Lang> items, OnListFragmentInteractionListener listener) {
+    public LangRecyclerViewAdapter(List<Lang> items, OnClickListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -41,17 +39,26 @@ public class MyLangRecyclerViewAdapter extends RecyclerView.Adapter<MyLangRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getId().toString());
         holder.mContentView.setText(mValues.get(position).name);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                if (mListener != null) {
+                    mListener.onClick(holder.mItem);
                 }
+            }
+        });
+
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(mListener != null) {
+                    mListener.onLongClick(holder.mItem);
+                    return true;
+                }
+
+                return false;
             }
         });
     }
@@ -63,14 +70,12 @@ public class MyLangRecyclerViewAdapter extends RecyclerView.Adapter<MyLangRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
         public final TextView mContentView;
         public Lang mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
@@ -78,5 +83,11 @@ public class MyLangRecyclerViewAdapter extends RecyclerView.Adapter<MyLangRecycl
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+
+    public interface OnClickListener {
+        void onClick(Lang item);
+        void onLongClick(Lang item);
     }
 }

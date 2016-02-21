@@ -27,22 +27,42 @@
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".JpFrActivity" />
-
-        <activity android:name=".LangListActivity"
-            android:parentActivityName=".HomeActivity" >
+        <activity
+            android:name=".configuration.lang.LangListActivity"
+            android:parentActivityName=".HomeActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-
-        <activity android:name=".configuration.lang.AddLangActivity"/>
+        <activity android:name=".configuration.lang.EditLangActivity" />
+        <activity
+            android:name=".configuration.lang.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".configuration.word.WordListActivity"
+            android:label="@string/title_word_list"
+            android:parentActivityName=".HomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.or3lll.languagelearning.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".configuration.word.WordDetailActivity"
+            android:label="@string/title_word_detail"
+            android:parentActivityName=".configuration.word.WordListActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="net.or3lll.languagelearning.configuration.word.WordListActivity" />
+        </activity>
     </application>
 
 </manifest>

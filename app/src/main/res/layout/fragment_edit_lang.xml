@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.or3lll.languagelearning.configuration.lang.AddLangFragment">
+    tools:context=".configuration.lang.EditLangFragment">
 
     <EditText
         android:layout_width="match_parent"
@@ -18,6 +18,6 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajouter"
+        android:text="@string/button_add"
         android:id="@+id/add_btn" />
 </LinearLayout>
