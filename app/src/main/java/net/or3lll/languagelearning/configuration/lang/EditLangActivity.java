@@ -16,7 +16,7 @@ public class EditLangActivity extends AppCompatActivity implements EditLangFragm
 
         if(savedInstanceState == null) {
             long langId = getIntent().getLongExtra(LANG_ID_PARAM, -1);
-            EditLangFragment editLangFragment = EditLangFragment.newInstance(langId, this);
+            EditLangFragment editLangFragment = EditLangFragment.newInstance(langId);
             getSupportFragmentManager().beginTransaction().add(R.id.content, editLangFragment).commit();
         }
     }

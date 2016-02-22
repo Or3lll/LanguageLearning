@@ -51,13 +51,11 @@ public class EditLangFragment extends Fragment {
      *
      * @return A new instance of fragment EditLangFragment.
      */
-    public static EditLangFragment newInstance(long langId, OnFragmentInteractionListener listener) {
+    public static EditLangFragment newInstance(long langId) {
         EditLangFragment fragment = new EditLangFragment();
-        fragment.setListener(listener);
         Bundle args = new Bundle();
         args.putLong(LANG_ID_PARAM, langId);
         fragment.setArguments(args);
-
         return fragment;
     }
 
