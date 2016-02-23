@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.lang;
+package net.or3lll.languagelearning.configuration.word;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,24 +7,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Word;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Lang}
+ * Created by or3lll on 23/02/2016.
  */
-public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerViewAdapter.ViewHolder> {
+public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerViewAdapter.ViewHolder> {
 
-    private List<Lang> mValues;
+    private List<Word> mValues;
     private OnClickListener mListener;
 
-    public LangRecyclerViewAdapter(List<Lang> items, OnClickListener listener) {
+    public WordRecyclerViewAdapter(List<Word> items, OnClickListener listener) {
         mValues = items;
         mListener = listener;
     }
 
-    public void setLangs(List<Lang> items) {
+    public void setWords(List<Word> items) {
         mValues = items;
         notifyDataSetChanged();
     }
@@ -38,7 +38,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(mValues.get(position).name);
+        holder.mContentView.setText(mValues.get(position).text);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +70,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mContentView;
-        public Lang mItem;
+        public Word mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -84,9 +84,8 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
         }
     }
 
-
     public interface OnClickListener {
-        void onClick(Lang item);
-        void onLongClick(Lang item);
+        void onClick(Word item);
+        void onLongClick(Word item);
     }
 }
