@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.word;
+package net.or3lll.languagelearning.configuration.shared;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +14,9 @@ import java.util.List;
 /**
  * Created by or3lll on 22/02/2016.
  */
-public class LangAdapter extends BaseAdapter {
+abstract public class LangAdapter extends BaseAdapter {
 
-    private List<Lang> mLangs;
+    protected List<Lang> mLangs;
 
     public LangAdapter() {
         mLangs = Lang.listAll(Lang.class);

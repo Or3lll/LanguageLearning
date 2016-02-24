@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.configuration.lang.LangRecyclerViewAdapter;
+import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Word;
 
@@ -39,7 +39,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         ab.setDisplayHomeAsUpEnabled(true);
 
         mLangSpinner = (Spinner) findViewById(R.id.langSpinner);
-        mLangSpinner.setAdapter(new LangAdapter());
+        mLangSpinner.setAdapter(new UserLangAdapter());
         mLangSpinner.setOnItemSelectedListener(this);
 
         emptyListText = (TextView) findViewById(R.id.emptyList);

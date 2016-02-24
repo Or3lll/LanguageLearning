@@ -25,10 +25,12 @@ import java.util.List;
 public class LangListActivity extends AppCompatActivity
         implements LangRecyclerViewAdapter.OnClickListener,
         EditLangFragment.OnFragmentInteractionListener,
-        DeleteLangDialogFragment.OnDeleteLangListener {
+        DeleteLangDialogFragment.OnDeleteLangListener,
+        DefaultLangsDialogFragment.OnDefaultLangSelected {
 
     private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
     private static final String TAG_DELETE_DIALOG = "delete_dialog";
+    private static final String TAG_ADD_DIALOG = "add_dialog";
 
     private LangRecyclerViewAdapter mLangAdapter;
 
@@ -91,18 +93,37 @@ public class LangListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_add_lang) {
-            if(editContainer != null) {
-                EditLangFragment fragment = EditLangFragment.newInstance(-1);
-                getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, fragment, TAG_EDIT_FRAGMENT).commit();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag(TAG_ADD_DIALOG);
+            if (prev != null) {
+                ft.remove(prev);
             }
-            else {
-                Intent i = new Intent(this, EditLangActivity.class);
-                startActivity(i);
-            }
+
+            DialogFragment newFragment = DefaultLangsDialogFragment.newInstance();
+            newFragment.show(ft, TAG_ADD_DIALOG);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onLangSelected(Lang lang) {
+        updateList();
+        hideEdit();
+    }
+
+    @Override
+    public void onOtherSelected() {
+        if(editContainer != null) {
+            EditLangFragment fragment = EditLangFragment.newInstance(-1);
+            getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, fragment, TAG_EDIT_FRAGMENT).commit();
+        }
+        else {
+            Intent i = new Intent(this, EditLangActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override
