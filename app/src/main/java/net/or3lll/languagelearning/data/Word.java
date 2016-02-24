@@ -6,10 +6,10 @@ import com.orm.SugarRecord;
  * Created by Or3lll on 29/11/2015.
  */
 public class Word extends SugarRecord {
-    Lang lang;
-    String text;
-    String subText;
-    String desc;
+    public Lang lang;
+    public String text;
+    public String subText;
+    public String desc;
 
     public Word() {
     }
