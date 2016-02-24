@@ -1,5 +1,8 @@
-package net.or3lll.languagelearning;
+package net.or3lll.languagelearning.home;
 
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
@@ -7,7 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +21,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import net.or3lll.languagelearning.JpFrActivity;
+import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.DeleteLangDialogFragment;
 import net.or3lll.languagelearning.configuration.lang.LangListActivity;
 import net.or3lll.languagelearning.configuration.word.WordListActivity;
+import net.or3lll.languagelearning.data.Lang;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private static final String TAG_ADVICE_DIALOG = "advice_dialog";
 
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
@@ -57,15 +65,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Todo: ne pas gérer ça avec la position
-                if(position == 0) {
+                if (position == 0) {
                     Intent testIntent = new Intent(HomeActivity.this, LangListActivity.class);
                     startActivity(testIntent);
-                }
-                else if(position == 1) {
+                } else if (position == 1) {
                     Intent testIntent = new Intent(HomeActivity.this, WordListActivity.class);
                     startActivity(testIntent);
-                }
-                else {
+                } else {
                     Toast.makeText(HomeActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 }
 
@@ -79,6 +85,17 @@ public class HomeActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
         setupDrawer();
+
+        if(Lang.count(Lang.class) < 2) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            Fragment prev = getFragmentManager().findFragmentByTag(TAG_ADVICE_DIALOG);
+            if (prev != null) {
+                ft.remove(prev);
+            }
+
+            DialogFragment newFragment = LangMinimumAdviceDialogFragment.newInstance();
+            newFragment.show(ft, TAG_ADVICE_DIALOG);
+        }
     }
 
     private void addDrawerItems() {
