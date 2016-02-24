@@ -41,7 +41,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".configuration.lang.EditLangActivity" />
+        <activity
+            android:name=".configuration.lang.EditLangActivity"
+            android:parentActivityName=".configuration.lang.LangListActivity"/>
         <activity
             android:name=".configuration.lang.SettingsActivity"
             android:label="@string/title_activity_settings" />
