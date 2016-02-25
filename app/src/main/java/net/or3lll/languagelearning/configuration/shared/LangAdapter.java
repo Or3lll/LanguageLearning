@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
@@ -57,6 +58,10 @@ abstract public class LangAdapter extends BaseAdapter {
 
         Lang lang = mLangs.get(position);
         if(lang != null) {
+            Integer resIdFlag = Lang.flags.get(lang.isoCode);
+            if(resIdFlag != null) {
+                holder.getLangFlag().setImageResource(resIdFlag);
+            }
             holder.getLangName().setText(lang.name);
         }
 
@@ -65,10 +70,19 @@ abstract public class LangAdapter extends BaseAdapter {
 
     private class Holder {
         private View mItemView;
+        private ImageView mlangFlagImageView;
         private TextView mLangNameTextView;
 
         public Holder(View itemView) {
             mItemView = itemView;
+        }
+
+        public ImageView getLangFlag() {
+            if(mlangFlagImageView == null) {
+                mlangFlagImageView = (ImageView) mItemView.findViewById(R.id.langFlag);
+            }
+
+            return mlangFlagImageView;
         }
 
         public TextView getLangName() {
