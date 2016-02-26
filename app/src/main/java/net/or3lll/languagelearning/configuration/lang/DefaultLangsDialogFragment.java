@@ -3,10 +3,9 @@ package net.or3lll.languagelearning.configuration.lang;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.ListAdapter;
+import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.shared.AvailableDefaultLangAdapter;

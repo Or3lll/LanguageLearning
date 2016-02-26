@@ -44,6 +44,10 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
         Integer resIdFlag = Lang.flags.get(lang.isoCode);
         if(resIdFlag != null) {
             holder.mLangFlag.setImageResource(resIdFlag);
+            holder.mLangFlag.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.mLangFlag.setVisibility(View.INVISIBLE);
         }
         holder.mlangName.setText(lang.name);
 

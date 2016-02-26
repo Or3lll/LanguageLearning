@@ -3,9 +3,9 @@ package net.or3lll.languagelearning.configuration.lang;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
@@ -13,7 +13,7 @@ import net.or3lll.languagelearning.data.Lang;
 /**
  * Created by Or3lll on 21/02/2016.
  */
-public class DeleteLangDialogFragment extends DialogFragment{
+public class DeleteLangDialogFragment extends DialogFragment {
     public static String LANG_ID_PARAM = "LANG_ID";
 
     private OnDeleteLangListener mListener;

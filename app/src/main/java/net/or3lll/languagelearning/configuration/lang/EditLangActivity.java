@@ -34,4 +34,9 @@ public class EditLangActivity extends AppCompatActivity implements EditLangFragm
     public void onLanguageAdded() {
         finish();
     }
+
+    @Override
+    public void onLanguageUpdated() {
+        finish();
+    }
 }

@@ -61,7 +61,12 @@ abstract public class LangAdapter extends BaseAdapter {
             Integer resIdFlag = Lang.flags.get(lang.isoCode);
             if(resIdFlag != null) {
                 holder.getLangFlag().setImageResource(resIdFlag);
+                holder.getLangFlag().setVisibility(View.VISIBLE);
             }
+            else {
+                holder.getLangFlag().setVisibility(View.INVISIBLE);
+            }
+
             holder.getLangName().setText(lang.name);
         }
 
