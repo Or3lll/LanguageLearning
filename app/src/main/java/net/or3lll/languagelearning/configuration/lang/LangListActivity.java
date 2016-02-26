@@ -1,9 +1,9 @@
 package net.or3lll.languagelearning.configuration.lang;
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -93,8 +93,8 @@ public class LangListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_add_lang) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            Fragment prev = getFragmentManager().findFragmentByTag(TAG_ADD_DIALOG);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_ADD_DIALOG);
             if (prev != null) {
                 ft.remove(prev);
             }
@@ -141,8 +141,8 @@ public class LangListActivity extends AppCompatActivity
 
     @Override
     public void onLongClick(Lang lang) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag(TAG_DELETE_DIALOG);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DELETE_DIALOG);
         if (prev != null) {
             ft.remove(prev);
         }
@@ -158,14 +158,20 @@ public class LangListActivity extends AppCompatActivity
     }
 
     @Override
+    public void onLanguageUpdated() {
+        updateList();
+        hideEdit();
+    }
+
+    @Override
     public void onLangDeleted(Lang lang) {
         updateList();
         hideEdit();
     }
 
     private void hideEdit() {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag(TAG_EDIT_FRAGMENT);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_FRAGMENT);
         if (prev != null) {
             ft.remove(prev);
         }
