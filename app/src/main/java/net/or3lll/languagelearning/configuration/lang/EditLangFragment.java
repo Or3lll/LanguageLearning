@@ -90,6 +90,7 @@ public class EditLangFragment extends Fragment {
                     mLang.name = mNameEdit.getText().toString();
                     mLang.isoCode = mIsoCodeEdit.getText().toString();
                     mLang.save();
+                    mListener.onLanguageUpdated();
                 }
                 else {
                     Lang l = new Lang(mNameEdit.getText().toString(), mIsoCodeEdit.getText().toString());
@@ -158,5 +159,6 @@ public class EditLangFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onLanguageAdded();
+        void onLanguageUpdated();
     }
 }

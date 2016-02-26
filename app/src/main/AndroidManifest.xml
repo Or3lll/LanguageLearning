@@ -24,7 +24,7 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="net.or3lll.languagelearning.data" />
 
-        <activity android:name=".HomeActivity">
+        <activity android:name=".home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,25 +34,27 @@
         <activity android:name=".JpFrActivity" />
         <activity
             android:name=".configuration.lang.LangListActivity"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName=".home.HomeActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
+                android:value=".home.HomeActivity" />
         </activity>
-        <activity android:name=".configuration.lang.EditLangActivity" />
+        <activity
+            android:name=".configuration.lang.EditLangActivity"
+            android:parentActivityName=".configuration.lang.LangListActivity"/>
         <activity
             android:name=".configuration.lang.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".configuration.word.WordListActivity"
             android:label="@string/title_word_list"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".home.HomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.or3lll.languagelearning.HomeActivity" />
+                android:value=".home.HomeActivity" />
         </activity>
         <activity
             android:name=".configuration.word.WordDetailActivity"
