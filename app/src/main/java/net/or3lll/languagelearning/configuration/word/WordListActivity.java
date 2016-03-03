@@ -1,5 +1,6 @@
 package net.or3lll.languagelearning.configuration.word;
 
+import android.content.Intent;
 import android.provider.UserDictionary;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.EditLangFragment;
 import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Word;
@@ -52,11 +55,18 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mWordAdapter = new WordRecyclerViewAdapter(Word.listAll(Word.class), null);
+        mWordAdapter = new WordRecyclerViewAdapter(Word.listAll(Word.class), this);
         recyclerView.setAdapter(mWordAdapter);
         updateList((Lang) mLangSpinner.getSelectedItem());
 
         editContainer = (FrameLayout) findViewById(R.id.edit_container);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateList(Lang.findById(Lang.class, mLangSpinner.getSelectedItemId()));
     }
 
     private void updateList(Lang lang) {
@@ -86,6 +96,23 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_add_word) {
+            if(editContainer != null) {
+                EditWordFragment editWordFragment = EditWordFragment.newInstance(-1L, mLangSpinner.getSelectedItemId());
+                getSupportFragmentManager().beginTransaction().add(R.id.content, editWordFragment).commit();
+            } else {
+                Intent i = new Intent(this, EditWordActivity.class);
+                i.putExtra(EditWordActivity.LANG_ID_PARAM, mLangSpinner.getSelectedItemId());
+                startActivity(i);
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         updateList((Lang) parent.getSelectedItem());
     }
@@ -96,9 +123,12 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onClick(Word item) {
         if(editContainer != null) {
-            // set fragment in container
+            EditWordFragment editWordFragment = EditWordFragment.newInstance(item.getId(), -1L);
+            getSupportFragmentManager().beginTransaction().add(R.id.content, editWordFragment).commit();
         } else {
-            // Launch activity
+            Intent i = new Intent(this, EditWordActivity.class);
+            i.putExtra(EditWordActivity.WORD_ID_PARAM, item.getId());
+            startActivity(i);
         }
     }
 

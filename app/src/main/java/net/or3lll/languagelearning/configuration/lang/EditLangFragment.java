@@ -38,19 +38,6 @@ public class EditLangFragment extends Fragment {
     private Lang mLang;
 
 
-    public EditLangFragment() {
-    }
-
-    public void setListener(OnFragmentInteractionListener listener) {
-        mListener = listener;
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment EditLangFragment.
-     */
     public static EditLangFragment newInstance(long langId) {
         EditLangFragment fragment = new EditLangFragment();
         Bundle args = new Bundle();
