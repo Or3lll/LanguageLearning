@@ -64,6 +64,9 @@ captures/
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
 
+# Misc
+.idea/encodings.xml
+
 ## File-based project format:
 *.iws
 
