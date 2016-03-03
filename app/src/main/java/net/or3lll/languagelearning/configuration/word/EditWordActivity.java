@@ -1,7 +1,6 @@
 package net.or3lll.languagelearning.configuration.word;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -39,11 +38,9 @@ public class EditWordActivity extends AppCompatActivity implements EditWordFragm
 
     @Override
     public void onWordAdded() {
-        finish();
     }
 
     @Override
     public void onWordUpdated() {
-        finish();
     }
 }

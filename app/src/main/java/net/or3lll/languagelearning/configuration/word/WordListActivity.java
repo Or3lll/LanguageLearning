@@ -2,6 +2,9 @@ package net.or3lll.languagelearning.configuration.word;
 
 import android.content.Intent;
 import android.provider.UserDictionary;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.DeleteLangDialogFragment;
 import net.or3lll.languagelearning.configuration.lang.EditLangFragment;
 import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.Lang;
@@ -26,7 +30,14 @@ import net.or3lll.languagelearning.data.Word;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, WordRecyclerViewAdapter.OnClickListener {
+public class WordListActivity extends AppCompatActivity
+        implements AdapterView.OnItemSelectedListener,
+        WordRecyclerViewAdapter.OnClickListener,
+        EditWordFragment.OnFragmentInteractionListener,
+        DeleteWordDialogFragment.OnDeleteWordListener {
+
+    private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
+    private static final String TAG_DELETE_DIALOG = "delete_dialog";
 
     private Spinner mLangSpinner;
     private TextView emptyListText;
@@ -100,7 +111,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         if(item.getItemId() == R.id.action_add_word) {
             if(editContainer != null) {
                 EditWordFragment editWordFragment = EditWordFragment.newInstance(-1L, mLangSpinner.getSelectedItemId());
-                getSupportFragmentManager().beginTransaction().add(R.id.content, editWordFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, editWordFragment).commit();
             } else {
                 Intent i = new Intent(this, EditWordActivity.class);
                 i.putExtra(EditWordActivity.LANG_ID_PARAM, mLangSpinner.getSelectedItemId());
@@ -124,7 +135,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     public void onClick(Word item) {
         if(editContainer != null) {
             EditWordFragment editWordFragment = EditWordFragment.newInstance(item.getId(), -1L);
-            getSupportFragmentManager().beginTransaction().add(R.id.content, editWordFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, editWordFragment).commit();
         } else {
             Intent i = new Intent(this, EditWordActivity.class);
             i.putExtra(EditWordActivity.WORD_ID_PARAM, item.getId());
@@ -134,6 +145,38 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onLongClick(Word item) {
-        // Display delete dialog fragment
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DELETE_DIALOG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+
+        DialogFragment newFragment = DeleteWordDialogFragment.newInstance(item.getId());
+        newFragment.show(ft, TAG_DELETE_DIALOG);
+    }
+
+    @Override
+    public void onWordAdded() {
+        updateList(Lang.findById(Lang.class, mLangSpinner.getSelectedItemId()));
+    }
+
+    @Override
+    public void onWordUpdated() {
+        updateList(Lang.findById(Lang.class, mLangSpinner.getSelectedItemId()));
+    }
+
+    private void hideEdit() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_FRAGMENT);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.commit();
+    }
+
+    @Override
+    public void onWordDeleted(Word word) {
+        updateList(Lang.findById(Lang.class, mLangSpinner.getSelectedItemId()));
+        hideEdit();
     }
 }

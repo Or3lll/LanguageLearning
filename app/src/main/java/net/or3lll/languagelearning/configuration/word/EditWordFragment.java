@@ -31,7 +31,10 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
 
     private Spinner mLangSpinner;
     private EditText mNameEdit;
+    private EditText mSubNameEdit;
+    private EditText mDescEdit;
     private Button mAddButton;
+    private ViewGroup mTranslationsLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,6 +62,8 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         mLangSpinner.setOnItemSelectedListener(this);
 
         mNameEdit = (EditText) v.findViewById(R.id.name_edit);
+        mSubNameEdit = (EditText) v.findViewById(R.id.sub_name_edit);
+        mDescEdit = (EditText) v.findViewById(R.id.desc_edit);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -80,33 +85,43 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
             public void onClick(View v) {
                 if (mWord != null) {
                     mWord.text = mNameEdit.getText().toString();
+                    mWord.subText = mSubNameEdit.getText().toString();
+                    mWord.desc = mDescEdit.getText().toString();
                     mWord.lang = mLang;
                     mWord.save();
                     mListener.onWordAdded();
                 } else {
-                    Word w = new Word(mLang, mNameEdit.getText().toString(), "", "");
-                    w.save();
+                    mWord = new Word(mLang, mNameEdit.getText().toString(),
+                            mSubNameEdit.getText().toString(),
+                            mDescEdit.getText().toString());
+                    mWord.save();
                     mListener.onWordUpdated();
                 }
+
+                setMode();
             }
         });
+
+        mTranslationsLayout = (ViewGroup) v.findViewById(R.id.translations_layout);
 
         long wordId = getArguments().getLong(WORD_ID_PARAM, -1);
         long langId = getArguments().getLong(LANG_ID_PARAM, -1);
 
         mWord = Word.findById(Word.class, wordId);
         if(mWord != null) {
-            mLang = Lang.findById(Lang.class, mWord.getId());
+            mLang = Lang.findById(Lang.class, mWord.lang.getId());
 
             mNameEdit.setText(mWord.text);
+            mSubNameEdit.setText(mWord.subText);
+            mDescEdit.setText(mWord.desc);
             mAddButton.setText(R.string.button_update);
-
-            mAddButton.setEnabled(validation());
         } else {
             mLang = Lang.findById(Lang.class, langId);
         }
 
         mLangSpinner.setSelection(langAdapter.getPosition(mLang.getId()));
+
+        setMode();
 
         return v;
     }
@@ -145,9 +160,20 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         return false;
     }
 
+    private void setMode() {
+        if(mWord != null) {
+            mAddButton.setText(R.string.button_update);
+            mTranslationsLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            mAddButton.setText(R.string.button_add);
+            mTranslationsLayout.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        mLang = (Lang) parent.getSelectedItem();
     }
 
     @Override
