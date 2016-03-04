@@ -4,7 +4,9 @@ package net.or3lll.languagelearning.configuration.word;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -29,12 +31,15 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     public static String WORD_ID_PARAM = "WORD_ID";
     public static String LANG_ID_PARAM = "LANG_ID";
 
+    private static final String TAG_ADD_TRANSLATION_DIALOG = "add_translation_dialog";
+
     private Spinner mLangSpinner;
     private EditText mNameEdit;
     private EditText mSubNameEdit;
     private EditText mDescEdit;
     private Button mAddButton;
     private ViewGroup mTranslationsLayout;
+    private Button mAddTranslationButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,6 +108,20 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         });
 
         mTranslationsLayout = (ViewGroup) v.findViewById(R.id.translations_layout);
+        mAddTranslationButton = (Button) v.findViewById(R.id.add_translation_btn);
+        mAddTranslationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag(TAG_ADD_TRANSLATION_DIALOG);
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+
+                DialogFragment newFragment = AddTranslationDialogFragment.newInstance(mWord.getId());
+                newFragment.show(ft, TAG_ADD_TRANSLATION_DIALOG);
+            }
+        });
 
         long wordId = getArguments().getLong(WORD_ID_PARAM, -1);
         long langId = getArguments().getLong(LANG_ID_PARAM, -1);

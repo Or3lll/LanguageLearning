@@ -22,9 +22,13 @@
     <string name="message_dialog_delete_word">Voulez-vous supprimer ce mot?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="cancel">Annuler</string>
 
     <string name="word_name_hint">Mot</string>
     <string name="word_sub_hint">Phonétique</string>
     <string name="word_desc_hint">Description</string>
     <string name="title_link">Traductions</string>
+
+    <string name="title_dialog_add_translation">Ajouter une traduction</string>
+    <string name="search_hint">Rechercher</string>
 </resources>
