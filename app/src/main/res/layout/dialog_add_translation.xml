@@ -7,5 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchAutoComplete"
-        android:hint="@string/search_hint"/>
+        android:hint="@string/search_hint"
+        android:completionThreshold="1"/>
 </LinearLayout>
