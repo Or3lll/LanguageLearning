@@ -6,8 +6,8 @@ import com.orm.SugarRecord;
  * Created by Or3lll on 29/11/2015.
  */
 public class Translation extends SugarRecord {
-    Word word1;
-    Word word2;
+    public Word word1;
+    public Word word2;
 
     public Translation() {
     }

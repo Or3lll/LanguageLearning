@@ -43,6 +43,17 @@ abstract public class LangAdapter extends BaseAdapter {
         return -1;
     }
 
+    public int getPosition(long itemId) {
+        for (int i = 0; i < mLangs.size(); i++) {
+            Lang lang = mLangs.get(i);
+            if(lang.getId() == itemId) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Holder holder;
