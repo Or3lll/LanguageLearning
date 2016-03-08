@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
 /**
@@ -44,7 +46,7 @@ public class AddTranslationDialogFragment extends DialogFragment {
         AutoCompleteTextView searchAutoComplete = (AutoCompleteTextView) contentView.findViewById(R.id.searchAutoComplete);
 
         long wordId = getArguments().getLong(WORD_ID_PARAM);
-        Word word = Word.findById(Word.class, wordId);
+        final Word word = Word.findById(Word.class, wordId);
         searchAdapter = new WordSearchAdapter(word.lang.getId());
         searchAutoComplete.setAdapter(searchAdapter);
 
@@ -52,7 +54,11 @@ public class AddTranslationDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Word w = (Word) parent.getItemAtPosition(position);
-                // TODO : créer le Link
+                Translation t = new Translation(word, w);
+                t.save();
+                if(mListener != null) {
+                    mListener.onTranslationAdd();
+                }
                 dismiss();
             }
         });

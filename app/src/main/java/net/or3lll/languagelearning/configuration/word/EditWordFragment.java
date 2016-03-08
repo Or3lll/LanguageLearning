@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -20,14 +22,16 @@ import android.widget.Spinner;
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by X2014568 on 03/03/2016.
  */
-public class EditWordFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class EditWordFragment extends Fragment implements AdapterView.OnItemSelectedListener, AddTranslationDialogFragment.OnAddTranslationListener {
     public static String WORD_ID_PARAM = "WORD_ID";
     public static String LANG_ID_PARAM = "LANG_ID";
 
@@ -40,6 +44,8 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     private Button mAddButton;
     private ViewGroup mTranslationsLayout;
     private Button mAddTranslationButton;
+    private RecyclerView mTranslationRecycler;
+    private TranslationRecyclerViewAdapter mTranslationAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -123,6 +129,11 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
             }
         });
 
+        mTranslationRecycler = (RecyclerView) v.findViewById(R.id.translation_list);
+
+        mTranslationRecycler.setHasFixedSize(true);
+        mTranslationRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         long wordId = getArguments().getLong(WORD_ID_PARAM, -1);
         long langId = getArguments().getLong(LANG_ID_PARAM, -1);
 
@@ -137,6 +148,16 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         } else {
             mLang = Lang.findById(Lang.class, langId);
         }
+
+        List<Translation> translations = new ArrayList<>();
+        for (Translation translation :
+                Translation.listAll(Translation.class)) {
+            if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
+                translations.add(translation);
+            }
+        }
+        mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, translations);
+        mTranslationRecycler.setAdapter(mTranslationAdapter);
 
         mLangSpinner.setSelection(langAdapter.getPosition(mLang.getId()));
 
@@ -198,6 +219,19 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onTranslationAdd() {
+        List<Translation> translations = new ArrayList<>();
+        for (Translation translation :
+                Translation.listAll(Translation.class)) {
+            if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
+                translations.add(translation);
+            }
+        }
+
+        mTranslationAdapter.setTranslations(translations);
     }
 
     public interface OnFragmentInteractionListener {
