@@ -25,6 +25,7 @@ import net.or3lll.languagelearning.configuration.lang.DeleteLangDialogFragment;
 import net.or3lll.languagelearning.configuration.lang.EditLangFragment;
 import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
 import java.util.ArrayList;
@@ -34,7 +35,9 @@ public class WordListActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener,
         WordRecyclerViewAdapter.OnClickListener,
         EditWordFragment.OnFragmentInteractionListener,
-        DeleteWordDialogFragment.OnDeleteWordListener {
+        DeleteWordDialogFragment.OnDeleteWordListener,
+        AddTranslationDialogFragment.OnAddTranslationListener,
+        DeleteTranslationDialogFragment.OnDeleteTranslationListener {
 
     private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
     private static final String TAG_DELETE_DIALOG = "delete_dialog";
@@ -43,6 +46,7 @@ public class WordListActivity extends AppCompatActivity
     private TextView emptyListText;
     private WordRecyclerViewAdapter mWordAdapter;
     private FrameLayout editContainer;
+    private EditWordFragment mEditWordFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +114,8 @@ public class WordListActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_add_word) {
             if(editContainer != null) {
-                EditWordFragment editWordFragment = EditWordFragment.newInstance(-1L, mLangSpinner.getSelectedItemId());
-                getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, editWordFragment).commit();
+                mEditWordFragment = EditWordFragment.newInstance(-1L, mLangSpinner.getSelectedItemId());
+                getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
             } else {
                 Intent i = new Intent(this, EditWordActivity.class);
                 i.putExtra(EditWordActivity.LANG_ID_PARAM, mLangSpinner.getSelectedItemId());
@@ -134,8 +138,8 @@ public class WordListActivity extends AppCompatActivity
     @Override
     public void onClick(Word item) {
         if(editContainer != null) {
-            EditWordFragment editWordFragment = EditWordFragment.newInstance(item.getId(), -1L);
-            getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, editWordFragment).commit();
+             mEditWordFragment = EditWordFragment.newInstance(item.getId(), -1L);
+            getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
         } else {
             Intent i = new Intent(this, EditWordActivity.class);
             i.putExtra(EditWordActivity.WORD_ID_PARAM, item.getId());
@@ -178,5 +182,19 @@ public class WordListActivity extends AppCompatActivity
     public void onWordDeleted(Word word) {
         updateList(Lang.findById(Lang.class, mLangSpinner.getSelectedItemId()));
         hideEdit();
+    }
+
+    @Override
+    public void onTranslationAdd() {
+        if(mEditWordFragment != null) {
+            mEditWordFragment.refreshTranslations();
+        }
+    }
+
+    @Override
+    public void onTranslationDeleted(Translation translation) {
+        if(mEditWordFragment != null) {
+            mEditWordFragment.refreshTranslations();
+        }
     }
 }

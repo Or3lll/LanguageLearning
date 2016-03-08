@@ -31,11 +31,13 @@ import java.util.List;
 /**
  * Created by X2014568 on 03/03/2016.
  */
-public class EditWordFragment extends Fragment implements AdapterView.OnItemSelectedListener, AddTranslationDialogFragment.OnAddTranslationListener {
+public class EditWordFragment extends Fragment implements AdapterView.OnItemSelectedListener,
+        TranslationRecyclerViewAdapter.OnClickListener {
     public static String WORD_ID_PARAM = "WORD_ID";
     public static String LANG_ID_PARAM = "LANG_ID";
 
     private static final String TAG_ADD_TRANSLATION_DIALOG = "add_translation_dialog";
+    private static final String TAG_DELETE_TRANSLATION_DIALOG = "delete_translation_dialog";
 
     private Spinner mLangSpinner;
     private EditText mNameEdit;
@@ -156,7 +158,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
                 translations.add(translation);
             }
         }
-        mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, translations);
+        mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, translations, this);
         mTranslationRecycler.setAdapter(mTranslationAdapter);
 
         mLangSpinner.setSelection(langAdapter.getPosition(mLang.getId()));
@@ -211,6 +213,18 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         }
     }
 
+    public void refreshTranslations() {
+        List<Translation> translations = new ArrayList<>();
+        for (Translation translation :
+                Translation.listAll(Translation.class)) {
+            if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
+                translations.add(translation);
+            }
+        }
+
+        mTranslationAdapter.setTranslations(translations);
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mLang = (Lang) parent.getSelectedItem();
@@ -222,16 +236,15 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     @Override
-    public void onTranslationAdd() {
-        List<Translation> translations = new ArrayList<>();
-        for (Translation translation :
-                Translation.listAll(Translation.class)) {
-            if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
-                translations.add(translation);
-            }
+    public void onLongClick(Translation item) {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag(TAG_DELETE_TRANSLATION_DIALOG);
+        if (prev != null) {
+            ft.remove(prev);
         }
 
-        mTranslationAdapter.setTranslations(translations);
+        DialogFragment newFragment = DeleteTranslationDialogFragment.newInstance(item.getId());
+        newFragment.show(ft, TAG_DELETE_TRANSLATION_DIALOG);
     }
 
     public interface OnFragmentInteractionListener {

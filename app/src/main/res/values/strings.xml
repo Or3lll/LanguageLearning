@@ -20,6 +20,7 @@
     <string name="title_dialog_add_lang">Ajouter une Langue</string>
     <string name="button_dialog_add_lang">Autre langue</string>
     <string name="message_dialog_delete_word">Voulez-vous supprimer ce mot?</string>
+    <string name="message_dialog_delete_translation">Voulez-vous supprimer cette traduction?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="cancel">Annuler</string>

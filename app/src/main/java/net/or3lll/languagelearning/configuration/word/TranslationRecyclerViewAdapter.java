@@ -20,10 +20,12 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
 
     private Word mWord;
     private List<Translation> mTranslations;
+    private OnClickListener mListener;
 
-    public TranslationRecyclerViewAdapter(Word word, List<Translation> translations) {
+    public TranslationRecyclerViewAdapter(Word word, List<Translation> translations, OnClickListener listener) {
         mWord = word;
         mTranslations = translations;
+        mListener = listener;
     }
 
     public void setTranslations(List<Translation> translations) {
@@ -38,7 +40,7 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
     }
 
     @Override
-    public void onBindViewHolder(TranslationRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Translation translation = mTranslations.get(position);
         holder.mItem = translation;
         if(translation.word1.getId() == mWord.getId()) {
@@ -55,6 +57,18 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
                 holder.mLangView.setText(lang.name);
             }
         }
+
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(mListener != null) {
+                    mListener.onLongClick(holder.mItem);
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -79,5 +93,9 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
         public String toString() {
             return super.toString() + " '" + mWordView.getText() + "'" + " '" + mLangView.getText() + "'";
         }
+    }
+
+    public interface OnClickListener {
+        void onLongClick(Translation item);
     }
 }
