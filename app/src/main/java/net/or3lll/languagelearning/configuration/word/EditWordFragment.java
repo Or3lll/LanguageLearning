@@ -151,16 +151,6 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
             mLang = Lang.findById(Lang.class, langId);
         }
 
-        List<Translation> translations = new ArrayList<>();
-        for (Translation translation :
-                Translation.listAll(Translation.class)) {
-            if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
-                translations.add(translation);
-            }
-        }
-        mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, translations, this);
-        mTranslationRecycler.setAdapter(mTranslationAdapter);
-
         mLangSpinner.setSelection(langAdapter.getPosition(mLang.getId()));
 
         setMode();
@@ -206,6 +196,15 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         if(mWord != null) {
             mAddButton.setText(R.string.button_update);
             mTranslationsLayout.setVisibility(View.VISIBLE);
+            List<Translation> translations = new ArrayList<>();
+            for (Translation translation :
+                    Translation.listAll(Translation.class)) {
+                if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
+                    translations.add(translation);
+                }
+            }
+            mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, translations, this);
+            mTranslationRecycler.setAdapter(mTranslationAdapter);
         }
         else {
             mAddButton.setText(R.string.button_add);

@@ -28,6 +28,11 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
         mListener = listener;
     }
 
+    public void setWord(Word word) {
+        mWord = word;
+        notifyDataSetChanged();
+    }
+
     public void setTranslations(List<Translation> translations) {
         mTranslations = translations;
         notifyDataSetChanged();

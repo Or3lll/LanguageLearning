@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
 import java.util.ArrayList;
@@ -19,11 +20,13 @@ import java.util.List;
  * Created by or3lll on 04/03/2016.
  */
 public class WordSearchAdapter extends BaseAdapter implements Filterable {
+    private long mWordId;
     private long mLangId;
     private List<Word> mOriginalWords;
     private List<Word> mWords;
 
-    public WordSearchAdapter(long langId) {
+    public WordSearchAdapter(long wordId, long langId) {
+        mWordId = wordId;
         mLangId = langId;
         mOriginalWords = new ArrayList<>();
         mWords = new ArrayList<>();
@@ -31,8 +34,20 @@ public class WordSearchAdapter extends BaseAdapter implements Filterable {
         for (Word w :
                 Word.listAll(Word.class)) {
             if(w.lang.getId() != mLangId) {
-                mOriginalWords.add(w);
-                mWords.add(w);
+                boolean add = true;
+                for (Translation translation :
+                        Translation.listAll(Translation.class)) {
+                    if ((w.getId() == translation.word1.getId() && mWordId == translation.word2.getId())
+                            || (mWordId == translation.word1.getId() && w.getId() == translation.word2.getId())) {
+                        add = false;
+                        break;
+                    }
+                }
+
+                if(add) {
+                    mOriginalWords.add(w);
+                    mWords.add(w);
+                }
             }
         }
     }
