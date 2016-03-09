@@ -11,26 +11,26 @@
     tools:context="net.or3lll.languagelearning.JpFrActivity">
 
     <TextView
-        android:id="@+id/kanji_text"
+        android:id="@+id/text_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
 
     <Button
-        android:id="@+id/display_kana_btn"
+        android:id="@+id/display_subtext_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Afficher Kana"/>
+        android:text="@string/display_subtext"/>
 
     <TextView
-        android:id="@+id/kana_text"
+        android:id="@+id/subtext_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="invisible"
         />
 
     <EditText
-        android:id="@+id/french_response"
+        android:id="@+id/answer_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -38,6 +38,6 @@
         android:id="@+id/check_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Check" />
+        android:text="@string/check" />
 
 </LinearLayout>
