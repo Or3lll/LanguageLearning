@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.or3lll.languagelearning.data.Translation;
+import net.or3lll.languagelearning.data.Word;
 
 import java.util.List;
 
@@ -28,7 +29,8 @@ public class VocabularyTestFragment extends Fragment {
     private Button displaySubTextBtn;
     private Button checkBtn;
 
-    private int index;
+    private Word mWord;
+
     private int score;
     private int attempts;
 
@@ -76,11 +78,25 @@ public class VocabularyTestFragment extends Fragment {
         checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Translation translation = Translation.listAll(Translation.class).get(index);
+                boolean hasCorrectResult = false;
                 attempts++;
 
-                if (((attempts % 2 == 0) && translation.word1.text.equalsIgnoreCase(answerEditText.getText().toString()))
-                    || ((attempts % 2 == 1) && translation.word2.text.equalsIgnoreCase(answerEditText.getText().toString()))) {
+                for (Translation translation :
+                        Translation.listAll(Translation.class)) {
+                    if (translation.word1.getId() == mWord.getId()) {
+                        if(translation.word2.text.equalsIgnoreCase(answerEditText.getText().toString())) {
+                            hasCorrectResult = true;
+                        }
+                    }
+
+                    else if (translation.word2.getId() == mWord.getId()) {
+                        if(translation.word1.text.equalsIgnoreCase(answerEditText.getText().toString())) {
+                            hasCorrectResult = true;
+                        }
+                    }
+                }
+
+                if(hasCorrectResult) {
                     score++;
                     Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.good_answer), score, attempts), Toast.LENGTH_SHORT).show();
                 } else {
@@ -106,20 +122,19 @@ public class VocabularyTestFragment extends Fragment {
 
     private void setWords() {
         List<Translation> translations = Translation.listAll(Translation.class);
-        index = (int) (Math.random() * (double)translations.size());
-
+        int index = (int) (Math.random() * (double)translations.size());
         Translation translation = translations.get(index);
 
         if(attempts % 2 == 0) {
-            textTextView.setText(translation.word1.text);
-            subTextTextView.setText(translation.word1.subText);
-            answerEditText.setText("");
+            mWord = translation.word1;
         }
         else {
-            textTextView.setText(translation.word2.text);
-            subTextTextView.setText(translation.word2.subText);
-            answerEditText.setText("");
+            mWord = translation.word2;
         }
+
+        textTextView.setText(mWord.text);
+        subTextTextView.setText(mWord.subText);
+        answerEditText.setText("");
 
         subTextTextView.setVisibility(View.INVISIBLE);
     }
