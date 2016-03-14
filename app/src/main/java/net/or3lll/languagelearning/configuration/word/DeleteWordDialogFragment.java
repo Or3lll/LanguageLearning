@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
 /**
@@ -36,6 +37,14 @@ public class DeleteWordDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Word word = Word.findById(Word.class, getArguments().getLong(WORD_ID_PARAM, -1));
                         if (word != null) {
+                            for (Translation translation :
+                                    Translation.listAll(Translation.class)) {
+                                if(translation.word1.getId() == word.getId()
+                                        || translation.word2.getId() == word.getId()) {
+                                    translation.delete();
+                                }
+
+                            }
                             word.delete();
                             if (mListener != null) {
                                 mListener.onWordDeleted(word);
