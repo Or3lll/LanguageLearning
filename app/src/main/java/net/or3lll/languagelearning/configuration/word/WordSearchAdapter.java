@@ -35,6 +35,7 @@ public class WordSearchAdapter extends BaseAdapter implements Filterable {
                 Word.listAll(Word.class)) {
             if(w.lang.getId() != mLangId) {
                 boolean add = true;
+
                 for (Translation translation :
                         Translation.listAll(Translation.class)) {
                     if ((w.getId() == translation.word1.getId() && mWordId == translation.word2.getId())

@@ -26,8 +26,6 @@ public class AddTranslationDialogFragment extends DialogFragment {
 
     private OnAddTranslationListener mListener;
 
-    private WordSearchAdapter searchAdapter;
-
     public static AddTranslationDialogFragment newInstance(long wordId) {
         AddTranslationDialogFragment fragment = new AddTranslationDialogFragment();
         Bundle args = new Bundle();
@@ -47,7 +45,7 @@ public class AddTranslationDialogFragment extends DialogFragment {
 
         long wordId = getArguments().getLong(WORD_ID_PARAM);
         final Word word = Word.findById(Word.class, wordId);
-        searchAdapter = new WordSearchAdapter(word.getId(), word.lang.getId());
+        WordSearchAdapter searchAdapter = new WordSearchAdapter(word.getId(), word.lang.getId());
         searchAutoComplete.setAdapter(searchAdapter);
 
         searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {

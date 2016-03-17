@@ -27,6 +27,7 @@ import net.or3lll.languagelearning.configuration.lang.DeleteLangDialogFragment;
 import net.or3lll.languagelearning.configuration.lang.LangListActivity;
 import net.or3lll.languagelearning.configuration.word.WordListActivity;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.dao.LangDao;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -86,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setupDrawer();
 
-        if(Lang.count(Lang.class) < 2) {
+        if(LangDao.count(this) < 2) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment prev = getFragmentManager().findFragmentByTag(TAG_ADVICE_DIALOG);
             if (prev != null) {
