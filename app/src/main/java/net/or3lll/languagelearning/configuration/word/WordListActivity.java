@@ -112,7 +112,7 @@ public class WordListActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_add_word) {
             if(editContainer != null) {
-                mEditWordFragment = EditWordFragment.newInstance(-1L, (Lang) mLangSpinner.getSelectedItem());
+                mEditWordFragment = EditWordFragment.newInstance(null, (Lang) mLangSpinner.getSelectedItem());
                 getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
             } else {
                 Intent i = new Intent(this, EditWordActivity.class);
@@ -136,11 +136,11 @@ public class WordListActivity extends AppCompatActivity
     @Override
     public void onClick(Word item) {
         if(editContainer != null) {
-             mEditWordFragment = EditWordFragment.newInstance(item.getId(), null);
+             mEditWordFragment = EditWordFragment.newInstance(item, null);
             getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
         } else {
             Intent i = new Intent(this, EditWordActivity.class);
-            i.putExtra(EditWordActivity.WORD_ID_PARAM, item.getId());
+            i.putExtra(EditWordActivity.WORD_PARAM, item);
             startActivity(i);
         }
     }
@@ -153,7 +153,7 @@ public class WordListActivity extends AppCompatActivity
             ft.remove(prev);
         }
 
-        DialogFragment newFragment = DeleteWordDialogFragment.newInstance(item.getId());
+        DialogFragment newFragment = DeleteWordDialogFragment.newInstance(item);
         newFragment.show(ft, TAG_DELETE_DIALOG);
     }
 
