@@ -14,14 +14,14 @@ import net.or3lll.languagelearning.data.Lang;
  * Created by Or3lll on 21/02/2016.
  */
 public class DeleteLangDialogFragment extends DialogFragment {
-    public static String LANG_ID_PARAM = "LANG_ID";
+    public static String LANG_PARAM = "LANG";
 
     private OnDeleteLangListener mListener;
 
-    public static DeleteLangDialogFragment newInstance(long langId) {
+    public static DeleteLangDialogFragment newInstance(Lang lang) {
         DeleteLangDialogFragment fragment = new DeleteLangDialogFragment();
         Bundle args = new Bundle();
-        args.putLong(LANG_ID_PARAM, langId);
+        args.putParcelable(LANG_PARAM, lang);
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,7 +33,7 @@ public class DeleteLangDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Lang lang = Lang.findById(Lang.class, getArguments().getLong(LANG_ID_PARAM, -1));
+                        Lang lang = getArguments().getParcelable(LANG_PARAM);
                         if (lang != null) {
                             lang.delete();
                             if (mListener != null) {

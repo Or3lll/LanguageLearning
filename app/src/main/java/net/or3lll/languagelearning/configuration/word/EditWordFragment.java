@@ -34,7 +34,7 @@ import java.util.List;
 public class EditWordFragment extends Fragment implements AdapterView.OnItemSelectedListener,
         TranslationRecyclerViewAdapter.OnClickListener {
     public static String WORD_ID_PARAM = "WORD_ID";
-    public static String LANG_ID_PARAM = "LANG_ID";
+    public static String LANG_PARAM = "LANG";
 
     private static final String TAG_ADD_TRANSLATION_DIALOG = "add_translation_dialog";
     private static final String TAG_DELETE_TRANSLATION_DIALOG = "delete_translation_dialog";
@@ -55,11 +55,11 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     private Lang mLang;
 
 
-    public static EditWordFragment newInstance(long wordId, long langId) {
+    public static EditWordFragment newInstance(long wordId, Lang lang) {
         EditWordFragment fragment = new EditWordFragment();
         Bundle args = new Bundle();
         args.putLong(WORD_ID_PARAM, wordId);
-        args.putLong(LANG_ID_PARAM, langId);
+        args.putParcelable(LANG_PARAM, lang);
         fragment.setArguments(args);
         return fragment;
     }
@@ -137,18 +137,16 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         mTranslationRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         long wordId = getArguments().getLong(WORD_ID_PARAM, -1);
-        long langId = getArguments().getLong(LANG_ID_PARAM, -1);
+        mLang = getArguments().getParcelable(LANG_PARAM);
 
         mWord = Word.findById(Word.class, wordId);
         if(mWord != null) {
-            mLang = Lang.findById(Lang.class, mWord.lang.getId());
+            mLang = mWord.lang;
 
             mNameEdit.setText(mWord.text);
             mSubNameEdit.setText(mWord.subText);
             mDescEdit.setText(mWord.desc);
             mAddButton.setText(R.string.button_update);
-        } else {
-            mLang = Lang.findById(Lang.class, langId);
         }
 
         mLangSpinner.setSelection(langAdapter.getPosition(mLang.getId()));

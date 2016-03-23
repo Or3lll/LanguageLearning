@@ -147,7 +147,7 @@ public class LangListActivity extends AppCompatActivity
             ft.remove(prev);
         }
 
-        DialogFragment newFragment = DeleteLangDialogFragment.newInstance(lang.getId());
+        DialogFragment newFragment = DeleteLangDialogFragment.newInstance(lang);
         newFragment.show(ft, TAG_DELETE_DIALOG);
     }
 

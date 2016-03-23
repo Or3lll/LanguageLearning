@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 
 /**
@@ -18,7 +19,7 @@ public class EditWordActivity
         DeleteTranslationDialogFragment.OnDeleteTranslationListener {
 
     public static String WORD_ID_PARAM = "WORD_ID";
-    public static String LANG_ID_PARAM = "LANG_ID";
+    public static String LANG_PARAM = "LANG";
 
     private EditWordFragment mEditWordFragment;
 
@@ -36,9 +37,9 @@ public class EditWordActivity
 
         if(savedInstanceState == null) {
             long wordId = getIntent().getLongExtra(WORD_ID_PARAM, -1);
-            long langId = getIntent().getLongExtra(LANG_ID_PARAM, -1);
+            Lang lang = getIntent().getParcelableExtra(LANG_PARAM);
 
-            mEditWordFragment = EditWordFragment.newInstance(wordId, langId);
+            mEditWordFragment = EditWordFragment.newInstance(wordId, lang);
             getSupportFragmentManager().beginTransaction().add(R.id.content, mEditWordFragment).commit();
         }
     }
