@@ -1,12 +1,15 @@
 package net.or3lll.languagelearning.configuration.word;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
 import java.util.List;
@@ -16,17 +19,31 @@ import java.util.List;
  */
 public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerViewAdapter.ViewHolder> {
 
-    private List<Word> mValues;
+    private Lang mLang;
+    private SparseArray<Word> mValues;
+    private int mValuesNumber;
     private OnClickListener mListener;
 
-    public WordRecyclerViewAdapter(List<Word> items, OnClickListener listener) {
-        mValues = items;
+    public WordRecyclerViewAdapter(Lang lang, OnClickListener listener) {
+        mLang = lang;
         mListener = listener;
+
+        setWords();
     }
 
-    public void setWords(List<Word> items) {
-        mValues = items;
+    private void setWords() {
+        mValuesNumber = (int) Word.count(Word.class, "lang = ?", new String[] {mLang.getId().toString()});
+        mValues = new SparseArray<>(mValuesNumber);
+    }
+
+    public void updateWords() {
+        setWords();
         notifyDataSetChanged();
+    }
+
+    public void updateLang(Lang lang) {
+        mLang = lang;
+        updateWords();
     }
 
     @Override
@@ -37,7 +54,13 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        Word word = mValues.get(position);
+        if(word == null) {
+            word = Word.find(Word.class, "lang = ?", new String[] {mLang.getId().toString()}, null, "text", position + ", 1").get(0);
+            mValues.append(position, word);
+        }
+        holder.mItem = word;
+
         holder.mContentView.setText(mValues.get(position).text);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +87,7 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValuesNumber;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -66,7 +66,7 @@ public class WordListActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mWordAdapter = new WordRecyclerViewAdapter(Word.listAll(Word.class), this);
+        mWordAdapter = new WordRecyclerViewAdapter((Lang) mLangSpinner.getSelectedItem(), this);
         recyclerView.setAdapter(mWordAdapter);
         updateList();
 
@@ -81,23 +81,15 @@ public class WordListActivity extends AppCompatActivity
     }
 
     private void updateList() {
-        // TODO Mieux gérer la récupération quand j'utiliserai les cursors
         Lang lang = (Lang) mLangSpinner.getSelectedItem();
-        List<Word> words = new ArrayList<>();
-        for (Word word : Word.listAll(Word.class)) {
-            if(word.lang.getId() == lang.getId()) {
-                words.add(word);
-            }
-        }
+        mWordAdapter.updateLang(lang);
 
-        if(words.size() == 0) {
+        if(mWordAdapter.getItemCount() == 0) {
             emptyListText.setVisibility(View.VISIBLE);
         }
         else {
             emptyListText.setVisibility(View.GONE);
         }
-
-        mWordAdapter.setWords(words);
     }
 
     @Override
@@ -135,7 +127,7 @@ public class WordListActivity extends AppCompatActivity
     @Override
     public void onClick(Word item) {
         if(editContainer != null) {
-             mEditWordFragment = EditWordFragment.newInstance(item, null);
+            mEditWordFragment = EditWordFragment.newInstance(item, null);
             getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
         } else {
             Intent i = new Intent(this, EditWordActivity.class);

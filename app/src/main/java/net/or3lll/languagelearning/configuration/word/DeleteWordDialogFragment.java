@@ -37,13 +37,10 @@ public class DeleteWordDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Word word = getArguments().getParcelable(WORD_PARAM);
                         if (word != null) {
+                            String sWordId = word.getId().toString();
                             for (Translation translation :
-                                    Translation.listAll(Translation.class)) {
-                                if(translation.word1.getId() == word.getId()
-                                        || translation.word2.getId() == word.getId()) {
-                                    translation.delete();
-                                }
-
+                                    Translation.find(Translation.class, "word1 = ? OR word2 = ?", new String[]{sWordId, sWordId})) {
+                                translation.delete();
                             }
                             word.delete();
                             if (mListener != null) {

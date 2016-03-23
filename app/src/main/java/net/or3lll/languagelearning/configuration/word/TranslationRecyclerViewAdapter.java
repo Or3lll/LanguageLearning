@@ -1,6 +1,7 @@
 package net.or3lll.languagelearning.configuration.word;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,22 +20,25 @@ import java.util.List;
 public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<TranslationRecyclerViewAdapter.ViewHolder> {
 
     private Word mWord;
-    private List<Translation> mTranslations;
+    private SparseArray<Translation> mValues;
+    private int mValuesNumber;
     private OnClickListener mListener;
 
-    public TranslationRecyclerViewAdapter(Word word, List<Translation> translations, OnClickListener listener) {
+    public TranslationRecyclerViewAdapter(Word word, OnClickListener listener) {
         mWord = word;
-        mTranslations = translations;
         mListener = listener;
+
+        setTranslations();
     }
 
-    public void setWord(Word word) {
-        mWord = word;
-        notifyDataSetChanged();
+    private void setTranslations() {
+        String sWordId = mWord.getId().toString();
+        mValuesNumber = (int) Translation.count(Translation.class, "word1 = ? OR word2 = ? ", new String[] {sWordId, sWordId});
+        mValues = new SparseArray<>(mValuesNumber);
     }
 
-    public void setTranslations(List<Translation> translations) {
-        mTranslations = translations;
+    public void updateTranslations() {
+        setTranslations();
         notifyDataSetChanged();
     }
 
@@ -46,8 +50,14 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Translation translation = mTranslations.get(position);
+        Translation translation = mValues.get(position);
+        if(translation == null) {
+            String sWordID = mWord.getId().toString();
+            translation = Translation.find(Translation.class, "word1 = ? OR word2 = ? ", new String[] {sWordID, sWordID}, null, null, position + ", 1").get(0);
+            mValues.append(position, translation);
+        }
         holder.mItem = translation;
+
         if(translation.word1.getId() == mWord.getId()) {
             holder.mWordView.setText(translation.word2.text);
             if(translation.word2.lang != null) {
@@ -76,7 +86,7 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
 
     @Override
     public int getItemCount() {
-        return mTranslations.size();
+        return mValuesNumber;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
