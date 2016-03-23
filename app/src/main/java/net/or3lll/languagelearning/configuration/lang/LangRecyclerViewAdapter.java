@@ -1,6 +1,7 @@
 package net.or3lll.languagelearning.configuration.lang;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +18,22 @@ import java.util.List;
  */
 public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerViewAdapter.ViewHolder> {
 
-    private List<Lang> mValues;
+    private SparseArray<Lang> mValues;
+    private int mValuesNumber;
     private OnClickListener mListener;
 
-    public LangRecyclerViewAdapter(List<Lang> items, OnClickListener listener) {
-        mValues = items;
+    public LangRecyclerViewAdapter(OnClickListener listener) {
         mListener = listener;
+        setLangs();
     }
 
-    public void setLangs(List<Lang> items) {
-        mValues = items;
+    private void setLangs() {
+        mValuesNumber = (int) Lang.count(Lang.class);
+        mValues = new SparseArray<>(mValuesNumber);
+    }
+
+    public void updateLangs() {
+        setLangs();
         notifyDataSetChanged();
     }
 
@@ -39,6 +46,10 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Lang lang = mValues.get(position);
+        if(lang == null) {
+            lang = Lang.find(Lang.class, null, null, null, "name", position + ", 1").get(0);
+            mValues.append(position, lang);
+        }
         holder.mItem = lang;
 
         Integer resIdFlag = Lang.flags.get(lang.isoCode);
@@ -75,7 +86,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValuesNumber;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

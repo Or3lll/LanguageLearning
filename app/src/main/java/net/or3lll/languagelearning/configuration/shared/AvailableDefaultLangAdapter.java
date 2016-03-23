@@ -1,5 +1,7 @@
 package net.or3lll.languagelearning.configuration.shared;
 
+import android.util.SparseArray;
+
 import net.or3lll.languagelearning.data.Lang;
 
 import java.util.ArrayList;
@@ -10,13 +12,16 @@ import java.util.ArrayList;
 public class AvailableDefaultLangAdapter extends LangAdapter {
 
     public AvailableDefaultLangAdapter() {
-        mLangs = new ArrayList<Lang>();
+        mValues = new SparseArray<>();
 
+        int index = 0;
         for (Lang lang : Lang.defaultLangs) {
             if (Lang.count(Lang.class, "iso_Code = ?", new String [] { lang.isoCode }) == 0) {
-                mLangs.add(lang);
+                mValues.append(index++, lang);
             }
         }
+
+        mValuesNumber = index;
     }
 
     @Override

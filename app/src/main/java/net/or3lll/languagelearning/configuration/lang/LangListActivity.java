@@ -18,14 +18,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 
 import java.util.List;
 
 public class LangListActivity extends AppCompatActivity
         implements LangRecyclerViewAdapter.OnClickListener,
-        EditLangFragment.OnFragmentInteractionListener,
-        DeleteLangDialogFragment.OnDeleteLangListener,
+        TableLangListener,
         DefaultLangsDialogFragment.OnDefaultLangSelected {
 
     private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
@@ -55,9 +55,8 @@ public class LangListActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mLangAdapter = new LangRecyclerViewAdapter(Lang.listAll(Lang.class), this);
+        mLangAdapter = new LangRecyclerViewAdapter(this);
         recyclerView.setAdapter(mLangAdapter);
-        updateList();
 
         editContainer = (FrameLayout) findViewById(R.id.edit_container);
     }
@@ -70,16 +69,23 @@ public class LangListActivity extends AppCompatActivity
     }
 
     private void updateList() {
-        List<Lang> langs = Lang.listAll(Lang.class);
+        mLangAdapter.updateLangs();
 
-        if(langs.size() == 0) {
+        if(mLangAdapter.getItemCount() == 0) {
             emptyListText.setVisibility(View.VISIBLE);
         }
         else {
             emptyListText.setVisibility(View.GONE);
         }
+    }
 
-        mLangAdapter.setLangs(langs);
+    private void hideEdit() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_FRAGMENT);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.commit();
     }
 
     @Override
@@ -152,29 +158,8 @@ public class LangListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLanguageAdded() {
+    public void onTableLangEvent(DataEventType eventType, Lang lang) {
         updateList();
         hideEdit();
-    }
-
-    @Override
-    public void onLanguageUpdated() {
-        updateList();
-        hideEdit();
-    }
-
-    @Override
-    public void onLangDeleted(Lang lang) {
-        updateList();
-        hideEdit();
-    }
-
-    private void hideEdit() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_FRAGMENT);
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.commit();
     }
 }

@@ -19,8 +19,7 @@ public class DefaultLangsDialogFragment extends DialogFragment {
     private OnDefaultLangSelected mListener;
 
     public static DefaultLangsDialogFragment newInstance() {
-        DefaultLangsDialogFragment fragment = new DefaultLangsDialogFragment();
-        return fragment;
+        return new DefaultLangsDialogFragment();
     }
 
     @Override

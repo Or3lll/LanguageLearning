@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
+import net.or3lll.languagelearning.data.Lang;
 
-public class EditLangActivity extends AppCompatActivity implements EditLangFragment.OnFragmentInteractionListener {
+public class EditLangActivity extends AppCompatActivity implements TableLangListener {
 
     public static String LANG_ID_PARAM = "LANG_ID";
 
@@ -31,12 +33,7 @@ public class EditLangActivity extends AppCompatActivity implements EditLangFragm
     }
 
     @Override
-    public void onLanguageAdded() {
-        finish();
-    }
-
-    @Override
-    public void onLanguageUpdated() {
+    public void onTableLangEvent(DataEventType eventType, Lang lang) {
         finish();
     }
 }
