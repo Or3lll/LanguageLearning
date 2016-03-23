@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
@@ -17,7 +18,7 @@ import net.or3lll.languagelearning.data.Word;
 public class DeleteWordDialogFragment extends DialogFragment {
     public static String WORD_PARAM = "WORD";
 
-    private OnDeleteWordListener mListener;
+    private TableWordListener mListener;
 
     public static DeleteWordDialogFragment newInstance(Word word) {
         DeleteWordDialogFragment fragment = new DeleteWordDialogFragment();
@@ -46,7 +47,7 @@ public class DeleteWordDialogFragment extends DialogFragment {
                             }
                             word.delete();
                             if (mListener != null) {
-                                mListener.onWordDeleted(word);
+                                mListener.onTableWordEvent(DataEventType.DELETE, word);
                             }
                         }
                     }
@@ -60,8 +61,8 @@ public class DeleteWordDialogFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if(activity instanceof OnDeleteWordListener) {
-            mListener = (OnDeleteWordListener) activity;
+        if(activity instanceof TableWordListener) {
+            mListener = (TableWordListener) activity;
         }
     }
 
@@ -69,9 +70,5 @@ public class DeleteWordDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public interface OnDeleteWordListener {
-        void onWordDeleted(Word word);
     }
 }

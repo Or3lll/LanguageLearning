@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
@@ -31,10 +32,8 @@ import java.util.List;
 public class WordListActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener,
         WordRecyclerViewAdapter.OnClickListener,
-        EditWordFragment.OnFragmentInteractionListener,
-        DeleteWordDialogFragment.OnDeleteWordListener,
-        AddTranslationDialogFragment.OnAddTranslationListener,
-        DeleteTranslationDialogFragment.OnDeleteTranslationListener {
+        TableWordListener,
+        TableTranslationListener {
 
     private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
     private static final String TAG_DELETE_DIALOG = "delete_dialog";
@@ -157,16 +156,6 @@ public class WordListActivity extends AppCompatActivity
         newFragment.show(ft, TAG_DELETE_DIALOG);
     }
 
-    @Override
-    public void onWordAdded() {
-        updateList();
-    }
-
-    @Override
-    public void onWordUpdated() {
-        updateList();
-    }
-
     private void hideEdit() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_FRAGMENT);
@@ -177,22 +166,17 @@ public class WordListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onWordDeleted(Word word) {
-        updateList();
-        hideEdit();
-    }
-
-    @Override
-    public void onTranslationAdd() {
+    public void onTableTranslationEvent(DataEventType eventType, Translation translation) {
         if(mEditWordFragment != null) {
             mEditWordFragment.refreshTranslations();
         }
     }
 
     @Override
-    public void onTranslationDeleted(Translation translation) {
-        if(mEditWordFragment != null) {
-            mEditWordFragment.refreshTranslations();
+    public void onTableWordEvent(DataEventType eventType, Word word) {
+        updateList();
+        if(eventType == DataEventType.DELETE) {
+            hideEdit();
         }
     }
 }

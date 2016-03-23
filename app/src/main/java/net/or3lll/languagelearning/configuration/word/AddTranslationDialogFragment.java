@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
@@ -22,7 +23,7 @@ public class AddTranslationDialogFragment extends DialogFragment {
 
     public static String WORD_PARAM = "WORD";
 
-    private OnAddTranslationListener mListener;
+    private TableTranslationListener mListener;
 
     private WordSearchAdapter searchAdapter;
 
@@ -50,11 +51,11 @@ public class AddTranslationDialogFragment extends DialogFragment {
         searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Word w = (Word) parent.getItemAtPosition(position);
-                Translation t = new Translation(word, w);
-                t.save();
+                Word selectedWord = (Word) parent.getItemAtPosition(position);
+                Translation translation = new Translation(word, selectedWord);
+                translation.save();
                 if(mListener != null) {
-                    mListener.onTranslationAdd();
+                    mListener.onTableTranslationEvent(DataEventType.CREATE, translation);
                 }
                 dismiss();
             }
@@ -71,8 +72,8 @@ public class AddTranslationDialogFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if(activity instanceof OnAddTranslationListener) {
-            mListener = (OnAddTranslationListener) activity;
+        if(activity instanceof TableTranslationListener) {
+            mListener = (TableTranslationListener) activity;
         }
     }
 
@@ -80,9 +81,5 @@ public class AddTranslationDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public interface OnAddTranslationListener {
-        void onTranslationAdd();
     }
 }
