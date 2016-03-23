@@ -123,7 +123,7 @@ public class LangListActivity extends AppCompatActivity
     @Override
     public void onOtherSelected() {
         if(editContainer != null) {
-            EditLangFragment fragment = EditLangFragment.newInstance(-1);
+            EditLangFragment fragment = EditLangFragment.newInstance(null);
             getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, fragment, TAG_EDIT_FRAGMENT).commit();
         }
         else {
@@ -135,12 +135,12 @@ public class LangListActivity extends AppCompatActivity
     @Override
     public void onClick(Lang lang) {
         if(editContainer != null) {
-            EditLangFragment fragment = EditLangFragment.newInstance(lang.getId());
+            EditLangFragment fragment = EditLangFragment.newInstance(lang);
             getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, fragment, TAG_EDIT_FRAGMENT).commit();
         }
         else {
             Intent i = new Intent(this, EditLangActivity.class);
-            i.putExtra(EditLangActivity.LANG_ID_PARAM, lang.getId());
+            i.putExtra(EditLangActivity.LANG_PARAM, lang);
             startActivity(i);
         }
     }
@@ -153,7 +153,7 @@ public class LangListActivity extends AppCompatActivity
             ft.remove(prev);
         }
 
-        DialogFragment newFragment = DeleteLangDialogFragment.newInstance(lang.getId());
+        DialogFragment newFragment = DeleteLangDialogFragment.newInstance(lang);
         newFragment.show(ft, TAG_DELETE_DIALOG);
     }
 

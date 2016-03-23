@@ -89,9 +89,8 @@ public class WordSearchAdapter extends BaseAdapter implements Filterable {
         if(word != null) {
             holder.getWordName().setText(word.text);
 
-            Lang lang = Lang.findById(Lang.class, word.lang.getId());
-            if(lang != null) {
-                holder.getLangName().setText(lang.name);
+            if(word.lang != null) {
+                holder.getLangName().setText(word.lang.name);
             }
         }
 

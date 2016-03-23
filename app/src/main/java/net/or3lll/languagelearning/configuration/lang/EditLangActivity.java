@@ -11,7 +11,7 @@ import net.or3lll.languagelearning.data.Lang;
 
 public class EditLangActivity extends AppCompatActivity implements TableLangListener {
 
-    public static String LANG_ID_PARAM = "LANG_ID";
+    public static String LANG_PARAM = "LANG_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class EditLangActivity extends AppCompatActivity implements TableLangList
         ab.setDisplayHomeAsUpEnabled(true);
 
         if(savedInstanceState == null) {
-            long langId = getIntent().getLongExtra(LANG_ID_PARAM, -1);
-            EditLangFragment editLangFragment = EditLangFragment.newInstance(langId);
+            Lang lang = getIntent().getParcelableExtra(LANG_PARAM);
+            EditLangFragment editLangFragment = EditLangFragment.newInstance(lang);
             getSupportFragmentManager().beginTransaction().add(R.id.content, editLangFragment).commit();
         }
     }

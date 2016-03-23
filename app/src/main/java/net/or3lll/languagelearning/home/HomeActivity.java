@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void addDrawerItems() {
         String[] osArray = { "Langues", "Mots" };
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
 
