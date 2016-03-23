@@ -122,8 +122,8 @@ public class VocabularyTestFragment extends Fragment {
 
     private void setWords() {
         List<Translation> translations = Translation.listAll(Translation.class);
-        int index = (int) (Math.random() * (double)translations.size());
-        Translation translation = translations.get(index);
+        int index = (int) (Math.random() * (double)Translation.count(Translation.class));
+        Translation translation = Translation.find(Translation.class, null, null, null, null, index + ", 1").get(0);
 
         if(attempts % 2 == 0) {
             mWord = translation.word1;

@@ -6,14 +6,12 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
@@ -22,16 +20,16 @@ import net.or3lll.languagelearning.data.Word;
  */
 public class AddTranslationDialogFragment extends DialogFragment {
 
-    public static String WORD_ID_PARAM = "WORD_ID";
+    public static String WORD_PARAM = "WORD";
 
     private OnAddTranslationListener mListener;
 
     private WordSearchAdapter searchAdapter;
 
-    public static AddTranslationDialogFragment newInstance(long wordId) {
+    public static AddTranslationDialogFragment newInstance(Word word) {
         AddTranslationDialogFragment fragment = new AddTranslationDialogFragment();
         Bundle args = new Bundle();
-        args.putLong(WORD_ID_PARAM, wordId);
+        args.putParcelable(WORD_PARAM, word);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,8 +43,7 @@ public class AddTranslationDialogFragment extends DialogFragment {
         View contentView = inflater.inflate(R.layout.dialog_add_translation, null);
         AutoCompleteTextView searchAutoComplete = (AutoCompleteTextView) contentView.findViewById(R.id.searchAutoComplete);
 
-        long wordId = getArguments().getLong(WORD_ID_PARAM);
-        final Word word = Word.findById(Word.class, wordId);
+        final Word word = getArguments().getParcelable(WORD_PARAM);
         searchAdapter = new WordSearchAdapter(word.getId(), word.lang.getId());
         searchAutoComplete.setAdapter(searchAdapter);
 

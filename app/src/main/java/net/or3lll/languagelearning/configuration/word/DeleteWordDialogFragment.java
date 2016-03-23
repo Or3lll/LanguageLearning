@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
@@ -16,14 +15,14 @@ import net.or3lll.languagelearning.data.Word;
  * Created by Or3lll on 03/03/2016.
  */
 public class DeleteWordDialogFragment extends DialogFragment {
-    public static String WORD_ID_PARAM = "WORD_ID";
+    public static String WORD_PARAM = "WORD";
 
     private OnDeleteWordListener mListener;
 
-    public static DeleteWordDialogFragment newInstance(long wordId) {
+    public static DeleteWordDialogFragment newInstance(Word word) {
         DeleteWordDialogFragment fragment = new DeleteWordDialogFragment();
         Bundle args = new Bundle();
-        args.putLong(WORD_ID_PARAM, wordId);
+        args.putParcelable(WORD_PARAM, word);
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,7 +34,7 @@ public class DeleteWordDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Word word = Word.findById(Word.class, getArguments().getLong(WORD_ID_PARAM, -1));
+                        Word word = getArguments().getParcelable(WORD_PARAM);
                         if (word != null) {
                             for (Translation translation :
                                     Translation.listAll(Translation.class)) {

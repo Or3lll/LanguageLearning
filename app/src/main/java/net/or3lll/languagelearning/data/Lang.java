@@ -1,5 +1,7 @@
 package net.or3lll.languagelearning.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.ArrayMap;
 
 import com.orm.SugarRecord;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Or3lll on 29/11/2015.
  */
-public class Lang extends SugarRecord {
+public class Lang extends SugarRecord implements Parcelable {
 
     // TODO voir si c'est pertinant de stocker comme ça
     public static ArrayList<Lang> defaultLangs = new ArrayList<Lang>();
@@ -40,5 +42,35 @@ public class Lang extends SugarRecord {
     public Lang(String name, String isoCode) {
         this.name = name;
         this.isoCode = isoCode;
+    }
+
+    protected Lang(Parcel in) {
+        setId(in.readLong());
+        name = in.readString();
+        isoCode = in.readString();
+    }
+
+    public static final Creator<Lang> CREATOR = new Creator<Lang>() {
+        @Override
+        public Lang createFromParcel(Parcel in) {
+            return new Lang(in);
+        }
+
+        @Override
+        public Lang[] newArray(int size) {
+            return new Lang[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(getId());
+        dest.writeString(name);
+        dest.writeString(isoCode);
     }
 }

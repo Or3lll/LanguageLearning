@@ -8,21 +8,20 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 
 /**
  * Created by or3lll on 08/03/2016.
  */
 public class DeleteTranslationDialogFragment extends DialogFragment {
-    public static String TRANSLATION_ID_PARAM = "TRANSLATION_ID";
+    public static String TRANSLATION_PARAM = "TRANSLATION";
 
     private OnDeleteTranslationListener mListener;
 
-    public static DeleteTranslationDialogFragment newInstance(long translationId) {
+    public static DeleteTranslationDialogFragment newInstance(Translation translation) {
         DeleteTranslationDialogFragment fragment = new DeleteTranslationDialogFragment();
         Bundle args = new Bundle();
-        args.putLong(TRANSLATION_ID_PARAM, translationId);
+        args.putParcelable(TRANSLATION_PARAM, translation);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,7 +33,7 @@ public class DeleteTranslationDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Translation translation = Translation.findById(Translation.class, getArguments().getLong(TRANSLATION_ID_PARAM, -1));
+                        Translation translation = getArguments().getParcelable(TRANSLATION_PARAM);
                         if (translation != null) {
                             translation.delete();
                             if (mListener != null) {

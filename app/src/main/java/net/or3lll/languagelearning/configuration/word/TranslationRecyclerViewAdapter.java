@@ -50,16 +50,14 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
         holder.mItem = translation;
         if(translation.word1.getId() == mWord.getId()) {
             holder.mWordView.setText(translation.word2.text);
-            Lang lang = Lang.findById(Lang.class, translation.word2.lang.getId());
-            if(lang != null) {
-                holder.mLangView.setText(lang.name);
+            if(translation.word2.lang != null) {
+                holder.mLangView.setText(translation.word2.lang.name);
             }
         }
         else {
             holder.mWordView.setText(translation.word1.text);
-            Lang lang = Lang.findById(Lang.class, translation.word1.lang.getId());
-            if(lang != null) {
-                holder.mLangView.setText(lang.name);
+            if(translation.word1.lang != null) {
+                holder.mLangView.setText(translation.word1.lang.name);
             }
         }
 

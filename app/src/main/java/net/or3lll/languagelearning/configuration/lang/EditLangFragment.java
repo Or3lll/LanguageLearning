@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class EditLangFragment extends Fragment {
 
-    private static String LANG_ID_PARAM = "LANG_ID";
+    private static String LANG_PARAM = "LANG";
 
 
     private OnFragmentInteractionListener mListener;
@@ -38,10 +38,10 @@ public class EditLangFragment extends Fragment {
     private Lang mLang;
 
 
-    public static EditLangFragment newInstance(long langId) {
+    public static EditLangFragment newInstance(Lang lang) {
         EditLangFragment fragment = new EditLangFragment();
         Bundle args = new Bundle();
-        args.putLong(LANG_ID_PARAM, langId);
+        args.putParcelable(LANG_PARAM, lang);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,7 +87,7 @@ public class EditLangFragment extends Fragment {
             }
         });
 
-        mLang = Lang.findById(Lang.class, getArguments().getLong(LANG_ID_PARAM, -1));
+        mLang = getArguments().getParcelable(LANG_PARAM);
         if(mLang != null) {
             mNameEdit.setText(mLang.name);
             mIsoCodeEdit.setText(mLang.isoCode);
@@ -121,14 +121,17 @@ public class EditLangFragment extends Fragment {
         String isoCode = mIsoCodeEdit.getText().toString();
 
         if(name.length() > 0 && isoCode.length() >= 5) {
-            List<Lang> langs = Lang.find(Lang.class, "name = ? or iso_Code = ?", name, isoCode);
+            List<Lang> langs = Lang.find(Lang.class, "(name = ? or iso_Code = ?) and id != ?",
+                    name, isoCode, (mLang != null ? mLang.getId().toString() : "-1"));
 
+            return langs.size() == 0;
+            /*
             if(mLang != null) {
                 return (langs.size() == 0) || (langs.size() == 1 && langs.get(0).getId() == mLang.getId());
             }
             else {
                 return langs.size() == 0;
-            }
+            }*/
         }
 
         return false;

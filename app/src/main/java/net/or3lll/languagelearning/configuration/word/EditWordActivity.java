@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
+import net.or3lll.languagelearning.data.Word;
 
 /**
  * Created by X2014568 on 03/03/2016.
@@ -17,8 +19,8 @@ public class EditWordActivity
         AddTranslationDialogFragment.OnAddTranslationListener,
         DeleteTranslationDialogFragment.OnDeleteTranslationListener {
 
-    public static String WORD_ID_PARAM = "WORD_ID";
-    public static String LANG_ID_PARAM = "LANG_ID";
+    public static String WORD_PARAM = "WORD";
+    public static String LANG_PARAM = "LANG";
 
     private EditWordFragment mEditWordFragment;
 
@@ -35,10 +37,10 @@ public class EditWordActivity
         ab.setDisplayHomeAsUpEnabled(true);
 
         if(savedInstanceState == null) {
-            long wordId = getIntent().getLongExtra(WORD_ID_PARAM, -1);
-            long langId = getIntent().getLongExtra(LANG_ID_PARAM, -1);
+            Word word = getIntent().getParcelableExtra(WORD_PARAM);
+            Lang lang = getIntent().getParcelableExtra(LANG_PARAM);
 
-            mEditWordFragment = EditWordFragment.newInstance(wordId, langId);
+            mEditWordFragment = EditWordFragment.newInstance(word, lang);
             getSupportFragmentManager().beginTransaction().add(R.id.content, mEditWordFragment).commit();
         }
     }
