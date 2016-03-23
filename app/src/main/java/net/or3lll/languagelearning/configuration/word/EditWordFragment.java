@@ -239,7 +239,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
             ft.remove(prev);
         }
 
-        DialogFragment newFragment = DeleteTranslationDialogFragment.newInstance(item.getId());
+        DialogFragment newFragment = DeleteTranslationDialogFragment.newInstance(item);
         newFragment.show(ft, TAG_DELETE_TRANSLATION_DIALOG);
     }
 
