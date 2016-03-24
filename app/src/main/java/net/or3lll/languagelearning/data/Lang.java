@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Lang extends SugarRecord implements Parcelable {
 
     // TODO voir si c'est pertinant de stocker comme ça
-    public static ArrayList<Lang> defaultLangs = new ArrayList<Lang>();
+    public static ArrayList<Lang> defaultLangs = new ArrayList<>();
     static {
         defaultLangs.add(new Lang("Français", "fr_FR")); //TODO a mettre dans les ressources
         defaultLangs.add(new Lang("Anglais", "en_GB")); //TODO a mettre dans les ressources
@@ -25,7 +25,7 @@ public class Lang extends SugarRecord implements Parcelable {
     }
 
     // TODO voir si c'est pertinant de stocker comme ça
-    public static ArrayMap<String, Integer> flags = new ArrayMap<String, Integer>();
+    public static ArrayMap<String, Integer> flags = new ArrayMap<>();
     static {
         flags.put("fr_FR", R.drawable.french_flag);
         flags.put("en_GB", R.drawable.uk_flag);

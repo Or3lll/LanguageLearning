@@ -1,5 +1,6 @@
 package net.or3lll.languagelearning.configuration.shared;
 
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,32 +11,32 @@ import android.widget.TextView;
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
 
-import java.util.List;
-
 /**
  * Created by or3lll on 22/02/2016.
  */
 abstract public class LangAdapter extends BaseAdapter {
 
-    protected List<Lang> mLangs;
-
-    public LangAdapter() {
-        mLangs = Lang.listAll(Lang.class);
-    }
+    protected SparseArray<Lang> mValues;
+    protected int mValuesNumber;
 
     @Override
     public int getCount() {
-        return mLangs.size();
+        return mValuesNumber;
     }
 
     @Override
     public Object getItem(int position) {
-        return mLangs.get(position);
+        Lang lang = mValues.get(position);
+        if(lang == null) {
+            lang = Lang.find(Lang.class, null, null, null, "name", position + ", 1").get(0);
+            mValues.append(position, lang);
+        }
+        return lang;
     }
 
     @Override
     public long getItemId(int position) {
-        Lang lang = mLangs.get(position);
+        Lang lang = (Lang) getItem(position);
         if(lang != null) {
             return lang.getId();
         }
@@ -44,8 +45,8 @@ abstract public class LangAdapter extends BaseAdapter {
     }
 
     public int getPosition(long itemId) {
-        for (int i = 0; i < mLangs.size(); i++) {
-            Lang lang = mLangs.get(i);
+        for (int i = 0; i < mValuesNumber; i++) {
+            Lang lang = (Lang) getItem(i);
             if(lang.getId() == itemId) {
                 return i;
             }
@@ -67,7 +68,7 @@ abstract public class LangAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
-        Lang lang = mLangs.get(position);
+        Lang lang = (Lang) getItem(position);
         if(lang != null) {
             Integer resIdFlag = Lang.flags.get(lang.isoCode);
             if(resIdFlag != null) {

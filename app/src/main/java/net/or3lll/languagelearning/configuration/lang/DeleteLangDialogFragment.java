@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 
 /**
@@ -16,7 +17,7 @@ import net.or3lll.languagelearning.data.Lang;
 public class DeleteLangDialogFragment extends DialogFragment {
     public static String LANG_PARAM = "LANG";
 
-    private OnDeleteLangListener mListener;
+    private TableLangListener mListener;
 
     public static DeleteLangDialogFragment newInstance(Lang lang) {
         DeleteLangDialogFragment fragment = new DeleteLangDialogFragment();
@@ -34,10 +35,11 @@ public class DeleteLangDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Lang lang = getArguments().getParcelable(LANG_PARAM);
+
                         if (lang != null) {
                             lang.delete();
                             if (mListener != null) {
-                                mListener.onLangDeleted(lang);
+                                mListener.onTableLangEvent(DataEventType.DELETE, lang);
                             }
                         }
                     }
@@ -51,8 +53,8 @@ public class DeleteLangDialogFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if(activity instanceof OnDeleteLangListener) {
-            mListener = (OnDeleteLangListener) activity;
+        if(activity instanceof TableLangListener) {
+            mListener = (TableLangListener) activity;
         }
     }
 
@@ -60,9 +62,5 @@ public class DeleteLangDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public interface OnDeleteLangListener {
-        void onLangDeleted(Lang lang);
     }
 }

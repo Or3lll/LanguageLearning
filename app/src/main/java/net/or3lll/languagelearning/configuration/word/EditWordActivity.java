@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
@@ -15,9 +16,7 @@ import net.or3lll.languagelearning.data.Word;
  */
 public class EditWordActivity
         extends AppCompatActivity
-        implements EditWordFragment.OnFragmentInteractionListener,
-        AddTranslationDialogFragment.OnAddTranslationListener,
-        DeleteTranslationDialogFragment.OnDeleteTranslationListener {
+        implements TableTranslationListener {
 
     public static String WORD_PARAM = "WORD";
     public static String LANG_PARAM = "LANG";
@@ -46,22 +45,7 @@ public class EditWordActivity
     }
 
     @Override
-    public void onWordAdded() {
-    }
-
-    @Override
-    public void onWordUpdated() {
-    }
-
-    @Override
-    public void onTranslationAdd() {
-        if(mEditWordFragment != null) {
-            mEditWordFragment.refreshTranslations();
-        }
-    }
-
-    @Override
-    public void onTranslationDeleted(Translation translation) {
+    public void onTableTranslationEvent(DataEventType eventType, Translation translation) {
         if(mEditWordFragment != null) {
             mEditWordFragment.refreshTranslations();
         }

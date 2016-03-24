@@ -12,24 +12,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link EditLangFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link EditLangFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class EditLangFragment extends Fragment {
 
     private static String LANG_PARAM = "LANG";
 
 
-    private OnFragmentInteractionListener mListener;
+    private TableLangListener mListener;
 
     private EditText mNameEdit;
     private EditText mIsoCodeEdit;
@@ -77,12 +71,12 @@ public class EditLangFragment extends Fragment {
                     mLang.name = mNameEdit.getText().toString();
                     mLang.isoCode = mIsoCodeEdit.getText().toString();
                     mLang.save();
-                    mListener.onLanguageUpdated();
+                    mListener.onTableLangEvent(DataEventType.UPDATE, mLang);
                 }
                 else {
                     Lang l = new Lang(mNameEdit.getText().toString(), mIsoCodeEdit.getText().toString());
                     l.save();
-                    mListener.onLanguageAdded();
+                    mListener.onTableLangEvent(DataEventType.CREATE, mLang);
                 }
             }
         });
@@ -102,8 +96,8 @@ public class EditLangFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof TableLangListener) {
+            mListener = (TableLangListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -135,20 +129,5 @@ public class EditLangFragment extends Fragment {
         }
 
         return false;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        void onLanguageAdded();
-        void onLanguageUpdated();
     }
 }

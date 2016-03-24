@@ -28,28 +28,17 @@ public class WordSearchAdapter extends BaseAdapter implements Filterable {
     public WordSearchAdapter(long wordId, long langId) {
         mWordId = wordId;
         mLangId = langId;
-        mOriginalWords = new ArrayList<>();
-        mWords = new ArrayList<>();
+        String sWordId = Long.toString(mWordId);
+        mOriginalWords = Word.findWithQuery(Word.class, "SELECT w.id, w.lang, w.text, w.sub_text, w.desc " +
+                        "FROM Word w " +
+                        "LEFT JOIN Translation t1 ON w.id = t1.word1 " +
+                        "LEFT JOIN Translation t2 ON w.id = t2.word2 " +
+                        "WHERE w.lang != ? " +
+                        "AND (t1.id IS NULL OR t1.word2 != ?) " +
+                        "AND (t2.id IS NULL OR t2.word1 != ?) "
+                        , new String[] {Long.toString(mLangId), sWordId, sWordId});
 
-        for (Word w :
-                Word.listAll(Word.class)) {
-            if(w.lang.getId() != mLangId) {
-                boolean add = true;
-                for (Translation translation :
-                        Translation.listAll(Translation.class)) {
-                    if ((w.getId() == translation.word1.getId() && mWordId == translation.word2.getId())
-                            || (mWordId == translation.word1.getId() && w.getId() == translation.word2.getId())) {
-                        add = false;
-                        break;
-                    }
-                }
-
-                if(add) {
-                    mOriginalWords.add(w);
-                    mWords.add(w);
-                }
-            }
-        }
+        mWords = new ArrayList<>(mOriginalWords);
     }
 
     @Override

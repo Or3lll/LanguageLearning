@@ -1,5 +1,7 @@
 package net.or3lll.languagelearning.configuration.shared;
 
+import android.util.SparseArray;
+
 import net.or3lll.languagelearning.data.Lang;
 
 /**
@@ -7,6 +9,7 @@ import net.or3lll.languagelearning.data.Lang;
  */
 public class UserLangAdapter extends LangAdapter {
     public UserLangAdapter() {
-        mLangs = Lang.listAll(Lang.class);
+        mValuesNumber = (int) Lang.count(Lang.class);
+        mValues = new SparseArray<>(mValuesNumber);
     }
 }

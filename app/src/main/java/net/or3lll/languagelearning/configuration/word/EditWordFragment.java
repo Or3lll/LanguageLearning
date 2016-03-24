@@ -21,6 +21,7 @@ import android.widget.Spinner;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
@@ -49,7 +50,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     private RecyclerView mTranslationRecycler;
     private TranslationRecyclerViewAdapter mTranslationAdapter;
 
-    private OnFragmentInteractionListener mListener;
+    private TableWordListener mListener;
 
     private Word mWord;
     private Lang mLang;
@@ -102,13 +103,17 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
                     mWord.desc = mDescEdit.getText().toString();
                     mWord.lang = mLang;
                     mWord.save();
-                    mListener.onWordAdded();
+                    if(mListener != null) {
+                        mListener.onTableWordEvent(DataEventType.CREATE, mWord);
+                    }
                 } else {
                     mWord = new Word(mLang, mNameEdit.getText().toString(),
                             mSubNameEdit.getText().toString(),
                             mDescEdit.getText().toString());
                     mWord.save();
-                    mListener.onWordUpdated();
+                    if(mListener != null) {
+                        mListener.onTableWordEvent(DataEventType.UPDATE, mWord);
+                    }
                 }
 
                 setMode();
@@ -158,11 +163,8 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+        if (context instanceof TableWordListener) {
+            mListener = (TableWordListener) context;
         }
     }
 
@@ -176,6 +178,15 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         String name = mNameEdit.getText().toString();
 
         if(name.length() > 0) {
+            if(mWord != null) {
+                return (Word.count(Word.class, "text = ? AND id != ?", new String[] {name, mWord.getId().toString()}, null, null, null) == 0);
+            }
+            else {
+                return (Word.count(Word.class, "text = ?", new String[] {name}, null, null, null) == 0);
+            }
+/*
+
+
             List<Word> words = Word.find(Word.class, "text = ?", name);
 
             if(mWord != null) {
@@ -183,7 +194,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
             }
             else {
                 return words.size() == 0;
-            }
+            }*/
         }
 
         return false;
@@ -193,14 +204,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         if(mWord != null) {
             mAddButton.setText(R.string.button_update);
             mTranslationsLayout.setVisibility(View.VISIBLE);
-            List<Translation> translations = new ArrayList<>();
-            for (Translation translation :
-                    Translation.listAll(Translation.class)) {
-                if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
-                    translations.add(translation);
-                }
-            }
-            mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, translations, this);
+            mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, this);
             mTranslationRecycler.setAdapter(mTranslationAdapter);
         }
         else {
@@ -210,15 +214,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     public void refreshTranslations() {
-        List<Translation> translations = new ArrayList<>();
-        for (Translation translation :
-                Translation.listAll(Translation.class)) {
-            if (translation.word1.getId() == mWord.getId() || translation.word2.getId() == mWord.getId()) {
-                translations.add(translation);
-            }
-        }
-
-        mTranslationAdapter.setTranslations(translations);
+        mTranslationAdapter.updateTranslations();
     }
 
     @Override
@@ -241,10 +237,5 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
 
         DialogFragment newFragment = DeleteTranslationDialogFragment.newInstance(item);
         newFragment.show(ft, TAG_DELETE_TRANSLATION_DIALOG);
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onWordAdded();
-        void onWordUpdated();
     }
 }

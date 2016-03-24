@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Translation;
 
 /**
@@ -16,7 +17,7 @@ import net.or3lll.languagelearning.data.Translation;
 public class DeleteTranslationDialogFragment extends DialogFragment {
     public static String TRANSLATION_PARAM = "TRANSLATION";
 
-    private OnDeleteTranslationListener mListener;
+    private TableTranslationListener mListener;
 
     public static DeleteTranslationDialogFragment newInstance(Translation translation) {
         DeleteTranslationDialogFragment fragment = new DeleteTranslationDialogFragment();
@@ -37,7 +38,7 @@ public class DeleteTranslationDialogFragment extends DialogFragment {
                         if (translation != null) {
                             translation.delete();
                             if (mListener != null) {
-                                mListener.onTranslationDeleted(translation);
+                                mListener.onTableTranslationEvent(DataEventType.DELETE, translation);
                             }
                         }
                     }
@@ -51,8 +52,8 @@ public class DeleteTranslationDialogFragment extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (activity instanceof OnDeleteTranslationListener) {
-            mListener = (OnDeleteTranslationListener) activity;
+        if (activity instanceof TableTranslationListener) {
+            mListener = (TableTranslationListener) activity;
         }
     }
 
@@ -60,9 +61,5 @@ public class DeleteTranslationDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public interface OnDeleteTranslationListener {
-        void onTranslationDeleted(Translation translation);
     }
 }

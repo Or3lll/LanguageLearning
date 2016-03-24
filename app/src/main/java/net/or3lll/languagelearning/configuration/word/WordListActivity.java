@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.shared.UserLangAdapter;
+import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
@@ -31,10 +32,8 @@ import java.util.List;
 public class WordListActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener,
         WordRecyclerViewAdapter.OnClickListener,
-        EditWordFragment.OnFragmentInteractionListener,
-        DeleteWordDialogFragment.OnDeleteWordListener,
-        AddTranslationDialogFragment.OnAddTranslationListener,
-        DeleteTranslationDialogFragment.OnDeleteTranslationListener {
+        TableWordListener,
+        TableTranslationListener {
 
     private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
     private static final String TAG_DELETE_DIALOG = "delete_dialog";
@@ -67,7 +66,7 @@ public class WordListActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mWordAdapter = new WordRecyclerViewAdapter(Word.listAll(Word.class), this);
+        mWordAdapter = new WordRecyclerViewAdapter((Lang) mLangSpinner.getSelectedItem(), this);
         recyclerView.setAdapter(mWordAdapter);
         updateList();
 
@@ -82,23 +81,15 @@ public class WordListActivity extends AppCompatActivity
     }
 
     private void updateList() {
-        // TODO Mieux gérer la récupération quand j'utiliserai les cursors
         Lang lang = (Lang) mLangSpinner.getSelectedItem();
-        List<Word> words = new ArrayList<>();
-        for (Word word : Word.listAll(Word.class)) {
-            if(word.lang.getId() == lang.getId()) {
-                words.add(word);
-            }
-        }
+        mWordAdapter.updateLang(lang);
 
-        if(words.size() == 0) {
+        if(mWordAdapter.getItemCount() == 0) {
             emptyListText.setVisibility(View.VISIBLE);
         }
         else {
             emptyListText.setVisibility(View.GONE);
         }
-
-        mWordAdapter.setWords(words);
     }
 
     @Override
@@ -136,7 +127,7 @@ public class WordListActivity extends AppCompatActivity
     @Override
     public void onClick(Word item) {
         if(editContainer != null) {
-             mEditWordFragment = EditWordFragment.newInstance(item, null);
+            mEditWordFragment = EditWordFragment.newInstance(item, null);
             getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
         } else {
             Intent i = new Intent(this, EditWordActivity.class);
@@ -157,16 +148,6 @@ public class WordListActivity extends AppCompatActivity
         newFragment.show(ft, TAG_DELETE_DIALOG);
     }
 
-    @Override
-    public void onWordAdded() {
-        updateList();
-    }
-
-    @Override
-    public void onWordUpdated() {
-        updateList();
-    }
-
     private void hideEdit() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_EDIT_FRAGMENT);
@@ -177,22 +158,17 @@ public class WordListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onWordDeleted(Word word) {
-        updateList();
-        hideEdit();
-    }
-
-    @Override
-    public void onTranslationAdd() {
+    public void onTableTranslationEvent(DataEventType eventType, Translation translation) {
         if(mEditWordFragment != null) {
             mEditWordFragment.refreshTranslations();
         }
     }
 
     @Override
-    public void onTranslationDeleted(Translation translation) {
-        if(mEditWordFragment != null) {
-            mEditWordFragment.refreshTranslations();
+    public void onTableWordEvent(DataEventType eventType, Word word) {
+        updateList();
+        if(eventType == DataEventType.DELETE) {
+            hideEdit();
         }
     }
 }
