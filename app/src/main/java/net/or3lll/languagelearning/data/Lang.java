@@ -50,6 +50,10 @@ public class Lang extends SugarRecord implements Parcelable {
         isoCode = in.readString();
     }
 
+    public static boolean isValidIsoCode(String isoCode) {
+        return isoCode.matches("[a-z]{2}_[A-Z]{2}");
+    }
+
     public static final Creator<Lang> CREATOR = new Creator<Lang>() {
         @Override
         public Lang createFromParcel(Parcel in) {

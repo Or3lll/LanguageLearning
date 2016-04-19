@@ -114,7 +114,7 @@ public class EditLangFragment extends Fragment {
         String name = mNameEdit.getText().toString();
         String isoCode = mIsoCodeEdit.getText().toString();
 
-        if(name.length() > 0 && isoCode.matches("[a-z]{2}_[A-Z]{2}")) {
+        if(name.length() > 0 && Lang.isValidIsoCode(isoCode)) {
             List<Lang> langs = Lang.find(Lang.class, "(name = ? or iso_Code = ?) and id != ?",
                     name, isoCode, (mLang != null ? mLang.getId().toString() : "-1"));
 
