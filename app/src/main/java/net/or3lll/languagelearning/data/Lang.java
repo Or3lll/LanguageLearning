@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class Lang extends SugarRecord implements Parcelable {
 
+    private static final int NAME_MIN_LENGTH = 3;
+
     // TODO voir si c'est pertinant de stocker comme ça
     public static ArrayList<Lang> defaultLangs = new ArrayList<>();
     static {
@@ -50,8 +52,9 @@ public class Lang extends SugarRecord implements Parcelable {
         isoCode = in.readString();
     }
 
-    public static boolean isValidIsoCode(String isoCode) {
-        return isoCode.matches("[a-z]{2}_[A-Z]{2}");
+    public boolean isValid() {
+        return (name != null && name.length() >= NAME_MIN_LENGTH
+            && isoCode.matches("[a-z]{2}_[A-Z]{2}"));
     }
 
     public static final Creator<Lang> CREATOR = new Creator<Lang>() {

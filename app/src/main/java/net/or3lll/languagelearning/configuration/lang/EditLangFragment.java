@@ -47,7 +47,8 @@ public class EditLangFragment extends Fragment {
 
         mNameEdit = (EditText) v.findViewById(R.id.name_edit);
         mIsoCodeEdit = (EditText) v.findViewById(R.id.iso_code_edit);
-        TextWatcher textWatcher = new TextWatcher() {
+
+        mNameEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
@@ -56,28 +57,35 @@ public class EditLangFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                mLang.name = s.toString();
                 mAddButton.setEnabled(validation());
             }
-        };
-        mNameEdit.addTextChangedListener(textWatcher);
-        mIsoCodeEdit.addTextChangedListener(textWatcher);
+        });
+        mIsoCodeEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mLang.isoCode = s.toString();
+                mAddButton.setEnabled(validation());
+            }
+        });
 
         mAddButton = (Button) v.findViewById(R.id.add_btn);
         mAddButton.setEnabled(false);
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mLang != null) {
-                    mLang.name = mNameEdit.getText().toString();
-                    mLang.isoCode = mIsoCodeEdit.getText().toString();
-                    mLang.save();
-                    mListener.onTableLangEvent(DataEventType.UPDATE, mLang);
-                }
-                else {
-                    Lang l = new Lang(mNameEdit.getText().toString(), mIsoCodeEdit.getText().toString());
-                    l.save();
-                    mListener.onTableLangEvent(DataEventType.CREATE, mLang);
-                }
+                DataEventType dataEventType = (mLang.getId() != null ? DataEventType.UPDATE : DataEventType.CREATE);
+
+                mLang.name = mNameEdit.getText().toString();
+                mLang.isoCode = mIsoCodeEdit.getText().toString();
+                mLang.save();
+                mListener.onTableLangEvent(dataEventType, mLang);
             }
         });
 
@@ -91,6 +99,15 @@ public class EditLangFragment extends Fragment {
         }
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if(mLang == null) {
+            mLang = new Lang();
+        }
     }
 
     @Override
@@ -111,12 +128,9 @@ public class EditLangFragment extends Fragment {
     }
 
     private boolean validation() {
-        String name = mNameEdit.getText().toString();
-        String isoCode = mIsoCodeEdit.getText().toString();
-
-        if(name.length() > 0 && Lang.isValidIsoCode(isoCode)) {
+        if(mLang.isValid()) {
             List<Lang> langs = Lang.find(Lang.class, "(name = ? or iso_Code = ?) and id != ?",
-                    name, isoCode, (mLang != null ? mLang.getId().toString() : "-1"));
+                    mLang.name, mLang.isoCode, (mLang.getId() != null ? mLang.getId().toString() : "-1"));
 
             return langs.size() == 0;
         }

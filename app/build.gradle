@@ -31,6 +31,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.github.satyan:sugar:1.4'
+    compile 'com.github.satyan:sugar:b16e65326'
     androidTestCompile 'junit:junit:4.12'
 }

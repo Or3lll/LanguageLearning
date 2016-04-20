@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,19 +19,26 @@ public class LangTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
+    private Lang mLang;
+
+    @Before
+    public void createLang() {
+        mLang = new Lang("Français", "fr_FR");
+    }
+
     @Test
     public void isoCode_isValid() throws Exception {
-        assertEquals(true, Lang.isValidIsoCode("aa_BB"));
+        assertEquals(true, new Lang("aaa", "aa_BB").isValid());
 
-        assertEquals(false, Lang.isValidIsoCode(""));
-        assertEquals(false, Lang.isValidIsoCode("a_B"));
-        assertEquals(false, Lang.isValidIsoCode("a_BB"));
-        assertEquals(false, Lang.isValidIsoCode("a_BBB"));
-        assertEquals(false, Lang.isValidIsoCode("aa_B"));
-        assertEquals(false, Lang.isValidIsoCode("aaa_B"));
-        assertEquals(false, Lang.isValidIsoCode("AA_BB"));
-        assertEquals(false, Lang.isValidIsoCode("aa_bb"));
-        assertEquals(false, Lang.isValidIsoCode("aaBB"));
-        assertEquals(false, Lang.isValidIsoCode("aa-BB"));
+        assertEquals(false, new Lang("aaa", "").isValid());
+        assertEquals(false, new Lang("aaa", "a_B").isValid());
+        assertEquals(false, new Lang("aaa", "a_BB").isValid());
+        assertEquals(false, new Lang("aaa", "a_BBB").isValid());
+        assertEquals(false, new Lang("aaa", "aa_B").isValid());
+        assertEquals(false, new Lang("aaa", "aaa_B").isValid());
+        assertEquals(false, new Lang("aaa", "AA_BB").isValid());
+        assertEquals(false, new Lang("aaa", "aa_bb").isValid());
+        assertEquals(false, new Lang("aaa", "aaBB").isValid());
+        assertEquals(false, new Lang("aaa", "aa-BB").isValid());
     }
 }
