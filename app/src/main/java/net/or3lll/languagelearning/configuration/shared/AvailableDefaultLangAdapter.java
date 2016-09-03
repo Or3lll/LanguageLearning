@@ -2,6 +2,8 @@ package net.or3lll.languagelearning.configuration.shared;
 
 import android.util.SparseArray;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.data.Lang;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class AvailableDefaultLangAdapter extends LangAdapter {
 
         int index = 0;
         for (Lang lang : Lang.defaultLangs) {
-            if (Lang.count(Lang.class, "iso_Code = ?", new String [] { lang.isoCode }) == 0) {
+            if (SugarRecord.count(Lang.class, "iso_Code = ?", new String [] { lang.getIsoCode() }) == 0) {
                 mValues.append(index++, lang);
             }
         }

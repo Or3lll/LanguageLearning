@@ -1,6 +1,7 @@
 package net.or3lll.languagelearning.configuration.lang;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -11,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.databinding.FragmentEditLangBinding;
 
 import java.util.List;
 
@@ -24,10 +28,6 @@ public class EditLangFragment extends Fragment {
 
 
     private TableLangListener mListener;
-
-    private EditText mNameEdit;
-    private EditText mIsoCodeEdit;
-    private Button mAddButton;
 
     private Lang mLang;
 
@@ -43,71 +43,49 @@ public class EditLangFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_edit_lang, container, false);
 
-        mNameEdit = (EditText) v.findViewById(R.id.name_edit);
-        mIsoCodeEdit = (EditText) v.findViewById(R.id.iso_code_edit);
+        mLang = getArguments().getParcelable(LANG_PARAM);
+        if(mLang == null) {
+            mLang = new Lang();
+        }
 
-        mNameEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        FragmentEditLangBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_lang, container, false);
+        binding.setLang(mLang);
 
+        binding.nameEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void afterTextChanged(Editable s) {
-                mLang.name = s.toString();
-                mAddButton.setEnabled(validation());
-            }
-        });
-        mIsoCodeEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
-                mLang.isoCode = s.toString();
-                mAddButton.setEnabled(validation());
+                mLang.setName(s.toString());
             }
         });
 
-        mAddButton = (Button) v.findViewById(R.id.add_btn);
-        mAddButton.setEnabled(false);
-        mAddButton.setOnClickListener(new View.OnClickListener() {
+        binding.isoCodeEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mLang.setIsoCode(s.toString());
+            }
+        });
+
+        binding.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DataEventType dataEventType = (mLang.getId() != null ? DataEventType.UPDATE : DataEventType.CREATE);
-
-                mLang.name = mNameEdit.getText().toString();
-                mLang.isoCode = mIsoCodeEdit.getText().toString();
-                mLang.save();
+                SugarRecord.save(mLang);
                 mListener.onTableLangEvent(dataEventType, mLang);
             }
         });
 
-        mLang = getArguments().getParcelable(LANG_PARAM);
-        if(mLang != null) {
-            mNameEdit.setText(mLang.name);
-            mIsoCodeEdit.setText(mLang.isoCode);
-            mAddButton.setText(R.string.button_update);
-
-            mAddButton.setEnabled(validation());
-        }
-
-        return v;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if(mLang == null) {
-            mLang = new Lang();
-        }
+        return binding.getRoot();
     }
 
     @Override
@@ -125,16 +103,5 @@ public class EditLangFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    private boolean validation() {
-        if(mLang.isValid()) {
-            List<Lang> langs = Lang.find(Lang.class, "(name = ? or iso_Code = ?) and id != ?",
-                    mLang.name, mLang.isoCode, (mLang.getId() != null ? mLang.getId().toString() : "-1"));
-
-            return langs.size() == 0;
-        }
-
-        return false;
     }
 }

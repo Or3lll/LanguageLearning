@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.shared.AvailableDefaultLangAdapter;
 import net.or3lll.languagelearning.data.Lang;
@@ -32,7 +34,7 @@ public class DefaultLangsDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Lang lang = (Lang) ((AlertDialog) dialog).getListView().getAdapter().getItem(which);
-                        lang.save();
+                        SugarRecord.save(lang);
 
                         if (mListener != null) {
                             mListener.onLangSelected(lang);

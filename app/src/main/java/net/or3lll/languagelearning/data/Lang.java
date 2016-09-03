@@ -1,19 +1,25 @@
 package net.or3lll.languagelearning.data;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.ArrayMap;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
+import net.or3lll.languagelearning.BR;
 import net.or3lll.languagelearning.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Or3lll on 29/11/2015.
  */
-public class Lang extends SugarRecord implements Parcelable {
+@Table
+public class Lang extends BaseObservable implements Parcelable {
 
     private static final int NAME_MIN_LENGTH = 3;
 
@@ -35,10 +41,14 @@ public class Lang extends SugarRecord implements Parcelable {
         flags.put("jn_JP", R.drawable.japan_flag);
     }
 
-    public String name;
-    public String isoCode;
+    private Long id;
+
+    private String name;
+    private String isoCode;
 
     public Lang() {
+        this.name = "";
+        this.isoCode = "";
     }
 
     public Lang(String name, String isoCode) {
@@ -47,14 +57,53 @@ public class Lang extends SugarRecord implements Parcelable {
     }
 
     protected Lang(Parcel in) {
-        setId(in.readLong());
+        id = in.readLong();
         name = in.readString();
         isoCode = in.readString();
     }
 
+    @Bindable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if(!this.name.equals(name)) {
+            this.name = name;
+            notifyPropertyChanged(BR.name);
+            notifyPropertyChanged(BR.valid);
+        }
+    }
+
+    @Bindable
+    public String getIsoCode() {
+        return isoCode;
+    }
+
+    public void setIsoCode(String isoCode) {
+        if(!this.isoCode.equals(isoCode)) {
+            this.isoCode = isoCode;
+            notifyPropertyChanged(BR.isoCode);
+            notifyPropertyChanged(BR.valid);
+        }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    @Bindable
     public boolean isValid() {
-        return (name != null && name.length() >= NAME_MIN_LENGTH
-            && isoCode.matches("[a-z]{2}_[A-Z]{2}"));
+        if(name != null && name.length() >= NAME_MIN_LENGTH
+            && isoCode.matches("[a-z]{2}_[A-Z]{2}")) {
+
+            List<Lang> langs = SugarRecord.find(Lang.class, "(name = ? or iso_Code = ?) and id != ?",
+                    name, isoCode, (getId() != null ? getId().toString() : "-1"));
+
+            return langs.size() == 0;
+        }
+
+        return false;
     }
 
     public static final Creator<Lang> CREATOR = new Creator<Lang>() {
@@ -76,7 +125,7 @@ public class Lang extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(getId());
+        dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(isoCode);
     }

@@ -9,8 +9,6 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.data.Lang;
-import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
 import java.util.ArrayList;
@@ -79,7 +77,7 @@ public class WordSearchAdapter extends BaseAdapter implements Filterable {
             holder.getWordName().setText(word.text);
 
             if(word.lang != null) {
-                holder.getLangName().setText(word.lang.name);
+                holder.getLangName().setText(word.lang.getName());
             }
         }
 

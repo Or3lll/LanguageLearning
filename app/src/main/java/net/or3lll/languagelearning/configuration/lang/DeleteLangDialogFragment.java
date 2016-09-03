@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
@@ -37,7 +39,7 @@ public class DeleteLangDialogFragment extends DialogFragment {
                         Lang lang = getArguments().getParcelable(LANG_PARAM);
 
                         if (lang != null) {
-                            lang.delete();
+                            SugarRecord.delete(lang);
                             if (mListener != null) {
                                 mListener.onTableLangEvent(DataEventType.DELETE, lang);
                             }

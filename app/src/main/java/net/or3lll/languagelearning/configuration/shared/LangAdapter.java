@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
 
@@ -28,7 +30,7 @@ abstract public class LangAdapter extends BaseAdapter {
     public Object getItem(int position) {
         Lang lang = mValues.get(position);
         if(lang == null) {
-            lang = Lang.find(Lang.class, null, null, null, "name", position + ", 1").get(0);
+            lang = SugarRecord.find(Lang.class, null, null, null, "name", position + ", 1").get(0);
             mValues.append(position, lang);
         }
         return lang;
@@ -70,7 +72,7 @@ abstract public class LangAdapter extends BaseAdapter {
 
         Lang lang = (Lang) getItem(position);
         if(lang != null) {
-            Integer resIdFlag = Lang.flags.get(lang.isoCode);
+            Integer resIdFlag = Lang.flags.get(lang.getIsoCode());
             if(resIdFlag != null) {
                 holder.getLangFlag().setImageResource(resIdFlag);
                 holder.getLangFlag().setVisibility(View.VISIBLE);
@@ -79,7 +81,7 @@ abstract public class LangAdapter extends BaseAdapter {
                 holder.getLangFlag().setVisibility(View.INVISIBLE);
             }
 
-            holder.getLangName().setText(lang.name);
+            holder.getLangName().setText(lang.getName());
         }
 
         return convertView;

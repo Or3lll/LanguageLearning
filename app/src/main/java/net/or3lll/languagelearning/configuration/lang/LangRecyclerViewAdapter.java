@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
-
-import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Lang}
@@ -28,7 +28,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
     }
 
     private void setLangs() {
-        mValuesNumber = (int) Lang.count(Lang.class);
+        mValuesNumber = (int) SugarRecord.count(Lang.class);
         mValues = new SparseArray<>(mValuesNumber);
     }
 
@@ -47,12 +47,12 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Lang lang = mValues.get(position);
         if(lang == null) {
-            lang = Lang.find(Lang.class, null, null, null, "name", position + ", 1").get(0);
+            lang = SugarRecord.find(Lang.class, null, null, null, "name", position + ", 1").get(0);
             mValues.append(position, lang);
         }
         holder.mItem = lang;
 
-        Integer resIdFlag = Lang.flags.get(lang.isoCode);
+        Integer resIdFlag = Lang.flags.get(lang.getIsoCode());
         if(resIdFlag != null) {
             holder.mLangFlag.setImageResource(resIdFlag);
             holder.mLangFlag.setVisibility(View.VISIBLE);
@@ -60,7 +60,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
         else {
             holder.mLangFlag.setVisibility(View.INVISIBLE);
         }
-        holder.mlangName.setText(lang.name);
+        holder.mlangName.setText(lang.getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.lang.LangListActivity;
 import net.or3lll.languagelearning.data.Lang;
@@ -39,9 +41,9 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Lang frLang = new Lang("Français", "fr_FR");
-                        frLang.save();
+                        SugarRecord.save(frLang);
                         Lang jnLang = new Lang("Japonais", "jn_JP");
-                        jnLang.save();
+                        SugarRecord.save(jnLang);
 
                         Word w1 = new Word(frLang, "je", "", "");
                         w1.save();

@@ -19,13 +19,6 @@ public class LangTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
-    private Lang mLang;
-
-    @Before
-    public void createLang() {
-        mLang = new Lang("Français", "fr_FR");
-    }
-
     @Test
     public void isoCode_isValid() throws Exception {
         assertEquals(true, new Lang("aaa", "aa_BB").isValid());

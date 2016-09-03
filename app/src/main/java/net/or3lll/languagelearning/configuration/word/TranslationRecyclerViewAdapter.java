@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
-
-import java.util.List;
 
 /**
  * Created by X2014568 on 08/03/2016.
@@ -61,13 +58,13 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
         if(translation.word1.getId() == mWord.getId()) {
             holder.mWordView.setText(translation.word2.text);
             if(translation.word2.lang != null) {
-                holder.mLangView.setText(translation.word2.lang.name);
+                holder.mLangView.setText(translation.word2.lang.getName());
             }
         }
         else {
             holder.mWordView.setText(translation.word1.text);
             if(translation.word1.lang != null) {
-                holder.mLangView.setText(translation.word1.lang.name);
+                holder.mLangView.setText(translation.word1.lang.getName());
             }
         }
 

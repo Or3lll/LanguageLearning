@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.JpFrActivity;
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.lang.DeleteLangDialogFragment;
@@ -86,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setupDrawer();
 
-        if(Lang.count(Lang.class) < 2) {
+        if(SugarRecord.count(Lang.class) < 2) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             Fragment prev = getFragmentManager().findFragmentByTag(TAG_ADVICE_DIALOG);
             if (prev != null) {
