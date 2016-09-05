@@ -5,7 +5,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.orm.SugarApp;
 import com.orm.SugarRecord;
 
 import net.or3lll.languagelearning.configuration.importer.DataImporter;
@@ -36,7 +35,7 @@ public class ImporterTest extends ApplicationTestCase<Application> {
 
     @Test
     public void importLangsOnly() throws Exception {
-        cleanData();
+        clearData();
 
         String dataToImport =
             "{" +
@@ -59,7 +58,7 @@ public class ImporterTest extends ApplicationTestCase<Application> {
 
     @Test
     public void importWordsOnly() throws Exception {
-        cleanData();
+        clearData();
 
         SugarRecord.save(new Lang("Français", "fr_FR"));
 
@@ -86,7 +85,44 @@ public class ImporterTest extends ApplicationTestCase<Application> {
         assertEquals(1, Word.find(Word.class, "text=?", "souris").size());
     }
 
-    private void cleanData() {
+    @Test
+    public void importTranslationsOnly() throws Exception {
+        clearData();
+
+        Lang frenchLang = new Lang("Français", "fr_FR");
+        Lang russianLang = new Lang("Russe", "ru_RU");
+        SugarRecord.save(frenchLang);
+        SugarRecord.save(russianLang);
+        Word.save(new Word(frenchLang, "voiture", "", ""));
+        Word.save(new Word(russianLang, "машина", "", ""));
+
+        String dataToImport =
+            "{" +
+            "\"translations\": [{" +
+            "\"isoCode1\": \"fr_FR\"," +
+            "\"text1\": \"voiture\"," +
+            "\"isoCode2\": \"ru_RU\"," +
+            "\"text2\": \"машина\"" +
+            "}]" +
+            "}";
+
+        DataImporter importer = new DataImporter();
+        importer.load(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(dataToImport.getBytes()))));
+        importer.apply();
+
+        List<Translation> translations = Translation.listAll(Translation.class);
+        assertEquals(1, translations.size());
+
+        Translation translation = translations.get(0);
+        assertTrue((translation.word1.text.equals("voiture") && translation.word1.lang.getIsoCode().equals("fr_FR")
+                && translation.word2.text.equals("машина") && translation.word2.lang.getIsoCode().equals("ru_RU"))
+                ||
+                (translation.word1.text.equals("машина") && translation.word1.lang.getIsoCode().equals("ru_RU")
+                && translation.word2.text.equals("voiture") && translation.word2.lang.getIsoCode().equals("fr_FR"))
+        );
+    }
+
+    private void clearData() {
         Translation.deleteAll(Translation.class);
         Word.deleteAll(Word.class);
         SugarRecord.deleteAll(Lang.class);

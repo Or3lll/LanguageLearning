@@ -5,6 +5,7 @@ import com.orm.query.Condition;
 import com.orm.query.Select;
 
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
 import org.json.JSONArray;
@@ -22,7 +23,7 @@ import java.util.List;
 public class DataImporter {
     private List<Lang> langsToAdd = new ArrayList<>();
     private List<Word> wordsToAdd = new ArrayList<>();
-
+    private List<Translation> translationsToAdd = new ArrayList<>();
 
     public void load(BufferedReader reader) {
         StringBuilder sb = new StringBuilder();
@@ -93,6 +94,41 @@ public class DataImporter {
             catch (JSONException e) {
 
             }
+
+            try {
+                JSONArray translations = json.getJSONArray("translations");
+                for (int i = 0; i < translations.length(); i++) {
+                    JSONObject jsonTranslation = translations.getJSONObject(i);
+
+                    String isoCode1 = jsonTranslation.getString("isoCode1");
+                    String text1 = jsonTranslation.getString("text1");
+                    String isoCode2 = jsonTranslation.getString("isoCode2");
+                    String text2 = jsonTranslation.getString("text2");
+
+                    List<Lang> langs = SugarRecord.find(Lang.class, "iso_code=?", isoCode1);
+                    if(langs.size() == 1) {
+                        Lang lang1 = langs.get(0);
+                        List<Word> words = Word.find(Word.class, "lang=? AND text=?", new String[]{ lang1.getId().toString(), text1 });
+                        if(words.size() == 1) {
+                            Word word1 = words.get(0);
+                            langs = SugarRecord.find(Lang.class, "iso_code=?", isoCode2);
+                            if (langs.size() == 1) {
+                                Lang lang2 = langs.get(0);
+                                words = Word.find(Word.class, "lang=? AND text=?", new String[]{ lang2.getId().toString(), text2 });
+                                if(words.size() == 1) {
+                                    Word word2 = words.get(0);
+
+                                    Translation translation = new Translation(word1, word2);
+                                    translationsToAdd.add(translation);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (JSONException e) {
+
+            }
         }
         catch (JSONException e) {
 
@@ -106,6 +142,10 @@ public class DataImporter {
 
         for (Word word : wordsToAdd) {
             word.save();
+        }
+
+        for (Translation translation : translationsToAdd) {
+            translation.save();
         }
     }
 }
