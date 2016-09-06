@@ -10,6 +10,7 @@ import com.orm.SugarRecord;
 import net.or3lll.languagelearning.configuration.exporter.DataExporter;
 import net.or3lll.languagelearning.configuration.importer.DataImporter;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.BufferedReader;
@@ -27,6 +28,7 @@ public class ExportTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
+    @Test
     public void export() throws Exception {
         clearData();
 
