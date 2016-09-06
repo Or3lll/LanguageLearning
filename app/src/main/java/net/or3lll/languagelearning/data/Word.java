@@ -14,10 +14,11 @@ import java.util.List;
  * Created by Or3lll on 29/11/2015.
  */
 public class Word extends SugarRecord implements Parcelable {
-    private static String JSON_PARAM_ISOCODE = "isoCode";
-    private static String JSON_PARAM_TEXT = "text";
-    private static String JSON_PARAM_SUBTEXT = "subText";
-    private static String JSON_PARAM_DESC = "desc";
+    public static String JSON_PARAM_GROUP_NAME = "words";
+    public static String JSON_PARAM_ISOCODE = "isoCode";
+    public static String JSON_PARAM_TEXT = "text";
+    public static String JSON_PARAM_SUBTEXT = "subText";
+    public static String JSON_PARAM_DESC = "desc";
 
     public Lang lang;
     public String text;

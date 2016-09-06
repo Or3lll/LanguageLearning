@@ -27,7 +27,7 @@ public class DataExporter {
                 }
             }
 
-            root.put("langs", jsonLangs);
+            root.put(Lang.JSON_PARAM_GROUP_NAME, jsonLangs);
         }
         catch (JSONException e) { }
 
@@ -41,7 +41,7 @@ public class DataExporter {
                 };
             }
 
-            root.put("words", jsonWords);
+            root.put(Word.JSON_PARAM_GROUP_NAME, jsonWords);
         }
         catch (JSONException e) { }
 
@@ -55,7 +55,7 @@ public class DataExporter {
                 }
             }
 
-            root.put("translations", jsonTranslations);
+            root.put(Translation.JSON_PARAM_GROUP_NAME, jsonTranslations);
         }
         catch (JSONException e) { }
 

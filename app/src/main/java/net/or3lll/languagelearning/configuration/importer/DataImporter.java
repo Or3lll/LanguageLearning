@@ -1,8 +1,6 @@
 package net.or3lll.languagelearning.configuration.importer;
 
 import com.orm.SugarRecord;
-import com.orm.query.Condition;
-import com.orm.query.Select;
 
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
@@ -55,17 +53,12 @@ public class DataImporter {
 
     private void analyzeLangs(JSONObject rootJson) {
         try {
-            JSONArray langs = rootJson.getJSONArray("langs");
+            JSONArray langs = rootJson.getJSONArray(Lang.JSON_PARAM_GROUP_NAME);
             for (int i = 0; i < langs.length(); i++) {
                 try {
-                    JSONObject jsonLang = langs.getJSONObject(i);
-                    String isoCode = jsonLang.getString("isoCode");
-                    if (Lang.getLangByIsoCode(isoCode) == null) {
-                        String name = jsonLang.getString("name");
-                        Lang lang = new Lang(name, isoCode);
-                        if (lang.isValid()) {
-                            langsToAdd.add(lang);
-                        }
+                    Lang lang = Lang.jsonImport(langs.getJSONObject(i));
+                    if (Lang.getLangByIsoCode(lang.getIsoCode()) == null) {
+                        langsToAdd.add(lang);
                     }
                 } catch (JSONException e) { }
             }
@@ -75,16 +68,16 @@ public class DataImporter {
 
     private void analyzeWords(JSONObject rootJson) {
         try {
-            JSONArray jsonWords = rootJson.getJSONArray("words");
+            JSONArray jsonWords = rootJson.getJSONArray(Word.JSON_PARAM_GROUP_NAME);
             for (int i = 0; i < jsonWords.length(); i++) {
                 try {
                     JSONObject jsonWord = jsonWords.getJSONObject(i);
-                    String isoCode = jsonWord.getString("isoCode");
+                    String isoCode = jsonWord.getString(Word.JSON_PARAM_ISOCODE);
 
                     Lang lang = getLang(isoCode);
                     if (lang != null) {
 
-                        String text = jsonWord.getString("text");
+                        String text = jsonWord.getString(Word.JSON_PARAM_TEXT);
                         boolean isAlreadyExist = false;
                         for (Word word : Word.find(Word.class, "text=?", text)) {
                             if (word.lang.getId() == lang.getId()) {
@@ -94,8 +87,8 @@ public class DataImporter {
                         }
 
                         if (!isAlreadyExist) {
-                            String subText = jsonWord.getString("subText");
-                            String desc = jsonWord.getString("desc");
+                            String subText = jsonWord.getString(Word.JSON_PARAM_SUBTEXT);
+                            String desc = jsonWord.getString(Word.JSON_PARAM_DESC);
                             Word word = new Word(lang, text, subText, desc);
                             wordsToAdd.add(word);
                         }
@@ -107,15 +100,15 @@ public class DataImporter {
 
     private void analyzeTranslations(JSONObject rootJson) {
         try {
-            JSONArray translations = rootJson.getJSONArray("translations");
+            JSONArray translations = rootJson.getJSONArray(Translation.JSON_PARAM_GROUP_NAME);
             for (int i = 0; i < translations.length(); i++) {
                 try {
                     JSONObject jsonTranslation = translations.getJSONObject(i);
 
-                    String isoCode1 = jsonTranslation.getString("isoCode1");
-                    String text1 = jsonTranslation.getString("text1");
-                    String isoCode2 = jsonTranslation.getString("isoCode2");
-                    String text2 = jsonTranslation.getString("text2");
+                    String isoCode1 = jsonTranslation.getString(Translation.JSON_PARAM_ISOCODE1);
+                    String text1 = jsonTranslation.getString(Translation.JSON_PARAM_TEXT1);
+                    String isoCode2 = jsonTranslation.getString(Translation.JSON_PARAM_ISOCODE2);
+                    String text2 = jsonTranslation.getString(Translation.JSON_PARAM_TEXT2);
 
                     Lang lang1 = getLang(isoCode1);
                     Lang lang2 = getLang(isoCode2);

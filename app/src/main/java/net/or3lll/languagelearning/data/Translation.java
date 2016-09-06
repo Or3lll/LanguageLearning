@@ -12,10 +12,11 @@ import org.json.JSONObject;
  * Created by Or3lll on 29/11/2015.
  */
 public class Translation extends SugarRecord implements Parcelable {
-    private static String JSON_PARAM_ISOCODE1 = "isoCode1";
-    private static String JSON_PARAM_TEXT1 = "text1";
-    private static String JSON_PARAM_ISOCODE2 = "isoCode2";
-    private static String JSON_PARAM_TEXT2 = "text2";
+    public static String JSON_PARAM_GROUP_NAME = "translations";
+    public static String JSON_PARAM_ISOCODE1 = "isoCode1";
+    public static String JSON_PARAM_TEXT1 = "text1";
+    public static String JSON_PARAM_ISOCODE2 = "isoCode2";
+    public static String JSON_PARAM_TEXT2 = "text2";
 
     public Word word1;
     public Word word2;

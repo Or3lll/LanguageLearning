@@ -44,8 +44,9 @@ public class Lang extends BaseObservable implements Parcelable {
         flags.put("jn_JP", R.drawable.japan_flag);
     }
 
-    private static String JSON_PARAM_ISOCODE = "isoCode";
-    private static String JSON_PARAM_NAME = "name";
+    public static String JSON_PARAM_GROUP_NAME = "langs";
+    public static String JSON_PARAM_ISOCODE = "isoCode";
+    public static String JSON_PARAM_NAME = "name";
 
     private Long id;
 
@@ -151,6 +152,21 @@ public class Lang extends BaseObservable implements Parcelable {
             json.put(JSON_PARAM_ISOCODE, isoCode);
             json.put(JSON_PARAM_NAME, name);
             return json;
+        }
+        catch (JSONException e) { }
+
+        return null;
+    }
+
+    public static Lang jsonImport(JSONObject json) {
+        try {
+            String isoCode = json.getString(JSON_PARAM_ISOCODE);
+            String name = json.getString(JSON_PARAM_NAME);
+
+            Lang lang = new Lang(name, isoCode);
+            if (lang.isValid()) {
+                return lang;
+            }
         }
         catch (JSONException e) { }
 
