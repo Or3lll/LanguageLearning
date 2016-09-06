@@ -129,4 +129,13 @@ public class Lang extends BaseObservable implements Parcelable {
         dest.writeString(name);
         dest.writeString(isoCode);
     }
+
+    public static Lang getLangByIsoCode(String isoCode) {
+        List<Lang> langs = SugarRecord.find(Lang.class, "iso_code=?", isoCode);
+        if(langs.size() == 1) {
+            return langs.get(0);
+        }
+
+        return null;
+    }
 }

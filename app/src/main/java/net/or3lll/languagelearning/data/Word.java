@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.orm.SugarRecord;
 
+import java.util.List;
+
 /**
  * Created by Or3lll on 29/11/2015.
  */
@@ -56,5 +58,16 @@ public class Word extends SugarRecord implements Parcelable {
         dest.writeString(text);
         dest.writeString(subText);
         dest.writeString(desc);
+    }
+
+    public static Word getWordByTextForLang(String text, Lang lang) {
+        if(lang.getId() != null) {
+            List<Word> words = Word.find(Word.class, "lang=? AND text=?", new String[]{lang.getId().toString(), text});
+            if (words.size() == 1) {
+                return words.get(0);
+            }
+        }
+
+        return null;
     }
 }

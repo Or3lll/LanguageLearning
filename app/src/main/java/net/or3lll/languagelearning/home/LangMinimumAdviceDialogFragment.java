@@ -10,10 +10,15 @@ import android.os.Bundle;
 import com.orm.SugarRecord;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.importer.DataImporter;
 import net.or3lll.languagelearning.configuration.lang.LangListActivity;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by or3lll on 24/02/2016.
@@ -40,67 +45,61 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                 .setNeutralButton("Init", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Lang frLang = new Lang("Français", "fr_FR");
-                        SugarRecord.save(frLang);
-                        Lang jnLang = new Lang("Japonais", "jn_JP");
-                        SugarRecord.save(jnLang);
+                        String initJson = "{\n" +
+                                "\t\"langs\": [{\n" +
+                                "\t\t\"isoCode\": \"fr_FR\",\n" +
+                                "\t\t\"name\": \"Français\"\n" +
+                                "\t}, {\n" +
+                                "\t\t\"isoCode\": \"jn_JP\",\n" +
+                                "\t\t\"name\": \"Japonais\"\n" +
+                                "\t}],\n" +
+                                "\t\"words\": [{\n" +
+                                "\t\t\"isoCode\": \"fr_FR\",\n" +
+                                "\t\t\"text\": \"je\",\n" +
+                                "\t\t\"subText\": \"\",\n" +
+                                "\t\t\"desc\": \"\"\n" +
+                                "\t}, {\n" +
+                                "\t\t\"isoCode\": \"jn_JP\",\n" +
+                                "\t\t\"text\": \"わたし\",\n" +
+                                "\t\t\"subText\": \"\",\n" +
+                                "\t\t\"desc\": \"\"\n" +
+                                "\t}, {\n" +
+                                "\t\t\"isoCode\": \"fr_FR\",\n" +
+                                "\t\t\"text\": \"moi\",\n" +
+                                "\t\t\"subText\": \"\",\n" +
+                                "\t\t\"desc\": \"\"\n" +
+                                "\t}, {\n" +
+                                "\t\t\"isoCode\": \"fr_FR\",\n" +
+                                "\t\t\"text\": \"nous\",\n" +
+                                "\t\t\"subText\": \"\",\n" +
+                                "\t\t\"desc\": \"\"\n" +
+                                "\t}, {\n" +
+                                "\t\t\"isoCode\": \"jn_JP\",\n" +
+                                "\t\t\"text\": \"わたしたち\",\n" +
+                                "\t\t\"subText\": \"\",\n" +
+                                "\t\t\"desc\": \"\"\n" +
+                                "\t}],\n" +
+                                "\t\"translations\": [{\n" +
+                                "\t\t\"isoCode1\": \"je\",\n" +
+                                "\t\t\"text1\": \"fr_FR\",\n" +
+                                "\t\t\"isoCode2\": \"わたし\",\n" +
+                                "\t\t\"text2\": \"jn_JP\"\n" +
+                                "\t}, {\n" +
+                                "\t\t\"isoCode1\": \"jn_JP\",\n" +
+                                "\t\t\"text1\": \"わたし\",\n" +
+                                "\t\t\"isoCode2\": \"fr_FR\",\n" +
+                                "\t\t\"text2\": \"moi\"\n" +
+                                "\t}, {\n" +
+                                "\t\t\"isoCode1\": \"fr_FR\",\n" +
+                                "\t\t\"text1\": \"nous\",\n" +
+                                "\t\t\"isoCode2\": \"jn_JP\",\n" +
+                                "\t\t\"text2\": \"わたしたち\"\n" +
+                                "\t}]\n" +
+                                "}";
 
-                        Word w1 = new Word(frLang, "je", "", "");
-                        w1.save();
-                        Word w2 = new Word(jnLang, "わたし", "", "");
-                        w2.save();
-                        Translation t = new Translation(w1, w2);
-                        t.save();
-                        Word w3 = new Word(frLang, "moi", "", "");
-                        w3.save();
-                        t = new Translation(w2, w3);
-                        t.save();
-
-                        w1 = new Word(frLang, "nous", "", "");
-                        w1.save();
-                        w2 = new Word(jnLang, "わたしたち", "", "");
-                        w2.save();
-                        t = new Translation(w1, w2);
-                        t.save();
-
-                        w1 = new Word(frLang, "vous", "", "singulier");
-                        w1.save();
-                        w2 = new Word(jnLang, "あなた", "", "");
-                        w2.save();
-                        t = new Translation(w1, w2);
-                        t.save();
-
-                        w1 = new Word(frLang, "professeur", "", "");
-                        w1.save();
-                        w2 = new Word(jnLang, "せんせい", "", "");
-                        w2.save();
-                        t = new Translation(w1, w2);
-                        t.save();
-                        w3 = new Word(frLang, "instituteur", "", "");
-                        w3.save();
-                        t = new Translation(w2, w3);
-                        t.save();
-
-                        w1 = new Word(frLang, "ingénieur", "", "");
-                        w1.save();
-                        w2 = new Word(jnLang, "エンジニア", "", "");
-                        w2.save();
-                        t = new Translation(w1, w2);
-                        t.save();
-
-                        w1 = new Word(frLang, "oui", "", "");
-                        w1.save();
-                        w2 = new Word(jnLang, "はい", "", "");
-                        w2.save();
-                        t = new Translation(w1, w2);
-                        t.save();
-
-                        w1 = new Word(frLang, "non", "", "");
-                        w1.save();
-                        w2 = new Word(jnLang, "いいえ", "", "");
-                        w2.save();
-                        t = new Translation(w1, w2);
-                        t.save();
+                        DataImporter importer = new DataImporter();
+                        importer.load(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(initJson.getBytes()))));
+                        importer.apply();
                     }
                 })
                 .setNegativeButton(R.string.no, null);

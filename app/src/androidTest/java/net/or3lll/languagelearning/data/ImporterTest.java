@@ -122,6 +122,68 @@ public class ImporterTest extends ApplicationTestCase<Application> {
         );
     }
 
+    @Test
+    public void importAllTypes() throws Exception {
+        clearData();
+
+        String initJson = "{" +
+            "\"langs\": [{" +
+            "\"isoCode\": \"fr_FR\"," +
+            "\"name\": \"Français\"" +
+            "}, {" +
+            "\"isoCode\": \"jn_JP\"," +
+            "\"name\": \"Japonais\"" +
+            "}]," +
+            "\"words\": [{" +
+            "\"isoCode\": \"fr_FR\"," +
+            "\"text\": \"je\"," +
+            "\"subText\": \"\"," +
+            "\"desc\": \"\"" +
+            "}, {" +
+            "\"isoCode\": \"jn_JP\"," +
+            "\"text\": \"わたし\"," +
+            "\"subText\": \"\"," +
+            "\"desc\": \"\"" +
+            "}, {" +
+            "\"isoCode\": \"fr_FR\"," +
+            "\"text\": \"moi\"," +
+            "\"subText\": \"\"," +
+            "\"desc\": \"\"" +
+            "}, {" +
+            "\"isoCode\": \"fr_FR\"," +
+            "\"text\": \"nous\"," +
+            "\"subText\": \"\"," +
+            "\"desc\": \"\"" +
+            "}, {" +
+            "\"isoCode\": \"jn_JP\"," +
+            "\"text\": \"わたしたち\"," +
+            "\"subText\": \"\"," +
+            "\"desc\": \"\"" +
+            "}]," +
+            "\"translations\": [{" +
+            "\"isoCode1\": \"fr_FR\"," +
+            "\"text1\": \"je\"," +
+            "\"isoCode2\": \"jn_JP\"," +
+            "\"text2\": \"わたし\"" +
+            "}]" +
+            "}";
+
+        DataImporter importer = new DataImporter();
+        importer.load(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(initJson.getBytes()))));
+        importer.apply();
+
+        List<Translation> translations = Translation.listAll(Translation.class);
+        assertEquals(1, translations.size());
+
+        Translation translation = translations.get(0);
+        assertTrue((translation.word1.text.equals("わたし") && translation.word1.lang.getIsoCode().equals("jn_JP")
+                && translation.word2.text.equals("je") && translation.word2.lang.getIsoCode().equals("fr_FR"))
+                ||
+                (translation.word1.text.equals("je") && translation.word1.lang.getIsoCode().equals("fr_FR")
+                        && translation.word2.text.equals("わたし") && translation.word2.lang.getIsoCode().equals("jn_JP"))
+        );
+    }
+
     private void clearData() {
         Translation.deleteAll(Translation.class);
         Word.deleteAll(Word.class);

@@ -43,61 +43,73 @@ public class DataImporter {
 
     private void analyzeJson(String jsonText) {
         try {
-            JSONObject json = new JSONObject(jsonText);
-            try {
-                JSONArray langs = json.getJSONArray("langs");
-                for (int i = 0; i < langs.length(); i++) {
+            JSONObject rootJson = new JSONObject(jsonText);
+            analyzeLangs(rootJson);
+            analyzeWords(rootJson);
+            analyzeTranslations(rootJson);
+        }
+        catch (JSONException e) {
+
+        }
+    }
+
+    private void analyzeLangs(JSONObject rootJson) {
+        try {
+            JSONArray langs = rootJson.getJSONArray("langs");
+            for (int i = 0; i < langs.length(); i++) {
+                try {
                     JSONObject jsonLang = langs.getJSONObject(i);
                     String isoCode = jsonLang.getString("isoCode");
-                    if(SugarRecord.find(Lang.class, "iso_code=?", isoCode).size() == 0) {
+                    if (Lang.getLangByIsoCode(isoCode) == null) {
                         String name = jsonLang.getString("name");
                         Lang lang = new Lang(name, isoCode);
-                        if(lang.isValid()) {
+                        if (lang.isValid()) {
                             langsToAdd.add(lang);
                         }
                     }
-                }
+                } catch (JSONException e) { }
             }
-            catch (JSONException e) {
+        }
+        catch (JSONException e) { }
+    }
 
-            }
-
-            try {
-                JSONArray jsonWords = json.getJSONArray("words");
-                for (int i = 0; i < jsonWords.length(); i++) {
+    private void analyzeWords(JSONObject rootJson) {
+        try {
+            JSONArray jsonWords = rootJson.getJSONArray("words");
+            for (int i = 0; i < jsonWords.length(); i++) {
+                try {
                     JSONObject jsonWord = jsonWords.getJSONObject(i);
                     String isoCode = jsonWord.getString("isoCode");
 
-                    List<Lang> langs = SugarRecord.find(Lang.class, "iso_code=?", isoCode);
-                    if(langs.size() == 1) {
-                        Lang lang = langs.get(0);
+                    Lang lang = getLang(isoCode);
+                    if (lang != null) {
 
                         String text = jsonWord.getString("text");
-                        List<Word> words = Word.find(Word.class, "text=?", text);
                         boolean isAlreadyExist = false;
-                        for (Word word : words) {
-                            if(word.lang.getId() == lang.getId()) {
+                        for (Word word : Word.find(Word.class, "text=?", text)) {
+                            if (word.lang.getId() == lang.getId()) {
                                 isAlreadyExist = true;
                                 break;
                             }
                         }
 
-                        if(!isAlreadyExist) {
+                        if (!isAlreadyExist) {
                             String subText = jsonWord.getString("subText");
                             String desc = jsonWord.getString("desc");
                             Word word = new Word(lang, text, subText, desc);
                             wordsToAdd.add(word);
                         }
                     }
-                }
+                } catch (JSONException e) { }
             }
-            catch (JSONException e) {
+        } catch (JSONException e) { }
+    }
 
-            }
-
-            try {
-                JSONArray translations = json.getJSONArray("translations");
-                for (int i = 0; i < translations.length(); i++) {
+    private void analyzeTranslations(JSONObject rootJson) {
+        try {
+            JSONArray translations = rootJson.getJSONArray("translations");
+            for (int i = 0; i < translations.length(); i++) {
+                try {
                     JSONObject jsonTranslation = translations.getJSONObject(i);
 
                     String isoCode1 = jsonTranslation.getString("isoCode1");
@@ -105,34 +117,50 @@ public class DataImporter {
                     String isoCode2 = jsonTranslation.getString("isoCode2");
                     String text2 = jsonTranslation.getString("text2");
 
-                    List<Lang> langs = SugarRecord.find(Lang.class, "iso_code=?", isoCode1);
-                    if(langs.size() == 1) {
-                        Lang lang1 = langs.get(0);
-                        List<Word> words = Word.find(Word.class, "lang=? AND text=?", new String[]{ lang1.getId().toString(), text1 });
-                        if(words.size() == 1) {
-                            Word word1 = words.get(0);
-                            langs = SugarRecord.find(Lang.class, "iso_code=?", isoCode2);
-                            if (langs.size() == 1) {
-                                Lang lang2 = langs.get(0);
-                                words = Word.find(Word.class, "lang=? AND text=?", new String[]{ lang2.getId().toString(), text2 });
-                                if(words.size() == 1) {
-                                    Word word2 = words.get(0);
+                    Lang lang1 = getLang(isoCode1);
+                    Lang lang2 = getLang(isoCode2);
 
-                                    Translation translation = new Translation(word1, word2);
-                                    translationsToAdd.add(translation);
-                                }
-                            }
+                    if (lang1 != null && lang2 != null) {
+                        Word word1 = getWord(text1, lang1);
+                        Word word2 = getWord(text2, lang2);
+
+                        if (word1 != null && word2 != null) {
+                            Translation translation = new Translation(word1, word2);
+                            translationsToAdd.add(translation);
                         }
                     }
+                } catch (JSONException e) { }
+            }
+        } catch (JSONException e) { }
+    }
+
+    
+    private Lang getLang(String isoCode) {
+        Lang lang = Lang.getLangByIsoCode(isoCode);
+        if(lang == null) {
+            for (Lang langToAdd : langsToAdd) {
+                if(langToAdd.getIsoCode().equals(isoCode)) {
+                    lang = langToAdd;
+                    break;
                 }
             }
-            catch (JSONException e) {
+        }
 
+        return lang;
+    }
+
+    private Word getWord(String text, Lang lang) {
+        Word word = Word.getWordByTextForLang(text, lang);
+        if(word == null) {
+            for (Word wordToAdd : wordsToAdd) {
+                if(wordToAdd.text.equals(text) && wordToAdd.lang.getIsoCode().equals(lang.getIsoCode())) {
+                    word = wordToAdd;
+                    break;
+                }
             }
         }
-        catch (JSONException e) {
 
-        }
+        return word;
     }
 
     public void apply() {
