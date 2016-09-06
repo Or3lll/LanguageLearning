@@ -21,10 +21,10 @@ public class DataExporter {
             JSONArray jsonLangs = new JSONArray();
 
             for (Lang lang : SugarRecord.listAll(Lang.class)) {
-                JSONObject jsonLang = new JSONObject();
-                jsonLang.put("isoCode", lang.getIsoCode());
-                jsonLang.put("name", lang.getName());
-                jsonLangs.put(jsonLang);
+                JSONObject jsonLang = lang.jsonExport();
+                if (jsonLang != null) {
+                    jsonLangs.put(jsonLang);
+                }
             }
 
             root.put("langs", jsonLangs);
@@ -35,12 +35,10 @@ public class DataExporter {
             JSONArray jsonWords = new JSONArray();
 
             for (Word word : SugarRecord.listAll(Word.class)) {
-                JSONObject jsonWord = new JSONObject();
-                jsonWord.put("isoCode", word.lang.getIsoCode());
-                jsonWord.put("text", word.text);
-                jsonWord.put("subText", word.subText);
-                jsonWord.put("desc", word.desc);
-                jsonWords.put(jsonWord);
+                JSONObject jsonWord = word.jsonExport();
+                if(jsonWord != null) {
+                    jsonWords.put(jsonWord);
+                };
             }
 
             root.put("words", jsonWords);
@@ -51,12 +49,10 @@ public class DataExporter {
             JSONArray jsonTranslations = new JSONArray();
 
             for (Translation translation : SugarRecord.listAll(Translation.class)) {
-                JSONObject jsonTranslation = new JSONObject();
-                jsonTranslation.put("isoCode1", translation.word1.lang.getIsoCode());
-                jsonTranslation.put("text1", translation.word1.text);
-                jsonTranslation.put("isoCode2", translation.word2.lang.getIsoCode());
-                jsonTranslation.put("text2", translation.word2.text);
-                jsonTranslations.put(jsonTranslation);
+                JSONObject jsonTranslation = translation.jsonExport();
+                if(jsonTranslation != null) {
+                    jsonTranslations.put(jsonTranslation);
+                }
             }
 
             root.put("translations", jsonTranslations);

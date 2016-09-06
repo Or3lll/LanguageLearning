@@ -12,6 +12,9 @@ import com.orm.dsl.Table;
 import net.or3lll.languagelearning.BR;
 import net.or3lll.languagelearning.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,9 @@ public class Lang extends BaseObservable implements Parcelable {
         flags.put("ru_RU", R.drawable.russian_flag);
         flags.put("jn_JP", R.drawable.japan_flag);
     }
+
+    private static String JSON_PARAM_ISOCODE = "isoCode";
+    private static String JSON_PARAM_NAME = "name";
 
     private Long id;
 
@@ -135,6 +141,18 @@ public class Lang extends BaseObservable implements Parcelable {
         if(langs.size() == 1) {
             return langs.get(0);
         }
+
+        return null;
+    }
+
+    public JSONObject jsonExport() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put(JSON_PARAM_ISOCODE, isoCode);
+            json.put(JSON_PARAM_NAME, name);
+            return json;
+        }
+        catch (JSONException e) { }
 
         return null;
     }

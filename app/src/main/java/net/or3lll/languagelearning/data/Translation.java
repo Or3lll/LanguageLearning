@@ -5,10 +5,18 @@ import android.os.Parcelable;
 
 import com.orm.SugarRecord;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Or3lll on 29/11/2015.
  */
 public class Translation extends SugarRecord implements Parcelable {
+    private static String JSON_PARAM_ISOCODE1 = "isoCode1";
+    private static String JSON_PARAM_TEXT1 = "text1";
+    private static String JSON_PARAM_ISOCODE2 = "isoCode2";
+    private static String JSON_PARAM_TEXT2 = "text2";
+
     public Word word1;
     public Word word2;
 
@@ -48,5 +56,19 @@ public class Translation extends SugarRecord implements Parcelable {
         dest.writeLong(getId());
         dest.writeParcelable(word1, flags);
         dest.writeParcelable(word2, flags);
+    }
+
+    public JSONObject jsonExport() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put(JSON_PARAM_ISOCODE1, word1.lang.getIsoCode());
+            json.put(JSON_PARAM_TEXT1, word1.text);
+            json.put(JSON_PARAM_ISOCODE2, word2.lang.getIsoCode());
+            json.put(JSON_PARAM_TEXT2, word2.text);
+            return json;
+        }
+        catch (JSONException e) { }
+
+        return null;
     }
 }
