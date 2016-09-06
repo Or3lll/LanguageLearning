@@ -28,11 +28,6 @@ public class ImporterTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
-    @Before
-    public void prepare() {
-        SugarRecord.deleteAll(Lang.class);
-    }
-
     @Test
     public void importLangsOnly() throws Exception {
         clearData();

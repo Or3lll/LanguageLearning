@@ -134,7 +134,7 @@ public class DataImporter {
         } catch (JSONException e) { }
     }
 
-    
+
     private Lang getLang(String isoCode) {
         Lang lang = Lang.getLangByIsoCode(isoCode);
         if(lang == null) {
