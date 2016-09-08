@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Language Learning</string>
 
+    <!-- Test -->
     <string name="display_subtext">Afficher la phonétique</string>
     <string name="check">Contrôler</string>
     <string name="good_answer">Correct %1$d/%2$d</string>
     <string name="bad_answer">Faux %1$d/%2$d</string>
 
+    <!-- Configuration -->
     <string name="title_activity_lang">Langues</string>
     <string name="title_activity_word">Mots</string>
 
@@ -37,4 +39,13 @@
 
     <string name="title_dialog_add_translation">Ajouter une traduction</string>
     <string name="search_hint">Rechercher</string>
+
+    <!-- Settings -->
+    <string name="title_activity_settings">Paramètres</string>
+
+    <string name="error_no_permission_save">Pas de sauvegarde sans permission</string>
+    <string name="error_no_permission_restore">Pas de restauration sans permission</string>
+    <string name="error_external_storage_unavailable">Stockage externe indisponible</string>
+    <string name="error_save_backup">Erreur pendant l\'écriture de la sauvegarde</string>
+    <string name="error_restore_backup">Erreur pendant la lecture de la sauvegarde</string>
 </resources>
