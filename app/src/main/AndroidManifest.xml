@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.or3lll.languagelearning">
+          package="net.or3lll.languagelearning">
 
     <application
         android:name="com.orm.SugarApp"
@@ -13,50 +13,48 @@
         <!-- SugarORM configuration -->
         <meta-data
             android:name="DATABASE"
-            android:value="words.db" />
+            android:value="words.db"/>
         <meta-data
             android:name="VERSION"
-            android:value="1" />
+            android:value="1"/>
         <meta-data
             android:name="QUERY_LOG"
-            android:value="true" />
+            android:value="true"/>
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
-            android:value="net.or3lll.languagelearning.data" />
+            android:value="net.or3lll.languagelearning.data"/>
 
         <activity android:name=".home.HomeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:name=".JpFrActivity" />
-
+        <activity android:name=".JpFrActivity"/>
         <activity
             android:name=".configuration.lang.LangListActivity"
             android:parentActivityName=".home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".home.HomeActivity" />
+                android:value=".home.HomeActivity"/>
         </activity>
-
         <activity
             android:name=".configuration.lang.EditLangActivity"
             android:parentActivityName=".configuration.lang.LangListActivity"/>
-
         <activity
             android:name=".configuration.word.WordListActivity"
             android:parentActivityName=".home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".home.HomeActivity" />
+                android:value=".home.HomeActivity"/>
         </activity>
-
         <activity
             android:name=".configuration.word.EditWordActivity"
             android:parentActivityName=".configuration.word.WordListActivity"/>
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".home.HomeActivity"/>
     </application>
 
 </manifest>
