@@ -29,6 +29,7 @@ import net.or3lll.languagelearning.configuration.lang.DeleteLangDialogFragment;
 import net.or3lll.languagelearning.configuration.lang.LangListActivity;
 import net.or3lll.languagelearning.configuration.word.WordListActivity;
 import net.or3lll.languagelearning.data.Lang;
+import net.or3lll.languagelearning.settings.SettingsActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -73,6 +74,9 @@ public class HomeActivity extends AppCompatActivity {
                 } else if (position == 1) {
                     Intent testIntent = new Intent(HomeActivity.this, WordListActivity.class);
                     startActivity(testIntent);
+                } else if (position == 2) {
+                    Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+                    startActivity(settingsIntent);
                 } else {
                     Toast.makeText(HomeActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 }
@@ -101,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Langues", "Mots" };
+        String[] osArray = { "Langues", "Mots", "Paramètres" };
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
