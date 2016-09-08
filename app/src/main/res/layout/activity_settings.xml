@@ -14,7 +14,8 @@
         android:text="Sauvegarder"
         android:id="@+id/button"
         android:layout_below="@+id/toolbar"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:onClick="onSaveDataClick"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -22,5 +23,15 @@
         android:text="Restaurer"
         android:id="@+id/button2"
         android:layout_below="@+id/button"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:onClick="onRestoreDataClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Effacer données"
+        android:id="@+id/button3"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentStart="true"
+        android:onClick="onCleanDataClick"/>
 </RelativeLayout>
