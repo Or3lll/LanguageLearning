@@ -133,9 +133,17 @@ public class VocabularyTestFragment extends Fragment {
         }
 
         textTextView.setText(mWord.text);
-        subTextTextView.setText(mWord.subText);
+        if(mWord.subText != null && !mWord.subText.isEmpty()) {
+            subTextTextView.setText(mWord.subText);
+            displaySubTextBtn.setVisibility(View.VISIBLE);
+            subTextTextView.setVisibility(View.INVISIBLE);
+        }
+        else {
+            displaySubTextBtn.setVisibility(View.GONE);
+            subTextTextView.setVisibility(View.GONE);
+        }
         answerEditText.setText("");
 
-        subTextTextView.setVisibility(View.INVISIBLE);
+
     }
 }
