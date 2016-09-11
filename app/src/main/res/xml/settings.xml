@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/settings_backup_title">
+        <Preference android:title="@string/settings_backup_save"
+            android:key="pref_backup_save"/>
+        <Preference android:title="@string/settings_backup_restore"
+            android:key="pref_backup_restore"/>
+        <Preference android:title="@string/settings_backup_clear"
+            android:key="pref_backup_clear"/>
+    </PreferenceCategory>
+</PreferenceScreen>

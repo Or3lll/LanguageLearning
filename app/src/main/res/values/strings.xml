@@ -43,6 +43,12 @@
     <!-- Settings -->
     <string name="title_activity_settings">Paramètres</string>
 
+        <!-- Database backup -->
+    <string name="settings_backup_title">Sauvegarde</string>
+    <string name="settings_backup_save">Sauvegarder</string>
+    <string name="settings_backup_restore">Restaurer</string>
+    <string name="settings_backup_clear">Tout supprimer</string>
+
     <string name="error_no_permission_save">Pas de sauvegarde sans permission</string>
     <string name="error_no_permission_restore">Pas de restauration sans permission</string>
     <string name="error_external_storage_unavailable">Stockage externe indisponible</string>
