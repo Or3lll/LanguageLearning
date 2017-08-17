@@ -68,16 +68,13 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
             }
         }
 
-        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if(mListener != null) {
-                    mListener.onLongClick(holder.mItem);
-                    return true;
-                }
-
-                return false;
+        holder.mView.setOnLongClickListener(v -> {
+            if(mListener != null) {
+                mListener.onLongClick(holder.mItem);
+                return true;
             }
+
+            return false;
         });
     }
 

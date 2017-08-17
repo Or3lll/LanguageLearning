@@ -62,25 +62,19 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
         }
         holder.mlangName.setText(lang.getName());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onClick(holder.mItem);
-                }
+        holder.mView.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onClick(holder.mItem);
             }
         });
 
-        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if(mListener != null) {
-                    mListener.onLongClick(holder.mItem);
-                    return true;
-                }
-
-                return false;
+        holder.mView.setOnLongClickListener(v -> {
+            if(mListener != null) {
+                mListener.onLongClick(holder.mItem);
+                return true;
             }
+
+            return false;
         });
     }
 

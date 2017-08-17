@@ -34,73 +34,67 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.message_dialog_advice_minimum_lang)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent testIntent = new Intent(getActivity(), LangListActivity.class);
-                        startActivity(testIntent);
-                    }
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    Intent testIntent = new Intent(getActivity(), LangListActivity.class);
+                    startActivity(testIntent);
                 })
                 // TODO: to move after settings page will be created
-                .setNeutralButton("Init", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String initJson = "{\n" +
-                                "\t\"langs\": [{\n" +
-                                "\t\t\"isoCode\": \"fr_FR\",\n" +
-                                "\t\t\"name\": \"Français\"\n" +
-                                "\t}, {\n" +
-                                "\t\t\"isoCode\": \"jn_JP\",\n" +
-                                "\t\t\"name\": \"Japonais\"\n" +
-                                "\t}],\n" +
-                                "\t\"words\": [{\n" +
-                                "\t\t\"isoCode\": \"fr_FR\",\n" +
-                                "\t\t\"text\": \"je\",\n" +
-                                "\t\t\"subText\": \"\",\n" +
-                                "\t\t\"desc\": \"\"\n" +
-                                "\t}, {\n" +
-                                "\t\t\"isoCode\": \"jn_JP\",\n" +
-                                "\t\t\"text\": \"わたし\",\n" +
-                                "\t\t\"subText\": \"\",\n" +
-                                "\t\t\"desc\": \"\"\n" +
-                                "\t}, {\n" +
-                                "\t\t\"isoCode\": \"fr_FR\",\n" +
-                                "\t\t\"text\": \"moi\",\n" +
-                                "\t\t\"subText\": \"\",\n" +
-                                "\t\t\"desc\": \"\"\n" +
-                                "\t}, {\n" +
-                                "\t\t\"isoCode\": \"fr_FR\",\n" +
-                                "\t\t\"text\": \"nous\",\n" +
-                                "\t\t\"subText\": \"\",\n" +
-                                "\t\t\"desc\": \"\"\n" +
-                                "\t}, {\n" +
-                                "\t\t\"isoCode\": \"jn_JP\",\n" +
-                                "\t\t\"text\": \"わたしたち\",\n" +
-                                "\t\t\"subText\": \"\",\n" +
-                                "\t\t\"desc\": \"\"\n" +
-                                "\t}],\n" +
-                                "\t\"translations\": [{\n" +
-                                "\t\t\"isoCode1\": \"je\",\n" +
-                                "\t\t\"text1\": \"fr_FR\",\n" +
-                                "\t\t\"isoCode2\": \"わたし\",\n" +
-                                "\t\t\"text2\": \"jn_JP\"\n" +
-                                "\t}, {\n" +
-                                "\t\t\"isoCode1\": \"jn_JP\",\n" +
-                                "\t\t\"text1\": \"わたし\",\n" +
-                                "\t\t\"isoCode2\": \"fr_FR\",\n" +
-                                "\t\t\"text2\": \"moi\"\n" +
-                                "\t}, {\n" +
-                                "\t\t\"isoCode1\": \"fr_FR\",\n" +
-                                "\t\t\"text1\": \"nous\",\n" +
-                                "\t\t\"isoCode2\": \"jn_JP\",\n" +
-                                "\t\t\"text2\": \"わたしたち\"\n" +
-                                "\t}]\n" +
-                                "}";
+                .setNeutralButton("Init", (dialog, which) -> {
+                    String initJson = "{\n" +
+                            "\t\"langs\": [{\n" +
+                            "\t\t\"isoCode\": \"fr_FR\",\n" +
+                            "\t\t\"name\": \"Français\"\n" +
+                            "\t}, {\n" +
+                            "\t\t\"isoCode\": \"jn_JP\",\n" +
+                            "\t\t\"name\": \"Japonais\"\n" +
+                            "\t}],\n" +
+                            "\t\"words\": [{\n" +
+                            "\t\t\"isoCode\": \"fr_FR\",\n" +
+                            "\t\t\"text\": \"je\",\n" +
+                            "\t\t\"subText\": \"\",\n" +
+                            "\t\t\"desc\": \"\"\n" +
+                            "\t}, {\n" +
+                            "\t\t\"isoCode\": \"jn_JP\",\n" +
+                            "\t\t\"text\": \"わたし\",\n" +
+                            "\t\t\"subText\": \"\",\n" +
+                            "\t\t\"desc\": \"\"\n" +
+                            "\t}, {\n" +
+                            "\t\t\"isoCode\": \"fr_FR\",\n" +
+                            "\t\t\"text\": \"moi\",\n" +
+                            "\t\t\"subText\": \"\",\n" +
+                            "\t\t\"desc\": \"\"\n" +
+                            "\t}, {\n" +
+                            "\t\t\"isoCode\": \"fr_FR\",\n" +
+                            "\t\t\"text\": \"nous\",\n" +
+                            "\t\t\"subText\": \"\",\n" +
+                            "\t\t\"desc\": \"\"\n" +
+                            "\t}, {\n" +
+                            "\t\t\"isoCode\": \"jn_JP\",\n" +
+                            "\t\t\"text\": \"わたしたち\",\n" +
+                            "\t\t\"subText\": \"\",\n" +
+                            "\t\t\"desc\": \"\"\n" +
+                            "\t}],\n" +
+                            "\t\"translations\": [{\n" +
+                            "\t\t\"isoCode1\": \"je\",\n" +
+                            "\t\t\"text1\": \"fr_FR\",\n" +
+                            "\t\t\"isoCode2\": \"わたし\",\n" +
+                            "\t\t\"text2\": \"jn_JP\"\n" +
+                            "\t}, {\n" +
+                            "\t\t\"isoCode1\": \"jn_JP\",\n" +
+                            "\t\t\"text1\": \"わたし\",\n" +
+                            "\t\t\"isoCode2\": \"fr_FR\",\n" +
+                            "\t\t\"text2\": \"moi\"\n" +
+                            "\t}, {\n" +
+                            "\t\t\"isoCode1\": \"fr_FR\",\n" +
+                            "\t\t\"text1\": \"nous\",\n" +
+                            "\t\t\"isoCode2\": \"jn_JP\",\n" +
+                            "\t\t\"text2\": \"わたしたち\"\n" +
+                            "\t}]\n" +
+                            "}";
 
-                        DataImporter importer = new DataImporter();
-                        importer.load(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(initJson.getBytes()))));
-                        importer.apply();
-                    }
+                    DataImporter importer = new DataImporter();
+                    importer.load(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(initJson.getBytes()))));
+                    importer.apply();
                 })
                 .setNegativeButton(R.string.no, null);
         return builder.create();

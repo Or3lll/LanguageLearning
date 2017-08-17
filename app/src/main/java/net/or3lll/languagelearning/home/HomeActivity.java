@@ -53,36 +53,30 @@ public class HomeActivity extends AppCompatActivity {
         // Boutons de l'Activity
         Button testButton = (Button) findViewById(R.id.test_btn);
 
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent testIntent = new Intent(HomeActivity.this, JpFrActivity.class);
-                startActivity(testIntent);
-            }
+        testButton.setOnClickListener(v -> {
+            Intent testIntent = new Intent(HomeActivity.this, JpFrActivity.class);
+            startActivity(testIntent);
         });
 
         // Navigation Drawer
         mDrawerList = (ListView) findViewById(R.id.navList);
         addDrawerItems();
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Todo: ne pas gérer ça avec la position
-                if (position == 0) {
-                    Intent testIntent = new Intent(HomeActivity.this, LangListActivity.class);
-                    startActivity(testIntent);
-                } else if (position == 1) {
-                    Intent testIntent = new Intent(HomeActivity.this, WordListActivity.class);
-                    startActivity(testIntent);
-                } else if (position == 2) {
-                    Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
-                    startActivity(settingsIntent);
-                } else {
-                    Toast.makeText(HomeActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
-                }
-
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
+        mDrawerList.setOnItemClickListener((parent, view, position, id) -> {
+            // Todo: ne pas gérer ça avec la position
+            if (position == 0) {
+                Intent testIntent = new Intent(HomeActivity.this, LangListActivity.class);
+                startActivity(testIntent);
+            } else if (position == 1) {
+                Intent testIntent = new Intent(HomeActivity.this, WordListActivity.class);
+                startActivity(testIntent);
+            } else if (position == 2) {
+                Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+            } else {
+                Toast.makeText(HomeActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
             }
+
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

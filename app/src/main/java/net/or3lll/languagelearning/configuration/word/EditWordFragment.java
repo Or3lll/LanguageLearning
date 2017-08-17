@@ -94,46 +94,40 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
 
         mAddButton = (Button) v.findViewById(R.id.add_btn);
         mAddButton.setEnabled(false);
-        mAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mWord != null) {
-                    mWord.text = mNameEdit.getText().toString();
-                    mWord.subText = mSubNameEdit.getText().toString();
-                    mWord.desc = mDescEdit.getText().toString();
-                    mWord.lang = mLang;
-                    mWord.save();
-                    if(mListener != null) {
-                        mListener.onTableWordEvent(DataEventType.CREATE, mWord);
-                    }
-                } else {
-                    mWord = new Word(mLang, mNameEdit.getText().toString(),
-                            mSubNameEdit.getText().toString(),
-                            mDescEdit.getText().toString());
-                    mWord.save();
-                    if(mListener != null) {
-                        mListener.onTableWordEvent(DataEventType.UPDATE, mWord);
-                    }
+        mAddButton.setOnClickListener(v1 -> {
+            if (mWord != null) {
+                mWord.text = mNameEdit.getText().toString();
+                mWord.subText = mSubNameEdit.getText().toString();
+                mWord.desc = mDescEdit.getText().toString();
+                mWord.lang = mLang;
+                mWord.save();
+                if(mListener != null) {
+                    mListener.onTableWordEvent(DataEventType.CREATE, mWord);
                 }
-
-                setMode();
+            } else {
+                mWord = new Word(mLang, mNameEdit.getText().toString(),
+                        mSubNameEdit.getText().toString(),
+                        mDescEdit.getText().toString());
+                mWord.save();
+                if(mListener != null) {
+                    mListener.onTableWordEvent(DataEventType.UPDATE, mWord);
+                }
             }
+
+            setMode();
         });
 
         mTranslationsLayout = (ViewGroup) v.findViewById(R.id.translations_layout);
         mAddTranslationButton = (Button) v.findViewById(R.id.add_translation_btn);
-        mAddTranslationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag(TAG_ADD_TRANSLATION_DIALOG);
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-
-                DialogFragment newFragment = AddTranslationDialogFragment.newInstance(mWord);
-                newFragment.show(ft, TAG_ADD_TRANSLATION_DIALOG);
+        mAddTranslationButton.setOnClickListener(v12 -> {
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag(TAG_ADD_TRANSLATION_DIALOG);
+            if (prev != null) {
+                ft.remove(prev);
             }
+
+            DialogFragment newFragment = AddTranslationDialogFragment.newInstance(mWord);
+            newFragment.show(ft, TAG_ADD_TRANSLATION_DIALOG);
         });
 
         mTranslationRecycler = (RecyclerView) v.findViewById(R.id.translation_list);

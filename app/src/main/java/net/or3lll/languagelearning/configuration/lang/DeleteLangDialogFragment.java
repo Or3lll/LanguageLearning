@@ -33,16 +33,13 @@ public class DeleteLangDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.message_dialog_delete_lang)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Lang lang = getArguments().getParcelable(LANG_PARAM);
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    Lang lang = getArguments().getParcelable(LANG_PARAM);
 
-                        if (lang != null) {
-                            SugarRecord.delete(lang);
-                            if (mListener != null) {
-                                mListener.onTableLangEvent(DataEventType.DELETE, lang);
-                            }
+                    if (lang != null) {
+                        SugarRecord.delete(lang);
+                        if (mListener != null) {
+                            mListener.onTableLangEvent(DataEventType.DELETE, lang);
                         }
                     }
                 })

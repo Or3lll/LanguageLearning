@@ -30,23 +30,17 @@ public class DefaultLangsDialogFragment extends DialogFragment {
 
         builder.setTitle(R.string.title_dialog_add_lang)
                 // TODO gérer dans l'adapter l'absence de langue
-                .setAdapter(new AvailableDefaultLangAdapter(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Lang lang = (Lang) ((AlertDialog) dialog).getListView().getAdapter().getItem(which);
-                        SugarRecord.save(lang);
+                .setAdapter(new AvailableDefaultLangAdapter(), (dialog, which) -> {
+                    Lang lang = (Lang) ((AlertDialog) dialog).getListView().getAdapter().getItem(which);
+                    SugarRecord.save(lang);
 
-                        if (mListener != null) {
-                            mListener.onLangSelected(lang);
-                        }
+                    if (mListener != null) {
+                        mListener.onLangSelected(lang);
                     }
                 })
-                .setNeutralButton(R.string.button_dialog_add_lang, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (mListener != null) {
-                            mListener.onOtherSelected();
-                        }
+                .setNeutralButton(R.string.button_dialog_add_lang, (dialog, which) -> {
+                    if (mListener != null) {
+                        mListener.onOtherSelected();
                     }
                 });
 

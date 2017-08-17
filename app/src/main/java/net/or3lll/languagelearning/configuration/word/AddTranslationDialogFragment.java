@@ -48,17 +48,14 @@ public class AddTranslationDialogFragment extends DialogFragment {
         searchAdapter = new WordSearchAdapter(word.getId(), word.lang.getId());
         searchAutoComplete.setAdapter(searchAdapter);
 
-        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Word selectedWord = (Word) parent.getItemAtPosition(position);
-                Translation translation = new Translation(word, selectedWord);
-                translation.save();
-                if(mListener != null) {
-                    mListener.onTableTranslationEvent(DataEventType.CREATE, translation);
-                }
-                dismiss();
+        searchAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
+            Word selectedWord = (Word) parent.getItemAtPosition(position);
+            Translation translation = new Translation(word, selectedWord);
+            translation.save();
+            if(mListener != null) {
+                mListener.onTableTranslationEvent(DataEventType.CREATE, translation);
             }
+            dismiss();
         });
 
         builder.setTitle(R.string.title_dialog_add_translation)

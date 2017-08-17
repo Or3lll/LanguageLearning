@@ -67,44 +67,38 @@ public class VocabularyTestFragment extends Fragment {
         displaySubTextBtn = (Button) v.findViewById(R.id.display_subtext_btn);
         checkBtn = (Button) v.findViewById(R.id.check_btn);
 
-        displaySubTextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                subTextTextView.setVisibility(View.VISIBLE);
-                return;
-            }
+        displaySubTextBtn.setOnClickListener(v12 -> {
+            subTextTextView.setVisibility(View.VISIBLE);
+            return;
         });
 
-        checkBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean hasCorrectResult = false;
-                attempts++;
+        checkBtn.setOnClickListener(v1 -> {
+            boolean hasCorrectResult = false;
+            attempts++;
 
-                for (Translation translation :
-                        Translation.listAll(Translation.class)) {
-                    if (translation.word1.getId() == mWord.getId()) {
-                        if(translation.word2.text.equalsIgnoreCase(answerEditText.getText().toString())) {
-                            hasCorrectResult = true;
-                        }
-                    }
-
-                    else if (translation.word2.getId() == mWord.getId()) {
-                        if(translation.word1.text.equalsIgnoreCase(answerEditText.getText().toString())) {
-                            hasCorrectResult = true;
-                        }
+            for (Translation translation :
+                    Translation.listAll(Translation.class)) {
+                if (translation.word1.getId() == mWord.getId()) {
+                    if(translation.word2.text.equalsIgnoreCase(answerEditText.getText().toString())) {
+                        hasCorrectResult = true;
                     }
                 }
 
-                if(hasCorrectResult) {
-                    score++;
-                    Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.good_answer), score, attempts), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.bad_answer), score, attempts), Toast.LENGTH_SHORT).show();
+                else if (translation.word2.getId() == mWord.getId()) {
+                    if(translation.word1.text.equalsIgnoreCase(answerEditText.getText().toString())) {
+                        hasCorrectResult = true;
+                    }
                 }
-
-                setWords();
             }
+
+            if(hasCorrectResult) {
+                score++;
+                Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.good_answer), score, attempts), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.bad_answer), score, attempts), Toast.LENGTH_SHORT).show();
+            }
+
+            setWords();
         });
 
         setWords();

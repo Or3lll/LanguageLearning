@@ -46,24 +46,21 @@ public class SettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.settings);
 
-        Preference.OnPreferenceClickListener clickListener  = new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                if(preference == saveBackupPref) {
-                    saveDataWithCheckPermission();
-                    return true;
-                }
-                else if(preference == restoreBackupPref) {
-                    restoreDataWithCheckPermission();
-                    return true;
-                }
-                else if(preference == clearBackupPref) {
-                    clearDataClickWithCheckPermission();
-                    return true;
-                }
-
-                return false;
+        Preference.OnPreferenceClickListener clickListener  = preference -> {
+            if(preference == saveBackupPref) {
+                saveDataWithCheckPermission();
+                return true;
             }
+            else if(preference == restoreBackupPref) {
+                restoreDataWithCheckPermission();
+                return true;
+            }
+            else if(preference == clearBackupPref) {
+                clearDataClickWithCheckPermission();
+                return true;
+            }
+
+            return false;
         };
 
         saveBackupPref = findPreference("pref_backup_save");

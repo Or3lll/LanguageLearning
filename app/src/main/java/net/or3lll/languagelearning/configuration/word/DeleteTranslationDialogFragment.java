@@ -31,15 +31,12 @@ public class DeleteTranslationDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.message_dialog_delete_translation)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Translation translation = getArguments().getParcelable(TRANSLATION_PARAM);
-                        if (translation != null) {
-                            translation.delete();
-                            if (mListener != null) {
-                                mListener.onTableTranslationEvent(DataEventType.DELETE, translation);
-                            }
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    Translation translation = getArguments().getParcelable(TRANSLATION_PARAM);
+                    if (translation != null) {
+                        translation.delete();
+                        if (mListener != null) {
+                            mListener.onTableTranslationEvent(DataEventType.DELETE, translation);
                         }
                     }
                 })

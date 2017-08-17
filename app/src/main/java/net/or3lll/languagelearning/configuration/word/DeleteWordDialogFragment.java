@@ -32,20 +32,17 @@ public class DeleteWordDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.message_dialog_delete_word)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Word word = getArguments().getParcelable(WORD_PARAM);
-                        if (word != null) {
-                            String sWordId = word.getId().toString();
-                            for (Translation translation :
-                                    Translation.find(Translation.class, "word1 = ? OR word2 = ?", new String[]{sWordId, sWordId})) {
-                                translation.delete();
-                            }
-                            word.delete();
-                            if (mListener != null) {
-                                mListener.onTableWordEvent(DataEventType.DELETE, word);
-                            }
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    Word word = getArguments().getParcelable(WORD_PARAM);
+                    if (word != null) {
+                        String sWordId = word.getId().toString();
+                        for (Translation translation :
+                                Translation.find(Translation.class, "word1 = ? OR word2 = ?", new String[]{sWordId, sWordId})) {
+                            translation.delete();
+                        }
+                        word.delete();
+                        if (mListener != null) {
+                            mListener.onTableWordEvent(DataEventType.DELETE, word);
                         }
                     }
                 })

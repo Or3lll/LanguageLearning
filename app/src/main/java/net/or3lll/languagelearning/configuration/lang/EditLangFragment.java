@@ -76,13 +76,10 @@ public class EditLangFragment extends Fragment {
             }
         });
 
-        binding.addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DataEventType dataEventType = (mLang.getId() != null ? DataEventType.UPDATE : DataEventType.CREATE);
-                SugarRecord.save(mLang);
-                mListener.onTableLangEvent(dataEventType, mLang);
-            }
+        binding.addBtn.setOnClickListener(v -> {
+            DataEventType dataEventType = (mLang.getId() != null ? DataEventType.UPDATE : DataEventType.CREATE);
+            SugarRecord.save(mLang);
+            mListener.onTableLangEvent(dataEventType, mLang);
         });
 
         return binding.getRoot();
