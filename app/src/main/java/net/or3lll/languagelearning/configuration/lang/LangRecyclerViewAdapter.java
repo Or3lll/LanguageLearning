@@ -13,6 +13,9 @@ import com.orm.SugarRecord;
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Lang}
  */
@@ -85,15 +88,14 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final ImageView mLangFlag;
-        public final TextView mlangName;
+        @BindView(R.id.langFlag) ImageView mLangFlag;
+        @BindView(R.id.langName) TextView mlangName;
         public Lang mItem;
 
         public ViewHolder(View view) {
             super(view);
+            ButterKnife.bind(this, view);
             mView = view;
-            mLangFlag = (ImageView) view.findViewById(R.id.langFlag);
-            mlangName = (TextView) view.findViewById(R.id.langName);
         }
 
         @Override

@@ -14,6 +14,9 @@ import net.or3lll.languagelearning.data.Word;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by or3lll on 23/02/2016.
  */
@@ -86,13 +89,13 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mContentView;
+        @BindView(R.id.content) TextView mContentView;
         public Word mItem;
 
         public ViewHolder(View view) {
             super(view);
+            ButterKnife.bind(this, view);
             mView = view;
-            mContentView = (TextView) view.findViewById(R.id.content);
         }
 
         @Override

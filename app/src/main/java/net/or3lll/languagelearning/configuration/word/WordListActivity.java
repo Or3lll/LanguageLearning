@@ -1,6 +1,7 @@
 package net.or3lll.languagelearning.configuration.word;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +30,9 @@ import net.or3lll.languagelearning.data.Word;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WordListActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener,
         WordRecyclerViewAdapter.OnClickListener,
@@ -38,16 +42,19 @@ public class WordListActivity extends AppCompatActivity
     private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
     private static final String TAG_DELETE_DIALOG = "delete_dialog";
 
-    private Spinner mLangSpinner;
-    private TextView emptyListText;
+    @BindView(R.id.langSpinner) Spinner mLangSpinner;
+    @BindView(R.id.emptyList) TextView emptyListText;
     private WordRecyclerViewAdapter mWordAdapter;
-    private FrameLayout editContainer;
+
+    @Nullable @BindView(R.id.edit_container) FrameLayout editContainer;
     private EditWordFragment mEditWordFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_word_list);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,11 +63,8 @@ public class WordListActivity extends AppCompatActivity
         ab.setTitle(R.string.title_activity_word);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        mLangSpinner = (Spinner) findViewById(R.id.langSpinner);
         mLangSpinner.setAdapter(new UserLangAdapter());
         mLangSpinner.setOnItemSelectedListener(this);
-
-        emptyListText = (TextView) findViewById(R.id.emptyList);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
@@ -69,8 +73,6 @@ public class WordListActivity extends AppCompatActivity
         mWordAdapter = new WordRecyclerViewAdapter((Lang) mLangSpinner.getSelectedItem(), this);
         recyclerView.setAdapter(mWordAdapter);
         updateList();
-
-        editContainer = (FrameLayout) findViewById(R.id.edit_container);
     }
 
     @Override

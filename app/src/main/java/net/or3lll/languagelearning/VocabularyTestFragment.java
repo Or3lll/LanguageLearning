@@ -15,6 +15,11 @@ import net.or3lll.languagelearning.data.Word;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +28,12 @@ import java.util.List;
  */
 public class VocabularyTestFragment extends Fragment {
 
-    private TextView textTextView;
-    private TextView subTextTextView;
-    private EditText answerEditText;
-    private Button displaySubTextBtn;
-    private Button checkBtn;
+    private Unbinder unbinder;
+
+    @BindView(R.id.text_text) TextView textTextView;
+    @BindView(R.id.subtext_text) TextView subTextTextView;
+    @BindView(R.id.answer_edittext) private EditText answerEditText;
+    @BindView(R.id.display_subtext_btn) Button displaySubTextBtn;
 
     private Word mWord;
 
@@ -57,53 +63,48 @@ public class VocabularyTestFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_vocabulary_test, container, false);
-
-        textTextView = (TextView) v.findViewById(R.id.text_text);
-        subTextTextView = (TextView) v.findViewById(R.id.subtext_text);
-        answerEditText = (EditText) v.findViewById(R.id.answer_edittext);
-
-        displaySubTextBtn = (Button) v.findViewById(R.id.display_subtext_btn);
-        checkBtn = (Button) v.findViewById(R.id.check_btn);
-
-        displaySubTextBtn.setOnClickListener(v12 -> {
-            subTextTextView.setVisibility(View.VISIBLE);
-            return;
-        });
-
-        checkBtn.setOnClickListener(v1 -> {
-            boolean hasCorrectResult = false;
-            attempts++;
-
-            for (Translation translation :
-                    Translation.listAll(Translation.class)) {
-                if (translation.word1.getId() == mWord.getId()) {
-                    if(translation.word2.text.equalsIgnoreCase(answerEditText.getText().toString())) {
-                        hasCorrectResult = true;
-                    }
-                }
-
-                else if (translation.word2.getId() == mWord.getId()) {
-                    if(translation.word1.text.equalsIgnoreCase(answerEditText.getText().toString())) {
-                        hasCorrectResult = true;
-                    }
-                }
-            }
-
-            if(hasCorrectResult) {
-                score++;
-                Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.good_answer), score, attempts), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.bad_answer), score, attempts), Toast.LENGTH_SHORT).show();
-            }
-
-            setWords();
-        });
+        unbinder = ButterKnife.bind(this, v);
 
         setWords();
 
         return v;
+    }
+
+    @OnClick(R.id.display_subtext_btn)
+    public void onSubtextButtonClicked() {
+        subTextTextView.setVisibility(View.VISIBLE);
+        return;
+    }
+
+    @OnClick(R.id.check_btn)
+    public void onCheckButtonClicked() {
+        boolean hasCorrectResult = false;
+        attempts++;
+
+        for (Translation translation :
+                Translation.listAll(Translation.class)) {
+            if (translation.word1.getId() == mWord.getId()) {
+                if(translation.word2.text.equalsIgnoreCase(answerEditText.getText().toString())) {
+                    hasCorrectResult = true;
+                }
+            }
+
+            else if (translation.word2.getId() == mWord.getId()) {
+                if(translation.word1.text.equalsIgnoreCase(answerEditText.getText().toString())) {
+                    hasCorrectResult = true;
+                }
+            }
+        }
+
+        if(hasCorrectResult) {
+            score++;
+            Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.good_answer), score, attempts), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.bad_answer), score, attempts), Toast.LENGTH_SHORT).show();
+        }
+
+        setWords();
     }
 
     @Override
@@ -112,6 +113,12 @@ public class VocabularyTestFragment extends Fragment {
 
         outState.putInt("score", score);
         outState.putInt("tent", attempts);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void setWords() {

@@ -1,6 +1,7 @@
 package net.or3lll.languagelearning.configuration.lang;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +24,9 @@ import net.or3lll.languagelearning.data.Lang;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LangListActivity extends AppCompatActivity
         implements LangRecyclerViewAdapter.OnClickListener,
         TableLangListener,
@@ -34,13 +38,14 @@ public class LangListActivity extends AppCompatActivity
 
     private LangRecyclerViewAdapter mLangAdapter;
 
-    private TextView emptyListText;
-    private FrameLayout editContainer;
+    @BindView(R.id.emptyList) TextView emptyListText;
+    @Nullable @BindView(R.id.edit_container) FrameLayout editContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lang_list);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,16 +54,12 @@ public class LangListActivity extends AppCompatActivity
         ab.setTitle(R.string.title_activity_lang);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        emptyListText = (TextView) findViewById(R.id.emptyList);
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mLangAdapter = new LangRecyclerViewAdapter(this);
         recyclerView.setAdapter(mLangAdapter);
-
-        editContainer = (FrameLayout) findViewById(R.id.edit_container);
     }
 
     @Override

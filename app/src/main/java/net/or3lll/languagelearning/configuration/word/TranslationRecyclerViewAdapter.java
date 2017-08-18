@@ -11,6 +11,9 @@ import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by X2014568 on 08/03/2016.
  */
@@ -85,15 +88,14 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mWordView;
-        public final TextView mLangView;
+        @BindView(R.id.word_textview) TextView mWordView;
+        @BindView(R.id.lang_textview) TextView mLangView;
         public Translation mItem;
 
         public ViewHolder(View view) {
             super(view);
+            ButterKnife.bind(this, view);
             mView = view;
-            mWordView = (TextView) view.findViewById(R.id.word_textview);
-            mLangView = (TextView) view.findViewById(R.id.lang_textview);
         }
 
         @Override

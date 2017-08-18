@@ -29,6 +29,11 @@ import net.or3lll.languagelearning.data.Word;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 /**
  * Created by X2014568 on 03/03/2016.
  */
@@ -40,14 +45,15 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     private static final String TAG_ADD_TRANSLATION_DIALOG = "add_translation_dialog";
     private static final String TAG_DELETE_TRANSLATION_DIALOG = "delete_translation_dialog";
 
-    private Spinner mLangSpinner;
-    private EditText mNameEdit;
-    private EditText mSubNameEdit;
-    private EditText mDescEdit;
-    private Button mAddButton;
-    private ViewGroup mTranslationsLayout;
-    private Button mAddTranslationButton;
-    private RecyclerView mTranslationRecycler;
+    private Unbinder unbinder;
+
+    @BindView(R.id.langSpinner) Spinner mLangSpinner;
+    @BindView(R.id.name_edit) EditText mNameEdit;
+    @BindView(R.id.sub_name_edit) EditText mSubNameEdit;
+    @BindView(R.id.desc_edit) EditText mDescEdit;
+    @BindView(R.id.add_btn) Button mAddButton;
+    @BindView(R.id.translations_layout) ViewGroup mTranslationsLayout;
+    @BindView(R.id.translation_list) RecyclerView mTranslationRecycler;
     private TranslationRecyclerViewAdapter mTranslationAdapter;
 
     private TableWordListener mListener;
@@ -69,15 +75,12 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_word, container, false);
+        ButterKnife.bind(this, v);
 
-        mLangSpinner = (Spinner) v.findViewById(R.id.langSpinner);
         UserLangAdapter langAdapter = new UserLangAdapter();
         mLangSpinner.setAdapter(langAdapter);
         mLangSpinner.setOnItemSelectedListener(this);
 
-        mNameEdit = (EditText) v.findViewById(R.id.name_edit);
-        mSubNameEdit = (EditText) v.findViewById(R.id.sub_name_edit);
-        mDescEdit = (EditText) v.findViewById(R.id.desc_edit);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -92,45 +95,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
         };
         mNameEdit.addTextChangedListener(textWatcher);
 
-        mAddButton = (Button) v.findViewById(R.id.add_btn);
         mAddButton.setEnabled(false);
-        mAddButton.setOnClickListener(v1 -> {
-            if (mWord != null) {
-                mWord.text = mNameEdit.getText().toString();
-                mWord.subText = mSubNameEdit.getText().toString();
-                mWord.desc = mDescEdit.getText().toString();
-                mWord.lang = mLang;
-                mWord.save();
-                if(mListener != null) {
-                    mListener.onTableWordEvent(DataEventType.CREATE, mWord);
-                }
-            } else {
-                mWord = new Word(mLang, mNameEdit.getText().toString(),
-                        mSubNameEdit.getText().toString(),
-                        mDescEdit.getText().toString());
-                mWord.save();
-                if(mListener != null) {
-                    mListener.onTableWordEvent(DataEventType.UPDATE, mWord);
-                }
-            }
-
-            setMode();
-        });
-
-        mTranslationsLayout = (ViewGroup) v.findViewById(R.id.translations_layout);
-        mAddTranslationButton = (Button) v.findViewById(R.id.add_translation_btn);
-        mAddTranslationButton.setOnClickListener(v12 -> {
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag(TAG_ADD_TRANSLATION_DIALOG);
-            if (prev != null) {
-                ft.remove(prev);
-            }
-
-            DialogFragment newFragment = AddTranslationDialogFragment.newInstance(mWord);
-            newFragment.show(ft, TAG_ADD_TRANSLATION_DIALOG);
-        });
-
-        mTranslationRecycler = (RecyclerView) v.findViewById(R.id.translation_list);
 
         mTranslationRecycler.setHasFixedSize(true);
         mTranslationRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -161,6 +126,43 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
             mListener = (TableWordListener) context;
         }
     }
+
+    @OnClick(R.id.add_btn)
+    public void onAddButtonClicked() {
+        if (mWord != null) {
+            mWord.text = mNameEdit.getText().toString();
+            mWord.subText = mSubNameEdit.getText().toString();
+            mWord.desc = mDescEdit.getText().toString();
+            mWord.lang = mLang;
+            mWord.save();
+            if(mListener != null) {
+                mListener.onTableWordEvent(DataEventType.CREATE, mWord);
+            }
+        } else {
+            mWord = new Word(mLang, mNameEdit.getText().toString(),
+                    mSubNameEdit.getText().toString(),
+                    mDescEdit.getText().toString());
+            mWord.save();
+            if(mListener != null) {
+                mListener.onTableWordEvent(DataEventType.UPDATE, mWord);
+            }
+        }
+
+        setMode();
+    }
+
+    @OnClick(R.id.add_translation_btn)
+    public void onAddTranslationButtonClicked() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment prev = getActivity().getSupportFragmentManager().findFragmentByTag(TAG_ADD_TRANSLATION_DIALOG);
+        if (prev != null) {
+            ft.remove(prev);
+        }
+
+        DialogFragment newFragment = AddTranslationDialogFragment.newInstance(mWord);
+        newFragment.show(ft, TAG_ADD_TRANSLATION_DIALOG);
+    }
+
 
     @Override
     public void onDetach() {
