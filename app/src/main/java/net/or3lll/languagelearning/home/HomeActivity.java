@@ -113,6 +113,12 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.fab)
+    public void onFabClicked() {
+        Intent testIntent = new Intent(HomeActivity.this, WordListActivity.class);
+        startActivity(testIntent);
+    }
+
     private void addDrawerItems() {
         String[] osArray = { "Langues", "Mots", "Paramètres" };
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
@@ -141,27 +147,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_home, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
-        switch (item.getItemId()) {
-            case R.id.action_add_word:
-                Intent testIntent = new Intent(HomeActivity.this, WordListActivity.class);
-                startActivity(testIntent);
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

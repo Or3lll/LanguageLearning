@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LangListActivity extends AppCompatActivity
         implements LangRecyclerViewAdapter.OnClickListener,
@@ -89,30 +90,16 @@ public class LangListActivity extends AppCompatActivity
         ft.commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_lang, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_add_lang) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_ADD_DIALOG);
-            if (prev != null) {
-                ft.remove(prev);
-            }
-
-            DialogFragment newFragment = DefaultLangsDialogFragment.newInstance();
-            newFragment.show(ft, TAG_ADD_DIALOG);
-
-            return true;
+    @OnClick(R.id.fab)
+    public void onFabClicked() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_ADD_DIALOG);
+        if (prev != null) {
+            ft.remove(prev);
         }
 
-        return super.onOptionsItemSelected(item);
+        DialogFragment newFragment = DefaultLangsDialogFragment.newInstance();
+        newFragment.show(ft, TAG_ADD_DIALOG);
     }
 
     @Override

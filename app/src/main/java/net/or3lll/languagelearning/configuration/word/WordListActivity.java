@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.DefaultLangsDialogFragment;
 import net.or3lll.languagelearning.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
@@ -29,6 +30,7 @@ import net.or3lll.languagelearning.data.Word;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class WordListActivity extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener,
@@ -91,28 +93,16 @@ public class WordListActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_word, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_add_word) {
-            if(editContainer != null) {
-                mEditWordFragment = EditWordFragment.newInstance(null, (Lang) mLangSpinner.getSelectedItem());
-                getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
-            } else {
-                Intent i = new Intent(this, EditWordActivity.class);
-                i.putExtra(EditWordActivity.LANG_PARAM, (Lang) mLangSpinner.getSelectedItem());
-                startActivity(i);
-            }
-            return true;
+    @OnClick(R.id.fab)
+    public void onFabClicked() {
+        if(editContainer != null) {
+            mEditWordFragment = EditWordFragment.newInstance(null, (Lang) mLangSpinner.getSelectedItem());
+            getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();
+        } else {
+            Intent i = new Intent(this, EditWordActivity.class);
+            i.putExtra(EditWordActivity.LANG_PARAM, (Lang) mLangSpinner.getSelectedItem());
+            startActivity(i);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
