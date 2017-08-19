@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Language Learning</string>
 
+    <!-- Home -->
+    <string name="home_lang_src">Proposition</string>
+    <string name="home_lang_dst">A trouver</string>
+    <string name="home_start_test">Commencer</string>
+
     <!-- Test -->
     <string name="display_subtext">Afficher la phonétique</string>
     <string name="check">Contrôler</string>

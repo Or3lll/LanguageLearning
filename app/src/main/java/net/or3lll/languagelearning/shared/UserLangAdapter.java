@@ -1,9 +1,10 @@
-package net.or3lll.languagelearning.configuration.shared;
+package net.or3lll.languagelearning.shared;
 
 import android.util.SparseArray;
 
 import com.orm.SugarRecord;
 
+import net.or3lll.languagelearning.configuration.shared.LangAdapter;
 import net.or3lll.languagelearning.data.Lang;
 
 /**

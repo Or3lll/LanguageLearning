@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".JpFrActivity"/>
+        <activity android:name=".VocabularyTestActivity"/>
         <activity
             android:name=".configuration.lang.LangListActivity"
             android:parentActivityName=".home.HomeActivity">

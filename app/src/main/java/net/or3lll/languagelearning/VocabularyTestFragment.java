@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
@@ -34,6 +35,9 @@ public class VocabularyTestFragment extends Fragment {
     @BindView(R.id.subtext_text) TextView subTextTextView;
     @BindView(R.id.answer_edittext) EditText answerEditText;
     @BindView(R.id.display_subtext_btn) Button displaySubTextBtn;
+
+    private Lang langSrc;
+    private Lang langDst;
 
     private Word mWord;
 
@@ -69,6 +73,13 @@ public class VocabularyTestFragment extends Fragment {
         setWords();
 
         return v;
+    }
+
+    public void setLangs(Lang langSrc, Lang langDst) {
+        this.langSrc = langSrc;
+        this.langDst = langDst;
+
+        setWords();
     }
 
     @OnClick(R.id.display_subtext_btn)
@@ -122,27 +133,37 @@ public class VocabularyTestFragment extends Fragment {
     }
 
     private void setWords() {
-        List<Translation> translations = Translation.listAll(Translation.class);
-        int index = (int) (Math.random() * (double)Translation.count(Translation.class));
-        Translation translation = Translation.find(Translation.class, null, null, null, null, index + ", 1").get(0);
+        if (langSrc != null && langDst != null) {
 
-        if(attempts % 2 == 0) {
-            mWord = translation.word1;
-        }
-        else {
-            mWord = translation.word2;
-        }
+            List<Translation> translations = Translation.findWithQuery(Translation.class,
+                    "SELECT * " +
+                            "FROM Translation t " +
+                            "LEFT JOIN Word w1 ON t.word1 = w1.id " +
+                            "LEFT JOIN Word w2 ON t.word2 = w2.id " +
+                            "WHERE (w1.lang = ? OR w2.lang = ?) " +
+                            "   AND (w1.lang = ? OR w2.lang = ?) "
+                    , new String[] {langSrc.getId().toString(), langSrc.getId().toString(),
+                            langDst.getId().toString(), langDst.getId().toString()});
 
-        textTextView.setText(mWord.text);
-        if(mWord.subText != null && !mWord.subText.isEmpty()) {
-            subTextTextView.setText(mWord.subText);
-            displaySubTextBtn.setVisibility(View.VISIBLE);
-            subTextTextView.setVisibility(View.INVISIBLE);
+            int index = (int) (Math.random() * (double) translations.size());
+            Translation translation = translations.get(index);
+
+            if (translation.word1.lang.getId() == langSrc.getId()) {
+                mWord = translation.word1;
+            } else {
+                mWord = translation.word2;
+            }
+
+            textTextView.setText(mWord.text);
+            if (mWord.subText != null && !mWord.subText.isEmpty()) {
+                subTextTextView.setText(mWord.subText);
+                displaySubTextBtn.setVisibility(View.VISIBLE);
+                subTextTextView.setVisibility(View.INVISIBLE);
+            } else {
+                displaySubTextBtn.setVisibility(View.GONE);
+                subTextTextView.setVisibility(View.GONE);
+            }
+            answerEditText.setText("");
         }
-        else {
-            displaySubTextBtn.setVisibility(View.GONE);
-            subTextTextView.setVisibility(View.GONE);
-        }
-        answerEditText.setText("");
     }
 }

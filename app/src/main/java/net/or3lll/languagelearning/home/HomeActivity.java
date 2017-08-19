@@ -15,51 +15,49 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.orm.SugarRecord;
 
-import net.or3lll.languagelearning.JpFrActivity;
+import net.or3lll.languagelearning.VocabularyTestActivity;
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.configuration.lang.DeleteLangDialogFragment;
 import net.or3lll.languagelearning.configuration.lang.LangListActivity;
 import net.or3lll.languagelearning.configuration.word.WordListActivity;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.settings.SettingsActivity;
+import net.or3lll.languagelearning.shared.UserLangAdapter;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG_ADVICE_DIALOG = "advice_dialog";
 
-    private ListView mDrawerList;
+    @BindView(R.id.nav) ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
 
     private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout mDrawerLayout;
+    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.lang_src) Spinner mLangSrc;
+    @BindView(R.id.lang_dst) Spinner mLangDst;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
 
         // ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Boutons de l'Activity
-        Button testButton = (Button) findViewById(R.id.test_btn);
-
-        testButton.setOnClickListener(v -> {
-            Intent testIntent = new Intent(HomeActivity.this, JpFrActivity.class);
-            startActivity(testIntent);
-        });
-
         // Navigation Drawer
-        mDrawerList = (ListView) findViewById(R.id.navList);
         addDrawerItems();
         mDrawerList.setOnItemClickListener((parent, view, position, id) -> {
             // Todo: ne pas gérer ça avec la position
@@ -82,8 +80,6 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-
         setupDrawer();
 
         if(SugarRecord.count(Lang.class) < 2) {
@@ -95,6 +91,25 @@ public class HomeActivity extends AppCompatActivity {
 
             DialogFragment newFragment = LangMinimumAdviceDialogFragment.newInstance();
             newFragment.show(ft, TAG_ADVICE_DIALOG);
+        } else {
+            setSpinnerLangs();
+        }
+    }
+
+    private void setSpinnerLangs() {
+        mLangSrc.setAdapter(new UserLangAdapter());
+        mLangDst.setAdapter(new UserLangAdapter());
+    }
+
+    @OnClick(R.id.test_launch)
+    public void onTestButtonClick() {
+        Lang langSrc = (Lang) mLangSrc.getSelectedItem();
+        Lang langDst = (Lang) mLangDst.getSelectedItem();
+        if (langSrc != null && langDst != null && langSrc.getId() != langDst.getId()) {
+            Intent testIntent = new Intent(HomeActivity.this, VocabularyTestActivity.class);
+            testIntent.putExtra(VocabularyTestActivity.BUNDLE_LANG_SRC, langSrc);
+            testIntent.putExtra(VocabularyTestActivity.BUNDLE_LANG_DST, langDst);
+            startActivity(testIntent);
         }
     }
 
@@ -150,11 +165,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
@@ -164,4 +174,5 @@ public class HomeActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }}
+    }
+}
