@@ -172,10 +172,10 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
 
         if(name.length() > 0) {
             if(mWord != null) {
-                return (Word.count(Word.class, "text = ? AND id != ?", new String[] {name, mWord.getId().toString()}, null, null, null) == 0);
+                return (Word.count(Word.class, "text = ? AND lang = ? AND id != ?", new String[] {name, mLang.getId().toString(), mWord.getId().toString()}, null, null, null) == 0);
             }
             else {
-                return (Word.count(Word.class, "text = ?", new String[] {name}, null, null, null) == 0);
+                return (Word.count(Word.class, "text = ? AND lang = ?", new String[] {name, mLang.getId().toString()}, null, null, null) == 0);
             }
 /*
 
