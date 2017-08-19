@@ -45,6 +45,12 @@ public class EditWordActivity
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     public void onTableTranslationEvent(DataEventType eventType, Translation translation) {
         if(mEditWordFragment != null) {
             mEditWordFragment.refreshTranslations();

@@ -32,7 +32,7 @@ public class VocabularyTestFragment extends Fragment {
 
     @BindView(R.id.text_text) TextView textTextView;
     @BindView(R.id.subtext_text) TextView subTextTextView;
-    @BindView(R.id.answer_edittext) private EditText answerEditText;
+    @BindView(R.id.answer_edittext) EditText answerEditText;
     @BindView(R.id.display_subtext_btn) Button displaySubTextBtn;
 
     private Word mWord;
@@ -144,7 +144,5 @@ public class VocabularyTestFragment extends Fragment {
             subTextTextView.setVisibility(View.GONE);
         }
         answerEditText.setText("");
-
-
     }
 }
