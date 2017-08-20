@@ -66,13 +66,13 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
         holder.mContentView.setText(mValues.get(position).text);
 
-        holder.mView.setOnClickListener(v -> {
+        holder.mContentView.setOnClickListener(v -> {
             if (mListener != null) {
                 mListener.onClick(holder.mItem);
             }
         });
 
-        holder.mView.setOnLongClickListener(v -> {
+        holder.mContentView.setOnLongClickListener(v -> {
             if(mListener != null) {
                 mListener.onLongClick(holder.mItem);
                 return true;
@@ -88,14 +88,12 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
         @BindView(R.id.content) TextView mContentView;
         public Word mItem;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-            mView = view;
         }
 
         @Override
