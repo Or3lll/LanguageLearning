@@ -32,7 +32,7 @@ public class Lang extends BaseObservable implements Parcelable {
         defaultLangs.add(new Lang("Français", "fr_FR")); //TODO a mettre dans les ressources
         defaultLangs.add(new Lang("Anglais", "en_GB")); //TODO a mettre dans les ressources
         defaultLangs.add(new Lang("Russe", "ru_RU")); //TODO a mettre dans les ressources
-        defaultLangs.add(new Lang("Japonais", "jn_JP")); //TODO a mettre dans les ressources
+        defaultLangs.add(new Lang("Japonais", "ja_JP")); //TODO a mettre dans les ressources
     }
 
     // TODO voir si c'est pertinant de stocker comme ça
@@ -41,7 +41,7 @@ public class Lang extends BaseObservable implements Parcelable {
         flags.put("fr_FR", R.drawable.french_flag);
         flags.put("en_GB", R.drawable.uk_flag);
         flags.put("ru_RU", R.drawable.russian_flag);
-        flags.put("jn_JP", R.drawable.japan_flag);
+        flags.put("ja_JP", R.drawable.japan_flag);
     }
 
     public static String JSON_PARAM_GROUP_NAME = "langs";

@@ -1,6 +1,7 @@
 package net.or3lll.languagelearning.configuration.word;
 
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,8 @@ import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,6 +50,10 @@ public class WordListActivity extends AppCompatActivity
 
     @Nullable @BindView(R.id.edit_container) FrameLayout editContainer;
     private EditWordFragment mEditWordFragment;
+
+    private TextToSpeech mTts;
+    private boolean mIsTtsInit = false;
+    private Word mWordTts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +86,15 @@ public class WordListActivity extends AppCompatActivity
         super.onResume();
 
         updateList();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mTts != null) {
+            mTts.shutdown();
+        }
     }
 
     private void updateList() {
@@ -115,6 +131,29 @@ public class WordListActivity extends AppCompatActivity
 
     @Override
     public void onClick(Word item) {
+        mWordTts = item;
+        if (mIsTtsInit) {
+            speakWord();
+        } else {
+            mTts = new TextToSpeech(getApplicationContext(), status -> {
+                if (status == TextToSpeech.SUCCESS) {
+                    mIsTtsInit = true;
+                    speakWord();
+                }
+            });
+        }
+    }
+
+    private void speakWord() {
+        String[] localeParts = mWordTts.lang.getIsoCode().split("_");
+        Locale locale = new Locale.Builder().setLanguage(localeParts[0]).setRegion(localeParts[1]).build();
+        mTts.setLanguage(locale);
+
+        mTts.speak(mWordTts.text, TextToSpeech.QUEUE_FLUSH, null, "12");
+    }
+
+    @Override
+    public void onEditClick(Word item) {
         if(editContainer != null) {
             mEditWordFragment = EditWordFragment.newInstance(item, null);
             getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, mEditWordFragment).commit();

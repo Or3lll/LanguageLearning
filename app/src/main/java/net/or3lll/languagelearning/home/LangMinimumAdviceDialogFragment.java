@@ -45,7 +45,7 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                             "\t\t\"isoCode\": \"fr_FR\",\n" +
                             "\t\t\"name\": \"Français\"\n" +
                             "\t}, {\n" +
-                            "\t\t\"isoCode\": \"jn_JP\",\n" +
+                            "\t\t\"isoCode\": \"ja_JP\",\n" +
                             "\t\t\"name\": \"Japonais\"\n" +
                             "\t}],\n" +
                             "\t\"words\": [{\n" +
@@ -54,7 +54,7 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                             "\t\t\"subText\": \"\",\n" +
                             "\t\t\"desc\": \"\"\n" +
                             "\t}, {\n" +
-                            "\t\t\"isoCode\": \"jn_JP\",\n" +
+                            "\t\t\"isoCode\": \"ja_JP\",\n" +
                             "\t\t\"text\": \"わたし\",\n" +
                             "\t\t\"subText\": \"\",\n" +
                             "\t\t\"desc\": \"\"\n" +
@@ -69,7 +69,7 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                             "\t\t\"subText\": \"\",\n" +
                             "\t\t\"desc\": \"\"\n" +
                             "\t}, {\n" +
-                            "\t\t\"isoCode\": \"jn_JP\",\n" +
+                            "\t\t\"isoCode\": \"ja_JP\",\n" +
                             "\t\t\"text\": \"わたしたち\",\n" +
                             "\t\t\"subText\": \"\",\n" +
                             "\t\t\"desc\": \"\"\n" +
@@ -78,16 +78,16 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                             "\t\t\"isoCode1\": \"je\",\n" +
                             "\t\t\"text1\": \"fr_FR\",\n" +
                             "\t\t\"isoCode2\": \"わたし\",\n" +
-                            "\t\t\"text2\": \"jn_JP\"\n" +
+                            "\t\t\"text2\": \"ja_JP\"\n" +
                             "\t}, {\n" +
-                            "\t\t\"isoCode1\": \"jn_JP\",\n" +
+                            "\t\t\"isoCode1\": \"ja_JP\",\n" +
                             "\t\t\"text1\": \"わたし\",\n" +
                             "\t\t\"isoCode2\": \"fr_FR\",\n" +
                             "\t\t\"text2\": \"moi\"\n" +
                             "\t}, {\n" +
                             "\t\t\"isoCode1\": \"fr_FR\",\n" +
                             "\t\t\"text1\": \"nous\",\n" +
-                            "\t\t\"isoCode2\": \"jn_JP\",\n" +
+                            "\t\t\"isoCode2\": \"ja_JP\",\n" +
                             "\t\t\"text2\": \"わたしたち\"\n" +
                             "\t}]\n" +
                             "}";

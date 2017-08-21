@@ -126,7 +126,7 @@ public class ImporterTest extends ApplicationTestCase<Application> {
             "\"isoCode\": \"fr_FR\"," +
             "\"name\": \"Français\"" +
             "}, {" +
-            "\"isoCode\": \"jn_JP\"," +
+            "\"isoCode\": \"ja_JP\"," +
             "\"name\": \"Japonais\"" +
             "}]," +
             "\"words\": [{" +
@@ -135,7 +135,7 @@ public class ImporterTest extends ApplicationTestCase<Application> {
             "\"subText\": \"\"," +
             "\"desc\": \"\"" +
             "}, {" +
-            "\"isoCode\": \"jn_JP\"," +
+            "\"isoCode\": \"ja_JP\"," +
             "\"text\": \"わたし\"," +
             "\"subText\": \"\"," +
             "\"desc\": \"\"" +
@@ -150,7 +150,7 @@ public class ImporterTest extends ApplicationTestCase<Application> {
             "\"subText\": \"\"," +
             "\"desc\": \"\"" +
             "}, {" +
-            "\"isoCode\": \"jn_JP\"," +
+            "\"isoCode\": \"ja_JP\"," +
             "\"text\": \"わたしたち\"," +
             "\"subText\": \"\"," +
             "\"desc\": \"\"" +
@@ -158,7 +158,7 @@ public class ImporterTest extends ApplicationTestCase<Application> {
             "\"translations\": [{" +
             "\"isoCode1\": \"fr_FR\"," +
             "\"text1\": \"je\"," +
-            "\"isoCode2\": \"jn_JP\"," +
+            "\"isoCode2\": \"ja_JP\"," +
             "\"text2\": \"わたし\"" +
             "}]" +
             "}";
@@ -171,11 +171,11 @@ public class ImporterTest extends ApplicationTestCase<Application> {
         assertEquals(1, translations.size());
 
         Translation translation = translations.get(0);
-        assertTrue((translation.word1.text.equals("わたし") && translation.word1.lang.getIsoCode().equals("jn_JP")
+        assertTrue((translation.word1.text.equals("わたし") && translation.word1.lang.getIsoCode().equals("ja_JP")
                 && translation.word2.text.equals("je") && translation.word2.lang.getIsoCode().equals("fr_FR"))
                 ||
                 (translation.word1.text.equals("je") && translation.word1.lang.getIsoCode().equals("fr_FR")
-                        && translation.word2.text.equals("わたし") && translation.word2.lang.getIsoCode().equals("jn_JP"))
+                        && translation.word2.text.equals("わたし") && translation.word2.lang.getIsoCode().equals("ja_JP"))
         );
     }
 

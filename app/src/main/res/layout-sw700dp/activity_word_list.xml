@@ -47,7 +47,7 @@
                     android:layout_height="match_parent"
                     app:layoutManager="LinearLayoutManager"
                     tools:context=".configuration.lang.LangListFragment"
-                    tools:listitem="@layout/fragment_lang" />
+                    tools:listitem="@layout/layout_simple_word" />
 
             </LinearLayout>
 

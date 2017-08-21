@@ -5,14 +5,12 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
-import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +49,7 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_lang, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_simple_word, parent, false);
         return new ViewHolder(view);
     }
 
@@ -72,6 +70,12 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
             }
         });
 
+        holder.mEdit.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onEditClick(holder.mItem);
+            }
+        });
+
         holder.mContentView.setOnLongClickListener(v -> {
             if(mListener != null) {
                 mListener.onLongClick(holder.mItem);
@@ -89,6 +93,8 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.content) TextView mContentView;
+        @BindView(R.id.edit) ImageView mEdit;
+
         public Word mItem;
 
         public ViewHolder(View view) {
@@ -104,6 +110,7 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
     public interface OnClickListener {
         void onClick(Word item);
+        void onEditClick(Word item);
         void onLongClick(Word item);
     }
 }
