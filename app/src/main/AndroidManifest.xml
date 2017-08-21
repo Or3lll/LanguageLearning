@@ -35,7 +35,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".test.VocabularyTestActivity"
-            android:parentActivityName=".home.HomeActivity">
+            android:parentActivityName=".home.HomeActivity"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".home.HomeActivity"/>

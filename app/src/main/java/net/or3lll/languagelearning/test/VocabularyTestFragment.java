@@ -1,7 +1,10 @@
 package net.or3lll.languagelearning.test;
 
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,29 +94,23 @@ public class VocabularyTestFragment extends Fragment {
 
     @OnClick(R.id.check_btn)
     public void onCheckButtonClicked() {
-        boolean hasCorrectResult = false;
         attempts++;
 
-        for (Translation translation :
-                Translation.listAll(Translation.class)) {
-            if (translation.word1.getId() == mWord.getId()) {
-                if(translation.word2.text.equalsIgnoreCase(answerEditText.getText().toString())) {
-                    hasCorrectResult = true;
-                }
-            }
-
-            else if (translation.word2.getId() == mWord.getId()) {
-                if(translation.word1.text.equalsIgnoreCase(answerEditText.getText().toString())) {
-                    hasCorrectResult = true;
-                }
-            }
-        }
-
-        if(hasCorrectResult) {
+        if(mWord.text.equalsIgnoreCase(answerEditText.getText().toString())) {
             score++;
-            Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.good_answer), score, attempts), Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(getView(),
+                    String.format(getString(R.string.good_answer), score, attempts),
+                    BaseTransientBottomBar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(),
+                    android.R.color.holo_green_light));
+            snackbar.show();
         } else {
-            Toast.makeText(VocabularyTestFragment.this.getContext(), String.format(getString(R.string.bad_answer), score, attempts), Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(getView(),
+                    String.format(getString(R.string.bad_answer), mWord.text, score, attempts),
+                    BaseTransientBottomBar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(),
+                    android.R.color.holo_red_light));
+            snackbar.show();
         }
 
         setWords();
@@ -149,15 +146,18 @@ public class VocabularyTestFragment extends Fragment {
             int index = (int) (Math.random() * (double) translations.size());
             Translation translation = translations.get(index);
 
+            Word wordSrc;
             if (translation.word1.lang.getId() == langSrc.getId()) {
-                mWord = translation.word1;
-            } else {
                 mWord = translation.word2;
+                wordSrc = translation.word1;
+            } else {
+                mWord = translation.word1;
+                wordSrc = translation.word2;
             }
 
-            textTextView.setText(mWord.text);
-            if (mWord.subText != null && !mWord.subText.isEmpty()) {
-                subTextTextView.setText(mWord.subText);
+            textTextView.setText(wordSrc.text);
+            if (wordSrc.subText != null && !wordSrc.subText.isEmpty()) {
+                subTextTextView.setText(wordSrc.subText);
                 displaySubTextBtn.setVisibility(View.VISIBLE);
                 subTextTextView.setVisibility(View.INVISIBLE);
             } else {
