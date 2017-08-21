@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.lang;
+package net.or3lll.languagelearning.configuration.lang.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;

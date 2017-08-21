@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.word;
+package net.or3lll.languagelearning.configuration.word.edit;
 
 
 import android.content.Context;
@@ -20,6 +20,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.word.edit.dialog.AddTranslationDialogFragment;
+import net.or3lll.languagelearning.configuration.word.edit.dialog.DeleteTranslationDialogFragment;
+import net.or3lll.languagelearning.configuration.word.list.TableWordListener;
 import net.or3lll.languagelearning.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;

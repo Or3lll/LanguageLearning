@@ -34,27 +34,32 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".VocabularyTestActivity"/>
-        <activity
-            android:name=".configuration.lang.LangListActivity"
+        <activity android:name=".test.VocabularyTestActivity"
             android:parentActivityName=".home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".home.HomeActivity"/>
         </activity>
         <activity
-            android:name=".configuration.lang.EditLangActivity"
-            android:parentActivityName=".configuration.lang.LangListActivity"/>
-        <activity
-            android:name=".configuration.word.WordListActivity"
+            android:name=".configuration.lang.list.LangListActivity"
             android:parentActivityName=".home.HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".home.HomeActivity"/>
         </activity>
         <activity
-            android:name=".configuration.word.EditWordActivity"
-            android:parentActivityName=".configuration.word.WordListActivity"/>
+            android:name=".configuration.lang.edit.EditLangActivity"
+            android:parentActivityName=".configuration.lang.list.LangListActivity"/>
+        <activity
+            android:name=".configuration.word.list.WordListActivity"
+            android:parentActivityName=".home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".home.HomeActivity"/>
+        </activity>
+        <activity
+            android:name=".configuration.word.edit.EditWordActivity"
+            android:parentActivityName=".configuration.word.list.WordListActivity"/>
         <activity
             android:name=".settings.SettingsActivity"
             android:parentActivityName=".home.HomeActivity"/>

@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.word;
+package net.or3lll.languagelearning.configuration.word.edit;
 
 import android.view.LayoutInflater;
 import android.view.View;

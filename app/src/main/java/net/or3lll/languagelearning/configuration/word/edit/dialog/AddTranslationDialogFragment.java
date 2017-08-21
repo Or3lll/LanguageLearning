@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.word;
+package net.or3lll.languagelearning.configuration.word.edit.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,10 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.word.edit.WordSearchAdapter;
+import net.or3lll.languagelearning.configuration.word.edit.TableTranslationListener;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;

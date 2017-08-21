@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.lang;
+package net.or3lll.languagelearning.configuration.lang.edit;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.list.TableLangListener;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 

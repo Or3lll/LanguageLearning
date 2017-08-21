@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,10 +20,10 @@ import android.widget.Toast;
 
 import com.orm.SugarRecord;
 
-import net.or3lll.languagelearning.VocabularyTestActivity;
+import net.or3lll.languagelearning.test.VocabularyTestActivity;
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.configuration.lang.LangListActivity;
-import net.or3lll.languagelearning.configuration.word.WordListActivity;
+import net.or3lll.languagelearning.configuration.lang.list.LangListActivity;
+import net.or3lll.languagelearning.configuration.word.list.WordListActivity;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.settings.SettingsActivity;
 import net.or3lll.languagelearning.shared.UserLangAdapter;

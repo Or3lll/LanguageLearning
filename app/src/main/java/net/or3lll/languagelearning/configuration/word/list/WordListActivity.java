@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.word;
+package net.or3lll.languagelearning.configuration.word.list;
 
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
@@ -12,9 +12,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -22,7 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
-import net.or3lll.languagelearning.configuration.lang.DefaultLangsDialogFragment;
+import net.or3lll.languagelearning.configuration.word.edit.EditWordActivity;
+import net.or3lll.languagelearning.configuration.word.edit.EditWordFragment;
+import net.or3lll.languagelearning.configuration.word.edit.TableTranslationListener;
 import net.or3lll.languagelearning.shared.UserLangAdapter;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;

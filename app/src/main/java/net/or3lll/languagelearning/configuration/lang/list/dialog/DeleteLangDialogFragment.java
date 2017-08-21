@@ -1,15 +1,15 @@
-package net.or3lll.languagelearning.configuration.lang;
+package net.or3lll.languagelearning.configuration.lang.list.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import com.orm.SugarRecord;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.list.TableLangListener;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 

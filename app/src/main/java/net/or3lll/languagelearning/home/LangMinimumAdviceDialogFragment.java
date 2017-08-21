@@ -3,18 +3,12 @@ package net.or3lll.languagelearning.home;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.orm.SugarRecord;
-
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.importer.DataImporter;
-import net.or3lll.languagelearning.configuration.lang.LangListActivity;
-import net.or3lll.languagelearning.data.Lang;
-import net.or3lll.languagelearning.data.Translation;
-import net.or3lll.languagelearning.data.Word;
+import net.or3lll.languagelearning.configuration.lang.list.LangListActivity;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

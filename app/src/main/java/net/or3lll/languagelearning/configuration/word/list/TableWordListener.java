@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.word;
+package net.or3lll.languagelearning.configuration.word.list;
 
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Word;

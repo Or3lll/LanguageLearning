@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.lang;
+package net.or3lll.languagelearning.configuration.lang.list;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -11,18 +11,17 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.edit.EditLangActivity;
+import net.or3lll.languagelearning.configuration.lang.edit.EditLangFragment;
+import net.or3lll.languagelearning.configuration.lang.list.dialog.DefaultLangsDialogFragment;
+import net.or3lll.languagelearning.configuration.lang.list.dialog.DeleteLangDialogFragment;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

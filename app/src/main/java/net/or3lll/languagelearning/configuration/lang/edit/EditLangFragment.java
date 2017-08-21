@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning.configuration.lang;
+package net.or3lll.languagelearning.configuration.lang.edit;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -9,17 +9,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.orm.SugarRecord;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.lang.list.TableLangListener;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.databinding.FragmentEditLangBinding;
-
-import java.util.List;
 
 
 public class EditLangFragment extends Fragment {

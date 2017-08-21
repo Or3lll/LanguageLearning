@@ -1,4 +1,4 @@
-package net.or3lll.languagelearning;
+package net.or3lll.languagelearning.test;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;

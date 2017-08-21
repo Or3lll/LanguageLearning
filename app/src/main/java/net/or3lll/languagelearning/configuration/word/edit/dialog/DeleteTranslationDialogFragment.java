@@ -1,13 +1,13 @@
-package net.or3lll.languagelearning.configuration.word;
+package net.or3lll.languagelearning.configuration.word.edit.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import net.or3lll.languagelearning.R;
+import net.or3lll.languagelearning.configuration.word.edit.TableTranslationListener;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Translation;
 
