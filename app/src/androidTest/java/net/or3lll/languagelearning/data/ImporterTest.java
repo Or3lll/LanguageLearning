@@ -55,7 +55,7 @@ public class ImporterTest extends ApplicationTestCase<Application> {
     public void importWordsOnly() throws Exception {
         clearData();
 
-        SugarRecord.save(new Lang("Français", "fr_FR"));
+        SugarRecord.save(new Lang("Français", "fr_FR", ""));
 
         String dataToImport =
             "{" +
@@ -84,8 +84,8 @@ public class ImporterTest extends ApplicationTestCase<Application> {
     public void importTranslationsOnly() throws Exception {
         clearData();
 
-        Lang frenchLang = new Lang("Français", "fr_FR");
-        Lang russianLang = new Lang("Russe", "ru_RU");
+        Lang frenchLang = new Lang("Français", "fr_FR", "");
+        Lang russianLang = new Lang("Russe", "ru_RU", "");
         SugarRecord.save(frenchLang);
         SugarRecord.save(russianLang);
         Word.save(new Word(frenchLang, "voiture", "", ""));
@@ -124,10 +124,12 @@ public class ImporterTest extends ApplicationTestCase<Application> {
         String initJson = "{" +
             "\"langs\": [{" +
             "\"isoCode\": \"fr_FR\"," +
-            "\"name\": \"Français\"" +
+            "\"name\": \"Français\"," +
+            "\"flag\": \"\"" +
             "}, {" +
             "\"isoCode\": \"ja_JP\"," +
-            "\"name\": \"Japonais\"" +
+            "\"name\": \"Japonais\"," +
+            "\"flag\": \"\"" +
             "}]," +
             "\"words\": [{" +
             "\"isoCode\": \"fr_FR\"," +

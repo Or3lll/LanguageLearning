@@ -20,17 +20,17 @@ public class LangTest extends ApplicationTestCase<Application> {
 
     @Test
     public void isoCode_isValid() throws Exception {
-        assertEquals(true, new Lang("aaa", "aa_BB").isValid());
+        assertEquals(true, new Lang("aaa", "aa_BB", "").isValid());
 
-        assertEquals(false, new Lang("aaa", "").isValid());
-        assertEquals(false, new Lang("aaa", "a_B").isValid());
-        assertEquals(false, new Lang("aaa", "a_BB").isValid());
-        assertEquals(false, new Lang("aaa", "a_BBB").isValid());
-        assertEquals(false, new Lang("aaa", "aa_B").isValid());
-        assertEquals(false, new Lang("aaa", "aaa_B").isValid());
-        assertEquals(false, new Lang("aaa", "AA_BB").isValid());
-        assertEquals(false, new Lang("aaa", "aa_bb").isValid());
-        assertEquals(false, new Lang("aaa", "aaBB").isValid());
-        assertEquals(false, new Lang("aaa", "aa-BB").isValid());
+        assertEquals(false, new Lang("aaa", "", "").isValid());
+        assertEquals(false, new Lang("aaa", "a_B", "").isValid());
+        assertEquals(false, new Lang("aaa", "a_BB", "").isValid());
+        assertEquals(false, new Lang("aaa", "a_BBB", "").isValid());
+        assertEquals(false, new Lang("aaa", "aa_B", "").isValid());
+        assertEquals(false, new Lang("aaa", "aaa_B", "").isValid());
+        assertEquals(false, new Lang("aaa", "AA_BB", "").isValid());
+        assertEquals(false, new Lang("aaa", "aa_bb", "").isValid());
+        assertEquals(false, new Lang("aaa", "aaBB", "").isValid());
+        assertEquals(false, new Lang("aaa", "aa-BB", "").isValid());
     }
 }

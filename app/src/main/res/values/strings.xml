@@ -17,6 +17,7 @@
     <string name="lang_activity_title">Langues</string>
             <!-- Edit -->
     <string name="lang_edit_hint_name">Nom de la langue</string>
+    <string name="lang_edit_hint_flag">Emoji du drapeau</string>
     <string name="lang_edit_hint_iso_code">Code ISO</string>
     <string name="lang_edit_error_iso_code">Code ISO invalide</string>
 

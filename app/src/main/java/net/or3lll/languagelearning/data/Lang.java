@@ -29,44 +29,44 @@ public class Lang extends BaseObservable implements Parcelable {
     // TODO voir si c'est pertinant de stocker comme ça
     public static ArrayList<Lang> defaultLangs = new ArrayList<>();
     static {
-        defaultLangs.add(new Lang("Français", "fr_FR")); //TODO a mettre dans les ressources
-        defaultLangs.add(new Lang("Anglais", "en_GB")); //TODO a mettre dans les ressources
-        defaultLangs.add(new Lang("Russe", "ru_RU")); //TODO a mettre dans les ressources
-        defaultLangs.add(new Lang("Japonais", "ja_JP")); //TODO a mettre dans les ressources
-    }
-
-    // TODO voir si c'est pertinant de stocker comme ça
-    public static ArrayMap<String, Integer> flags = new ArrayMap<>();
-    static {
-        flags.put("fr_FR", R.drawable.french_flag);
-        flags.put("en_GB", R.drawable.uk_flag);
-        flags.put("ru_RU", R.drawable.russian_flag);
-        flags.put("ja_JP", R.drawable.japan_flag);
+        defaultLangs.add(new Lang("Français", "fr_FR",
+                new String(Character.toChars(0x1F1EB)) + new String(Character.toChars(0x1F1F7)))); //TODO a mettre dans les ressources
+        defaultLangs.add(new Lang("Anglais", "en_GB",
+                new String(Character.toChars(0x1F1EC)) + new String(Character.toChars(0x1F1E7)))); //TODO a mettre dans les ressources
+        defaultLangs.add(new Lang("Russe", "ru_RU",
+                new String(Character.toChars(0x1F1F7)) + new String(Character.toChars(0x1F1FA)))); //TODO a mettre dans les ressources
+        defaultLangs.add(new Lang("Japonais", "ja_JP",
+                new String(Character.toChars(0x1F1EF)) + new String(Character.toChars(0x1F1F5)))); //TODO a mettre dans les ressources
     }
 
     public static String JSON_PARAM_GROUP_NAME = "langs";
     public static String JSON_PARAM_ISOCODE = "isoCode";
     public static String JSON_PARAM_NAME = "name";
+    public static String JSON_PARAM_EMOJI_FLAG = "flag";
 
     private Long id;
 
     private String name;
     private String isoCode;
+    private String emojiFlag;
 
     public Lang() {
         this.name = "";
         this.isoCode = "";
+        this.emojiFlag = "";
     }
 
-    public Lang(String name, String isoCode) {
+    public Lang(String name, String isoCode, String emojiFlag) {
         this.name = name;
         this.isoCode = isoCode;
+        this.emojiFlag = emojiFlag;
     }
 
     protected Lang(Parcel in) {
         id = in.readLong();
         name = in.readString();
         isoCode = in.readString();
+        emojiFlag = in.readString();
     }
 
     @Bindable
@@ -79,6 +79,18 @@ public class Lang extends BaseObservable implements Parcelable {
             this.name = name;
             notifyPropertyChanged(BR.name);
             notifyPropertyChanged(BR.valid);
+        }
+    }
+
+    @Bindable
+    public String getEmojiFlag() {
+        return emojiFlag;
+    }
+
+    public void setEmojiFlag(String emojiFlag) {
+        if(!this.emojiFlag.equals(emojiFlag)) {
+            this.emojiFlag = emojiFlag;
+            notifyPropertyChanged(BR.emojiFlag);
         }
     }
 
@@ -144,6 +156,7 @@ public class Lang extends BaseObservable implements Parcelable {
         dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(isoCode);
+        dest.writeString(emojiFlag);
     }
 
     public static Lang getLangByIsoCode(String isoCode) {
@@ -160,6 +173,7 @@ public class Lang extends BaseObservable implements Parcelable {
             JSONObject json = new JSONObject();
             json.put(JSON_PARAM_ISOCODE, isoCode);
             json.put(JSON_PARAM_NAME, name);
+            json.put(JSON_PARAM_EMOJI_FLAG, emojiFlag);
             return json;
         }
         catch (JSONException e) { }
@@ -171,8 +185,9 @@ public class Lang extends BaseObservable implements Parcelable {
         try {
             String isoCode = json.getString(JSON_PARAM_ISOCODE);
             String name = json.getString(JSON_PARAM_NAME);
+            String emojiFlag = json.getString(JSON_PARAM_EMOJI_FLAG);
 
-            Lang lang = new Lang(name, isoCode);
+            Lang lang = new Lang(name, isoCode, emojiFlag);
             if (lang.isValid()) {
                 return lang;
             }

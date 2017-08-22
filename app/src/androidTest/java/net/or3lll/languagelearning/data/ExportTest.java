@@ -32,8 +32,8 @@ public class ExportTest extends ApplicationTestCase<Application> {
     public void export() throws Exception {
         clearData();
 
-        Lang frenchLang = new Lang("Français", "fr_FR");
-        Lang russianLang = new Lang("Russe", "ru_RU");
+        Lang frenchLang = new Lang("Français", "fr_FR", "");
+        Lang russianLang = new Lang("Russe", "ru_RU", "");
         SugarRecord.save(frenchLang);
         SugarRecord.save(russianLang);
         Word word1 = new Word(frenchLang, "voiture", "", "");

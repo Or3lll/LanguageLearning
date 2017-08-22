@@ -55,14 +55,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
         }
         holder.mItem = lang;
 
-        Integer resIdFlag = Lang.flags.get(lang.getIsoCode());
-        if(resIdFlag != null) {
-            holder.mLangFlag.setImageResource(resIdFlag);
-            holder.mLangFlag.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.mLangFlag.setVisibility(View.INVISIBLE);
-        }
+        holder.mLangFlag.setText(lang.getEmojiFlag());
         holder.mlangName.setText(lang.getName());
 
         holder.mView.setOnClickListener(v -> {
@@ -88,7 +81,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        @BindView(R.id.langFlag) ImageView mLangFlag;
+        @BindView(R.id.langFlag) TextView mLangFlag;
         @BindView(R.id.langName) TextView mlangName;
         public Lang mItem;
 

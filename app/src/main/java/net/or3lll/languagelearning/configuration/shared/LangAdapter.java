@@ -72,15 +72,7 @@ abstract public class LangAdapter extends BaseAdapter {
 
         Lang lang = (Lang) getItem(position);
         if(lang != null) {
-            Integer resIdFlag = Lang.flags.get(lang.getIsoCode());
-            if(resIdFlag != null) {
-                holder.getLangFlag().setImageResource(resIdFlag);
-                holder.getLangFlag().setVisibility(View.VISIBLE);
-            }
-            else {
-                holder.getLangFlag().setVisibility(View.INVISIBLE);
-            }
-
+            holder.getLangFlag().setText(lang.getEmojiFlag());
             holder.getLangName().setText(lang.getName());
         }
 
@@ -89,19 +81,19 @@ abstract public class LangAdapter extends BaseAdapter {
 
     private class Holder {
         private View mItemView;
-        private ImageView mlangFlagImageView;
+        private TextView mlangFlagTextView;
         private TextView mLangNameTextView;
 
         public Holder(View itemView) {
             mItemView = itemView;
         }
 
-        public ImageView getLangFlag() {
-            if(mlangFlagImageView == null) {
-                mlangFlagImageView = (ImageView) mItemView.findViewById(R.id.langFlag);
+        public TextView getLangFlag() {
+            if(mlangFlagTextView == null) {
+                mlangFlagTextView = (TextView) mItemView.findViewById(R.id.langFlag);
             }
 
-            return mlangFlagImageView;
+            return mlangFlagTextView;
         }
 
         public TextView getLangName() {

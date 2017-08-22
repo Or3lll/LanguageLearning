@@ -19,6 +19,7 @@ import net.or3lll.languagelearning.configuration.lang.list.TableLangListener;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.databinding.FragmentEditLangBinding;
+import net.or3lll.languagelearning.shared.SimpleTextWatcher;
 
 
 public class EditLangFragment extends Fragment {
@@ -53,24 +54,21 @@ public class EditLangFragment extends Fragment {
         FragmentEditLangBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_lang, container, false);
         binding.setLang(mLang);
 
-        binding.nameEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
+        binding.nameEdit.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 mLang.setName(s.toString());
             }
         });
 
-        binding.isoCodeEdit.addTextChangedListener(new TextWatcher() {
+        binding.flagEdit.addTextChangedListener(new SimpleTextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void afterTextChanged(Editable s) {
+                mLang.setEmojiFlag(s.toString());
+            }
+        });
 
+        binding.isoCodeEdit.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 mLang.setIsoCode(s.toString());
