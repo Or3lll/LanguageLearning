@@ -37,10 +37,12 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                     String initJson = "{\n" +
                             "\t\"langs\": [{\n" +
                             "\t\t\"isoCode\": \"fr_FR\",\n" +
-                            "\t\t\"name\": \"Français\"\n" +
+                            "\t\t\"name\": \"Français\",\n" +
+                            "\t\t\"flag\": \"dzds\"\n" +
                             "\t}, {\n" +
                             "\t\t\"isoCode\": \"ja_JP\",\n" +
-                            "\t\t\"name\": \"Japonais\"\n" +
+                            "\t\t\"name\": \"Japonais\",\n" +
+                            "\t\t\"flag\": \"dsd\"\n" +
                             "\t}],\n" +
                             "\t\"words\": [{\n" +
                             "\t\t\"isoCode\": \"fr_FR\",\n" +

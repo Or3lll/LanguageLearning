@@ -123,8 +123,7 @@ public class Lang extends BaseObservable implements Parcelable {
 
     @Bindable
     public boolean isValidIsoCode() {
-        if (isoCode.matches("[a-z]{2}_[A-Z]{2}")) {
-
+        if (isValidIsoCodeRegex()) {
             List<Lang> langs = SugarRecord.find(Lang.class, "(name = ? or iso_Code = ?) and id != ?",
                     name, isoCode, (getId() != null ? getId().toString() : "-1"));
 
@@ -132,6 +131,10 @@ public class Lang extends BaseObservable implements Parcelable {
         }
 
         return false;
+    }
+
+    public boolean isValidIsoCodeRegex() {
+        return isoCode.matches("[a-z]{2}_[A-Z]{2}");
     }
 
     public static final Creator<Lang> CREATOR = new Creator<Lang>() {
@@ -188,7 +191,7 @@ public class Lang extends BaseObservable implements Parcelable {
             String emojiFlag = json.getString(JSON_PARAM_EMOJI_FLAG);
 
             Lang lang = new Lang(name, isoCode, emojiFlag);
-            if (lang.isValid()) {
+            if (lang.isValidName() && lang.isValidIsoCodeRegex()) {
                 return lang;
             }
         }

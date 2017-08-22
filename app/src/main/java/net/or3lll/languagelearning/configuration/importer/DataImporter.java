@@ -57,8 +57,13 @@ public class DataImporter {
             for (int i = 0; i < langs.length(); i++) {
                 try {
                     Lang lang = Lang.jsonImport(langs.getJSONObject(i));
-                    if (Lang.getLangByIsoCode(lang.getIsoCode()) == null) {
+                    Lang langAlreadyExist = Lang.getLangByIsoCode(lang.getIsoCode());
+                    if (langAlreadyExist == null) {
                         langsToAdd.add(lang);
+                    } else {
+                        langAlreadyExist.setName(lang.getName());
+                        langAlreadyExist.setEmojiFlag(lang.getEmojiFlag());
+                        langsToAdd.add(langAlreadyExist);
                     }
                 } catch (JSONException e) { }
             }
