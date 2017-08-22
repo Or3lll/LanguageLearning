@@ -2,6 +2,7 @@ package net.or3lll.languagelearning.configuration.lang.edit;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.orm.SugarRecord;
 
+import net.or3lll.languagelearning.BR;
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.lang.list.TableLangListener;
 import net.or3lll.languagelearning.data.DataEventType;
@@ -27,6 +29,8 @@ public class EditLangFragment extends Fragment {
     private TableLangListener mListener;
 
     private Lang mLang;
+
+    private Observable.OnPropertyChangedCallback mPropertyChangedCallback;
 
 
     public static EditLangFragment newInstance(Lang lang) {
@@ -79,7 +83,24 @@ public class EditLangFragment extends Fragment {
             mListener.onTableLangEvent(dataEventType, mLang);
         });
 
+        mPropertyChangedCallback = new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (propertyId == BR.validIsoCode) {
+                    binding.isoCodeEditLayout.setError(mLang.isValidIsoCode() ? null :
+                            getString(R.string.lang_edit_error_iso_code));
+                }
+            }
+        };
+        mLang.addOnPropertyChangedCallback(mPropertyChangedCallback);
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mLang.removeOnPropertyChangedCallback(mPropertyChangedCallback);
     }
 
     @Override

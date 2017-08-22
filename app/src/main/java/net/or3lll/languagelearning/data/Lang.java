@@ -92,6 +92,7 @@ public class Lang extends BaseObservable implements Parcelable {
             this.isoCode = isoCode;
             notifyPropertyChanged(BR.isoCode);
             notifyPropertyChanged(BR.valid);
+            notifyPropertyChanged(BR.validIsoCode);
         }
     }
 
@@ -101,8 +102,16 @@ public class Lang extends BaseObservable implements Parcelable {
 
     @Bindable
     public boolean isValid() {
-        if(name != null && name.length() >= NAME_MIN_LENGTH
-            && isoCode.matches("[a-z]{2}_[A-Z]{2}")) {
+        return isValidName() && isValidIsoCode();
+    }
+
+    public boolean isValidName() {
+        return (name != null && name.length() >= NAME_MIN_LENGTH);
+    }
+
+    @Bindable
+    public boolean isValidIsoCode() {
+        if (isoCode.matches("[a-z]{2}_[A-Z]{2}")) {
 
             List<Lang> langs = SugarRecord.find(Lang.class, "(name = ? or iso_Code = ?) and id != ?",
                     name, isoCode, (getId() != null ? getId().toString() : "-1"));

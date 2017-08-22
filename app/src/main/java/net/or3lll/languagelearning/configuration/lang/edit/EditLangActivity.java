@@ -23,7 +23,7 @@ public class EditLangActivity extends AppCompatActivity implements TableLangList
         setSupportActionBar(toolbar);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.title_activity_lang);
+        ab.setTitle(R.string.lang_activity_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         if(savedInstanceState == null) {

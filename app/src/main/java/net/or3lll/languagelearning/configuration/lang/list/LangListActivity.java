@@ -51,7 +51,7 @@ public class LangListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.title_activity_lang);
+        ab.setTitle(R.string.lang_activity_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);

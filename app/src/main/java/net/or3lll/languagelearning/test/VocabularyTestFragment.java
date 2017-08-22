@@ -18,7 +18,10 @@ import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +38,8 @@ public class VocabularyTestFragment extends Fragment {
 
     private Unbinder unbinder;
 
+    @BindView(R.id.tent) TextView tentTextView;
+    @BindView(R.id.score) TextView scoreTextView;
     @BindView(R.id.text_text) TextView textTextView;
     @BindView(R.id.subtext_text) TextView subTextTextView;
     @BindView(R.id.answer_edittext) EditText answerEditText;
@@ -65,6 +70,8 @@ public class VocabularyTestFragment extends Fragment {
             if(savedInstanceState != null) {
                 score = savedInstanceState.getInt("score");
                 attempts = savedInstanceState.getInt("tent");
+
+                setScore();
             }
         }
     }
@@ -74,6 +81,7 @@ public class VocabularyTestFragment extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_vocabulary_test, container, false);
         unbinder = ButterKnife.bind(this, v);
 
+        setScore();
         setWords();
 
         return v;
@@ -98,21 +106,21 @@ public class VocabularyTestFragment extends Fragment {
 
         if(mWord.text.equalsIgnoreCase(answerEditText.getText().toString())) {
             score++;
-            Snackbar snackbar = Snackbar.make(getView(),
-                    String.format(getString(R.string.good_answer), score, attempts),
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.good_answer),
                     BaseTransientBottomBar.LENGTH_LONG);
             snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(),
                     android.R.color.holo_green_light));
             snackbar.show();
         } else {
             Snackbar snackbar = Snackbar.make(getView(),
-                    String.format(getString(R.string.bad_answer), mWord.text, score, attempts),
+                    String.format(getString(R.string.bad_answer), mWord.text),
                     BaseTransientBottomBar.LENGTH_LONG);
             snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(),
                     android.R.color.holo_red_light));
             snackbar.show();
         }
 
+        setScore();
         setWords();
     }
 
@@ -128,6 +136,11 @@ public class VocabularyTestFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void setScore() {
+        tentTextView.setText(String.format(Locale.FRANCE, "%d", attempts));
+        scoreTextView.setText(String.format(Locale.FRANCE, "%d", score));
     }
 
     private void setWords() {
