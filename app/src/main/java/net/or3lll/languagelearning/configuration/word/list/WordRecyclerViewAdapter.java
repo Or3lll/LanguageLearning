@@ -33,8 +33,10 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
     }
 
     private void setWords() {
-        mValuesNumber = (int) Word.count(Word.class, "lang = ?", new String[] {mLang.getId().toString()});
-        mValues = new SparseArray<>(mValuesNumber);
+        if (mLang != null) {
+            mValuesNumber = (int) Word.count(Word.class, "lang = ?", new String[]{mLang.getId().toString()});
+            mValues = new SparseArray<>(mValuesNumber);
+        }
     }
 
     public void updateWords() {
