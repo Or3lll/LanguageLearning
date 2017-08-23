@@ -114,6 +114,7 @@ public class DataImporter {
                     String text1 = jsonTranslation.getString(Translation.JSON_PARAM_TEXT1);
                     String isoCode2 = jsonTranslation.getString(Translation.JSON_PARAM_ISOCODE2);
                     String text2 = jsonTranslation.getString(Translation.JSON_PARAM_TEXT2);
+                    float score = (float)jsonTranslation.getDouble(Translation.JSON_PARAM_SCORE);
 
                     Lang lang1 = getLang(isoCode1);
                     Lang lang2 = getLang(isoCode2);
@@ -123,7 +124,7 @@ public class DataImporter {
                         Word word2 = getWord(text2, lang2);
 
                         if (word1 != null && word2 != null) {
-                            Translation translation = new Translation(word1, word2);
+                            Translation translation = new Translation(word1, word2, score);
                             translationsToAdd.add(translation);
                         }
                     }

@@ -17,9 +17,11 @@ public class Translation extends SugarRecord implements Parcelable {
     public static String JSON_PARAM_TEXT1 = "text1";
     public static String JSON_PARAM_ISOCODE2 = "isoCode2";
     public static String JSON_PARAM_TEXT2 = "text2";
+    public static String JSON_PARAM_SCORE = "score";
 
     public Word word1;
     public Word word2;
+    public float score;
 
     public Translation() {
     }
@@ -27,12 +29,20 @@ public class Translation extends SugarRecord implements Parcelable {
     public Translation(Word word1, Word word2) {
         this.word1 = word1;
         this.word2 = word2;
+        this.score = 0;
+    }
+
+    public Translation(Word word1, Word word2, float score) {
+        this.word1 = word1;
+        this.word2 = word2;
+        this.score = score;
     }
 
     protected Translation(Parcel in) {
         setId(in.readLong());
         word1 = in.readParcelable(Word.class.getClassLoader());
         word2 = in.readParcelable(Word.class.getClassLoader());
+        score = in.readFloat();
     }
 
     public static final Creator<Translation> CREATOR = new Creator<Translation>() {
@@ -57,6 +67,7 @@ public class Translation extends SugarRecord implements Parcelable {
         dest.writeLong(getId());
         dest.writeParcelable(word1, flags);
         dest.writeParcelable(word2, flags);
+        dest.writeFloat(score);
     }
 
     public JSONObject jsonExport() {
@@ -66,6 +77,7 @@ public class Translation extends SugarRecord implements Parcelable {
             json.put(JSON_PARAM_TEXT1, word1.text);
             json.put(JSON_PARAM_ISOCODE2, word2.lang.getIsoCode());
             json.put(JSON_PARAM_TEXT2, word2.text);
+            json.put(JSON_PARAM_SCORE, score);
             return json;
         }
         catch (JSONException e) { }

@@ -17,4 +17,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_margin="5dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/score_textview"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_margin="5dp"/>
+
 </LinearLayout>

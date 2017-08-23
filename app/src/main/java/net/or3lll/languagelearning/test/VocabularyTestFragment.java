@@ -48,6 +48,7 @@ public class VocabularyTestFragment extends Fragment {
     private Lang langSrc;
     private Lang langDst;
 
+    private Translation mTranslation;
     private Word mWord;
 
     private int score;
@@ -105,6 +106,8 @@ public class VocabularyTestFragment extends Fragment {
         attempts++;
 
         if(mWord.text.equalsIgnoreCase(answerEditText.getText().toString())) {
+            mTranslation.score += 1;
+            mTranslation.save();
             score++;
             Snackbar snackbar = Snackbar.make(getView(), getString(R.string.good_answer),
                     BaseTransientBottomBar.LENGTH_LONG);
@@ -112,6 +115,8 @@ public class VocabularyTestFragment extends Fragment {
                     android.R.color.holo_green_light));
             snackbar.show();
         } else {
+            mTranslation.score *= 0.5f;
+            mTranslation.save();
             Snackbar snackbar = Snackbar.make(getView(),
                     String.format(getString(R.string.bad_answer), mWord.text),
                     BaseTransientBottomBar.LENGTH_LONG);
@@ -152,20 +157,22 @@ public class VocabularyTestFragment extends Fragment {
                             "LEFT JOIN Word w1 ON t.word1 = w1.id " +
                             "LEFT JOIN Word w2 ON t.word2 = w2.id " +
                             "WHERE (w1.lang = ? OR w2.lang = ?) " +
-                            "   AND (w1.lang = ? OR w2.lang = ?) "
+                            "   AND (w1.lang = ? OR w2.lang = ?) " +
+                            "ORDER BY t.score ASC"
                     , new String[] {langSrc.getId().toString(), langSrc.getId().toString(),
                             langDst.getId().toString(), langDst.getId().toString()});
 
-            int index = (int) (Math.random() * (double) translations.size());
-            Translation translation = translations.get(index);
+            double random = Math.exp((Math.random()-1)*5);
+            int index = (int) (random * (double) translations.size());
+            mTranslation = translations.get(index);
 
             Word wordSrc;
-            if (translation.word1.lang.getId() == langSrc.getId()) {
-                mWord = translation.word2;
-                wordSrc = translation.word1;
+            if (mTranslation.word1.lang.getId() == langSrc.getId()) {
+                mWord = mTranslation.word2;
+                wordSrc = mTranslation.word1;
             } else {
-                mWord = translation.word1;
-                wordSrc = translation.word2;
+                mWord = mTranslation.word1;
+                wordSrc = mTranslation.word2;
             }
 
             textTextView.setText(wordSrc.text);

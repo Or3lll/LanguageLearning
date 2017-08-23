@@ -11,6 +11,8 @@ import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -71,6 +73,8 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
             }
         }
 
+        holder.mScore.setText(String.format(Locale.FRANCE,  "%.2f", translation.score));
+
         holder.mView.setOnLongClickListener(v -> {
             if(mListener != null) {
                 mListener.onLongClick(holder.mItem);
@@ -90,6 +94,7 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
         public final View mView;
         @BindView(R.id.word_textview) TextView mWordView;
         @BindView(R.id.lang_textview) TextView mLangView;
+        @BindView(R.id.score_textview) TextView mScore;
         public Translation mItem;
 
         public ViewHolder(View view) {
@@ -100,7 +105,7 @@ public class TranslationRecyclerViewAdapter extends RecyclerView.Adapter<Transla
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mWordView.getText() + "'" + " '" + mLangView.getText() + "'";
+            return super.toString() + " '" + mWordView.getText() + "'" + " '" + mLangView.getText() + "'" + " '" + mScore.getText();
         }
     }
 
