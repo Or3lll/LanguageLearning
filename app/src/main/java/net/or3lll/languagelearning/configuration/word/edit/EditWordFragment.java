@@ -74,7 +74,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_edit_word, container, false);
+        View v = inflater.inflate(R.layout.fragment_word_edit, container, false);
         ButterKnife.bind(this, v);
 
         UserLangAdapter langAdapter = new UserLangAdapter();

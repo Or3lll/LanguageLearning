@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/common_toolbar" />
+    <include layout="@layout/layout_all_toolbar" />
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -63,7 +63,7 @@
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_add"
+                app:srcCompat="@drawable/all_add"
                 android:tint="@android:color/white"
                 android:layout_gravity="bottom|end"
                 app:elevation="6dp"

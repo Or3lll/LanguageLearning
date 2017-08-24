@@ -6,7 +6,6 @@ import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.lang.list.TableLangListener;
 import net.or3lll.languagelearning.data.DataEventType;
 import net.or3lll.languagelearning.data.Lang;
-import net.or3lll.languagelearning.databinding.FragmentEditLangBinding;
+import net.or3lll.languagelearning.databinding.FragmentLangEditBinding;
 import net.or3lll.languagelearning.shared.SimpleTextWatcher;
 
 
@@ -51,7 +50,7 @@ public class EditLangFragment extends Fragment {
             mLang = new Lang();
         }
 
-        FragmentEditLangBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_lang, container, false);
+        FragmentLangEditBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lang_edit, container, false);
         binding.setLang(mLang);
 
         binding.nameEdit.addTextChangedListener(new SimpleTextWatcher() {

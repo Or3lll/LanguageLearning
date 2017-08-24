@@ -17,7 +17,7 @@ public class EditLangActivity extends AppCompatActivity implements TableLangList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_lang);
+        setContentView(R.layout.activity_lang_edit);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

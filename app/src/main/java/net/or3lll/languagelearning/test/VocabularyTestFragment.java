@@ -76,7 +76,7 @@ public class VocabularyTestFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_vocabulary_test, container, false);
+        View v =  inflater.inflate(R.layout.fragment_test_vocabulary, container, false);
         unbinder = ButterKnife.bind(this, v);
 
         setScore();

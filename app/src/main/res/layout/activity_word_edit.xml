@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".configuration.lang.edit.EditLangActivity">
+    tools:context=".configuration.word.edit.EditWordActivity">
 
-    <include layout="@layout/common_toolbar" />
+    <include layout="@layout/layout_all_toolbar" />
 
     <FrameLayout
         android:id="@+id/content"

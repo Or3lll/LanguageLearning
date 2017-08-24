@@ -42,7 +42,7 @@ public class AddTranslationDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View contentView = inflater.inflate(R.layout.dialog_add_translation, null);
+        View contentView = inflater.inflate(R.layout.dialog_word_add_translation, null);
         AutoCompleteTextView searchAutoComplete = (AutoCompleteTextView) contentView.findViewById(R.id.searchAutoComplete);
 
         final Word word = getArguments().getParcelable(WORD_PARAM);
