@@ -7,10 +7,11 @@
     <string name="home_start_test">Commencer</string>
 
     <!-- Test -->
-    <string name="display_subtext">Afficher la phonétique</string>
-    <string name="check">Contrôler</string>
-    <string name="good_answer">Correct</string>
-    <string name="bad_answer">Faux : %1$s</string>
+    <string name="test_answer_hint">Proposition</string>
+    <string name="test_display_subtext">Afficher la phonétique</string>
+    <string name="test_check">Contrôler</string>
+    <string name="test_good_answer">Correct</string>
+    <string name="test_bad_answer">Faux : %1$s</string>
 
     <!-- Configuration -->
         <!-- Lang -->

@@ -42,7 +42,7 @@
         android:id="@+id/display_subtext_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/display_subtext"
+        android:text="@string/test_display_subtext"
         android:layout_below="@id/text_text"/>
 
     <TextView
@@ -57,13 +57,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/subtext_text"
-        android:inputType="textVisiblePassword"/>
+        android:inputType="textVisiblePassword"
+        android:hint="@string/test_answer_hint" />
 
     <Button
         android:id="@+id/check_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/check"
+        android:text="@string/test_check"
         android:layout_below="@id/answer_edittext"/>
 
 </RelativeLayout>

@@ -12,23 +12,41 @@
             android:layout_height="wrap_content"
             android:id="@+id/langSpinner" />
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/name_edit"
-            android:hint="@string/word_name_hint" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sub_name_edit"
-            android:hint="@string/word_sub_hint" />
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_edit"
+                android:hint="@string/word_name_hint" />
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/desc_edit"
-            android:hint="@string/word_desc_hint" />
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sub_name_edit"
+                android:hint="@string/word_sub_hint" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/desc_edit"
+                android:hint="@string/word_desc_hint" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/translations_layout"

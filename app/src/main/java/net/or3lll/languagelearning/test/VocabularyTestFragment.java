@@ -11,14 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.data.Lang;
 import net.or3lll.languagelearning.data.Translation;
 import net.or3lll.languagelearning.data.Word;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.Locale;
@@ -109,7 +106,7 @@ public class VocabularyTestFragment extends Fragment {
             mTranslation.score += 1;
             mTranslation.save();
             score++;
-            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.good_answer),
+            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.test_good_answer),
                     BaseTransientBottomBar.LENGTH_LONG);
             snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(),
                     android.R.color.holo_green_light));
@@ -118,7 +115,7 @@ public class VocabularyTestFragment extends Fragment {
             mTranslation.score *= 0.5f;
             mTranslation.save();
             Snackbar snackbar = Snackbar.make(getView(),
-                    String.format(getString(R.string.bad_answer), mWord.text),
+                    String.format(getString(R.string.test_bad_answer), mWord.text),
                     BaseTransientBottomBar.LENGTH_LONG);
             snackbar.getView().setBackgroundColor(ContextCompat.getColor(getContext(),
                     android.R.color.holo_red_light));
