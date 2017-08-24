@@ -32,8 +32,8 @@ public class DeleteLangDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.message_dialog_delete_lang)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
+        builder.setMessage(R.string.lang_dialog_message_delete)
+                .setPositiveButton(R.string.all_yes, (dialog, which) -> {
                     Lang lang = getArguments().getParcelable(LANG_PARAM);
 
                     if (lang != null) {
@@ -43,7 +43,7 @@ public class DeleteLangDialogFragment extends DialogFragment {
                         }
                     }
                 })
-                .setNegativeButton(R.string.no, null);
+                .setNegativeButton(R.string.all_no, null);
 
         return builder.create();
     }

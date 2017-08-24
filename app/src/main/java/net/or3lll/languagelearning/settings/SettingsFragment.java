@@ -80,7 +80,7 @@ public class SettingsFragment extends PreferenceFragment {
                     saveData();
                 }
                 else {
-                    Toast.makeText(getActivity(), R.string.error_no_permission_save, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.settings_error_no_permission_save, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case REQUEST_PERMISSION_READ_EXTERNAL_STORAGE:
@@ -88,7 +88,7 @@ public class SettingsFragment extends PreferenceFragment {
                     restoreData();
                 }
                 else {
-                    Toast.makeText(getActivity(), R.string.error_no_permission_restore, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.settings_error_no_permission_restore, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -134,7 +134,7 @@ public class SettingsFragment extends PreferenceFragment {
                 fos.write(jsonBackUp.getBytes());
                 fos.close();
             } catch (IOException e) {
-                Toast.makeText(getActivity(), R.string.error_save_backup, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.settings_error_save_backup, Toast.LENGTH_SHORT).show();
             } finally {
                 if(fos != null) {
                     try {
@@ -144,7 +144,7 @@ public class SettingsFragment extends PreferenceFragment {
             }
         }
         else {
-            Toast.makeText(getActivity(), R.string.error_external_storage_unavailable, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.settings_error_external_storage_unavailable, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -158,11 +158,11 @@ public class SettingsFragment extends PreferenceFragment {
                 importer.load(new BufferedReader(new FileReader(backUpFile)));
                 importer.apply();
             } catch (FileNotFoundException e) {
-                Toast.makeText(getActivity(), R.string.error_restore_backup, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.settings_error_restore_backup, Toast.LENGTH_SHORT).show();
             }
         }
         else {
-            Toast.makeText(getActivity(), R.string.error_external_storage_unavailable, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.settings_error_external_storage_unavailable, Toast.LENGTH_SHORT).show();
         }
     }
 

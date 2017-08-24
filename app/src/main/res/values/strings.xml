@@ -5,6 +5,9 @@
     <string name="home_lang_src">Proposition</string>
     <string name="home_lang_dst">A trouver</string>
     <string name="home_start_test">Commencer</string>
+        <!-- Drawer -->
+    <string name="home_drawer_open">Open navigation drawer</string>
+    <string name="home_drawer_close">Close navigation drawer</string>
 
     <!-- Test -->
     <string name="test_answer_hint">Proposition</string>
@@ -16,59 +19,51 @@
     <!-- Configuration -->
         <!-- Lang -->
     <string name="lang_activity_title">Langues</string>
+            <!-- List -->
+    <string name="lang_empty_list">Aucune langue</string>
             <!-- Edit -->
     <string name="lang_edit_hint_name">Nom de la langue</string>
     <string name="lang_edit_hint_flag">Emoji du drapeau</string>
     <string name="lang_edit_hint_iso_code">Code ISO</string>
     <string name="lang_edit_error_iso_code">Code ISO invalide</string>
-
-
-
-
-
-    <string name="title_activity_word">Mots</string>
-
-    <string name="action_add_word">Nouveau mot</string>
-    <string name="action_add_lang">Nouvelle langue</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-
-    <string name="button_add">Ajouter</string>
-    <string name="button_update">Mettre à jour</string>
-
-    <string name="empty_lang_list">Aucune langue</string>
-    <string name="empty_word_list">Aucun mot</string>
-
-    <string name="message_dialog_delete_lang">Voulez-vous supprimer cette langue?</string>
-    <string name="message_dialog_advice_minimum_lang">Deux langues minimum sont nécessaires.\nAller les créer?</string>
-    <string name="title_dialog_add_lang">Ajouter une Langue</string>
-    <string name="button_dialog_add_lang">Autre langue</string>
-    <string name="message_dialog_delete_word">Voulez-vous supprimer ce mot?</string>
-    <string name="message_dialog_delete_translation">Voulez-vous supprimer cette traduction?</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
-    <string name="cancel">Annuler</string>
-
+            <!-- Dialog -->
+    <string name="lang_dialog_message_delete">Voulez-vous supprimer cette langue?</string>
+    <string name="lang_dialog_message_advice_minimum">Deux langues minimum sont nécessaires.\nAller les créer?</string>
+    <string name="lang_dialog_title_add">Ajouter une Langue</string>
+    <string name="lang_dialog_button_add">Autre langue</string>
+        <!-- Word -->
+    <string name="word_activity_title">Mots</string>
+            <!-- List -->
+    <string name="word_empty_list">Aucun mot</string>
+            <!-- Edit -->
     <string name="word_name_hint">Mot</string>
     <string name="word_sub_hint">Phonétique</string>
     <string name="word_desc_hint">Description</string>
-    <string name="title_link">Traductions</string>
-
-    <string name="title_dialog_add_translation">Ajouter une traduction</string>
-    <string name="search_hint">Rechercher</string>
+    <string name="word_title_translation_list">Traductions</string>
+            <!-- Dialog -->
+    <string name="word_dialog_message_delete">Voulez-vous supprimer ce mot?</string>
+    <string name="word_dialog_message_delete_transaction">Voulez-vous supprimer cette traduction?</string>
+    <string name="word_dialog_title_add_translation">Ajouter une traduction</string>
 
     <!-- Settings -->
-    <string name="title_activity_settings">Paramètres</string>
-
+    <string name="settings_activity_title">Paramètres</string>
         <!-- Database backup -->
     <string name="settings_backup_title">Sauvegarde</string>
     <string name="settings_backup_save">Sauvegarder</string>
     <string name="settings_backup_restore">Restaurer</string>
     <string name="settings_backup_clear">Tout supprimer</string>
+            <!-- Error -->
+    <string name="settings_error_no_permission_save">Pas de sauvegarde sans permission</string>
+    <string name="settings_error_no_permission_restore">Pas de restauration sans permission</string>
+    <string name="settings_error_external_storage_unavailable">Stockage externe indisponible</string>
+    <string name="settings_error_save_backup">Erreur pendant l\'écriture de la sauvegarde</string>
+    <string name="settings_error_restore_backup">Erreur pendant la lecture de la sauvegarde</string>
 
-    <string name="error_no_permission_save">Pas de sauvegarde sans permission</string>
-    <string name="error_no_permission_restore">Pas de restauration sans permission</string>
-    <string name="error_external_storage_unavailable">Stockage externe indisponible</string>
-    <string name="error_save_backup">Erreur pendant l\'écriture de la sauvegarde</string>
-    <string name="error_restore_backup">Erreur pendant la lecture de la sauvegarde</string>
+    <!-- Common -->
+    <string name="all_add">Ajouter</string>
+    <string name="all_update">Mettre à jour</string>
+    <string name="all_yes">Oui</string>
+    <string name="all_no">Non</string>
+    <string name="all_cancel">Annuler</string>
+    <string name="all_search_hint">Rechercher</string>
 </resources>

@@ -30,8 +30,8 @@ public class DeleteTranslationDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.message_dialog_delete_translation)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
+        builder.setMessage(R.string.word_dialog_message_delete_transaction)
+                .setPositiveButton(R.string.all_yes, (dialog, which) -> {
                     Translation translation = getArguments().getParcelable(TRANSLATION_PARAM);
                     if (translation != null) {
                         translation.delete();
@@ -40,7 +40,7 @@ public class DeleteTranslationDialogFragment extends DialogFragment {
                         }
                     }
                 })
-                .setNegativeButton(R.string.no, null);
+                .setNegativeButton(R.string.all_no, null);
 
         return builder.create();
     }

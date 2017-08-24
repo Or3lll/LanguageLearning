@@ -27,7 +27,7 @@ public class DefaultLangsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle(R.string.title_dialog_add_lang)
+        builder.setTitle(R.string.lang_dialog_title_add)
                 // TODO gérer dans l'adapter l'absence de langue
                 .setAdapter(new AvailableDefaultLangAdapter(), (dialog, which) -> {
                     Lang lang = (Lang) ((AlertDialog) dialog).getListView().getAdapter().getItem(which);
@@ -37,7 +37,7 @@ public class DefaultLangsDialogFragment extends DialogFragment {
                         mListener.onLangSelected(lang);
                     }
                 })
-                .setNeutralButton(R.string.button_dialog_add_lang, (dialog, which) -> {
+                .setNeutralButton(R.string.lang_dialog_button_add, (dialog, which) -> {
                     if (mListener != null) {
                         mListener.onOtherSelected();
                     }

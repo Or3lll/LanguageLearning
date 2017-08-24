@@ -59,9 +59,9 @@ public class AddTranslationDialogFragment extends DialogFragment {
             dismiss();
         });
 
-        builder.setTitle(R.string.title_dialog_add_translation)
+        builder.setTitle(R.string.word_dialog_title_add_translation)
             .setView(contentView)
-            .setNegativeButton(R.string.cancel, null);
+            .setNegativeButton(R.string.all_cancel, null);
 
         return builder.create();
     }

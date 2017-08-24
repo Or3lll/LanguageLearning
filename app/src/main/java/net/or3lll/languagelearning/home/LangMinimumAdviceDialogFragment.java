@@ -27,8 +27,8 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.message_dialog_advice_minimum_lang)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
+        builder.setMessage(R.string.lang_dialog_message_advice_minimum)
+                .setPositiveButton(R.string.all_yes, (dialog, which) -> {
                     Intent testIntent = new Intent(getActivity(), LangListActivity.class);
                     startActivity(testIntent);
                 })
@@ -92,7 +92,7 @@ public class LangMinimumAdviceDialogFragment extends DialogFragment {
                     importer.load(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(initJson.getBytes()))));
                     importer.apply();
                 })
-                .setNegativeButton(R.string.no, null);
+                .setNegativeButton(R.string.all_no, null);
         return builder.create();
     }
 }

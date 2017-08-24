@@ -30,8 +30,8 @@ public class DeleteWordDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.message_dialog_delete_word)
-                .setPositiveButton(R.string.yes, (dialog, which) -> {
+        builder.setMessage(R.string.word_dialog_message_delete)
+                .setPositiveButton(R.string.all_yes, (dialog, which) -> {
                     Word word = getArguments().getParcelable(WORD_PARAM);
                     if (word != null) {
                         String sWordId = word.getId().toString();
@@ -45,7 +45,7 @@ public class DeleteWordDialogFragment extends DialogFragment {
                         }
                     }
                 })
-                .setNegativeButton(R.string.no, null);
+                .setNegativeButton(R.string.all_no, null);
 
         return builder.create();
     }

@@ -65,7 +65,7 @@ public class WordListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.title_activity_word);
+        ab.setTitle(R.string.word_activity_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         mLangSpinner.setAdapter(new UserLangAdapter());

@@ -32,7 +32,7 @@ public class EditWordActivity
         setSupportActionBar(toolbar);
 
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(R.string.title_activity_word);
+        ab.setTitle(R.string.word_activity_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
         if(savedInstanceState == null) {

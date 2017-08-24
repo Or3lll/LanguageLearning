@@ -109,7 +109,7 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
             mNameEdit.setText(mWord.text);
             mSubNameEdit.setText(mWord.subText);
             mDescEdit.setText(mWord.desc);
-            mAddButton.setText(R.string.button_update);
+            mAddButton.setText(R.string.all_update);
         }
 
         mLangSpinner.setSelection(langAdapter.getPosition(mLang.getId()));
@@ -198,13 +198,13 @@ public class EditWordFragment extends Fragment implements AdapterView.OnItemSele
 
     private void setMode() {
         if(mWord != null) {
-            mAddButton.setText(R.string.button_update);
+            mAddButton.setText(R.string.all_update);
             mTranslationsLayout.setVisibility(View.VISIBLE);
             mTranslationAdapter = new TranslationRecyclerViewAdapter(mWord, this);
             mTranslationRecycler.setAdapter(mTranslationAdapter);
         }
         else {
-            mAddButton.setText(R.string.button_add);
+            mAddButton.setText(R.string.all_add);
             mTranslationsLayout.setVisibility(View.GONE);
         }
     }
