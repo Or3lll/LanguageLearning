@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.adapters.GenericItemAdapter;
+import com.orm.SugarRecord;
+
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.lang.edit.EditLangActivity;
 import net.or3lll.languagelearning.configuration.lang.edit.EditLangFragment;
@@ -28,15 +32,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LangListActivity extends AppCompatActivity
-        implements LangRecyclerViewAdapter.OnClickListener,
-        TableLangListener,
+        implements TableLangListener,
         DefaultLangsDialogFragment.OnDefaultLangSelected {
 
     private static final String TAG_EDIT_FRAGMENT = "edit_fragment";
     private static final String TAG_DELETE_DIALOG = "delete_dialog";
     private static final String TAG_ADD_DIALOG = "add_dialog";
 
-    private LangRecyclerViewAdapter mLangAdapter;
+    private GenericItemAdapter<Lang, LangItem> langAdapter;
 
     @BindView(R.id.emptyList) TextView emptyListText;
     @Nullable @BindView(R.id.edit_container) FrameLayout editContainer;
@@ -54,12 +57,45 @@ public class LangListActivity extends AppCompatActivity
         ab.setTitle(R.string.lang_activity_title);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mLangAdapter = new LangRecyclerViewAdapter(this);
-        recyclerView.setAdapter(mLangAdapter);
+        FastAdapter<LangItem> fastAdapter = new FastAdapter<>();
+        langAdapter = new GenericItemAdapter<>(LangItem::new);
+
+        fastAdapter.withOnClickListener((v, adapter, item, position) -> {
+            if(editContainer != null) {
+                EditLangFragment fragment = EditLangFragment.newInstance(item.getModel());
+                getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, fragment, TAG_EDIT_FRAGMENT).commit();
+            }
+            else {
+                Intent i = new Intent(this, EditLangActivity.class);
+                i.putExtra(EditLangActivity.LANG_PARAM, item.getModel());
+                startActivity(i);
+            }
+
+            return true;
+        });
+
+        fastAdapter.withOnLongClickListener((v, adapter, item, position) ->  {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DELETE_DIALOG);
+            if (prev != null) {
+                ft.remove(prev);
+            }
+
+            DialogFragment newFragment = DeleteLangDialogFragment.newInstance(item.getModel());
+            newFragment.show(ft, TAG_DELETE_DIALOG);
+
+            return true;
+        });
+
+        recyclerView.setAdapter(langAdapter.wrap(fastAdapter));
     }
 
     @Override
@@ -70,9 +106,10 @@ public class LangListActivity extends AppCompatActivity
     }
 
     private void updateList() {
-        mLangAdapter.updateLangs();
+        langAdapter.clear();
+        langAdapter.setModel(SugarRecord.listAll(Lang.class));
 
-        if(mLangAdapter.getItemCount() == 0) {
+        if(langAdapter.getItemCount() == 0) {
             emptyListText.setVisibility(View.VISIBLE);
         }
         else {
@@ -117,31 +154,6 @@ public class LangListActivity extends AppCompatActivity
             Intent i = new Intent(this, EditLangActivity.class);
             startActivity(i);
         }
-    }
-
-    @Override
-    public void onClick(Lang lang) {
-        if(editContainer != null) {
-            EditLangFragment fragment = EditLangFragment.newInstance(lang);
-            getSupportFragmentManager().beginTransaction().replace(R.id.edit_container, fragment, TAG_EDIT_FRAGMENT).commit();
-        }
-        else {
-            Intent i = new Intent(this, EditLangActivity.class);
-            i.putExtra(EditLangActivity.LANG_PARAM, lang);
-            startActivity(i);
-        }
-    }
-
-    @Override
-    public void onLongClick(Lang lang) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DELETE_DIALOG);
-        if (prev != null) {
-            ft.remove(prev);
-        }
-
-        DialogFragment newFragment = DeleteLangDialogFragment.newInstance(lang);
-        newFragment.show(ft, TAG_DELETE_DIALOG);
     }
 
     @Override
