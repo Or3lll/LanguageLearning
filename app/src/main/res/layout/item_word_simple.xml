@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:layout_margin="@dimen/text_margin">
+    android:layout_margin="@dimen/text_margin"
+    android:id="@+id/item_word_simple">
 
     <TextView
         android:id="@+id/content"

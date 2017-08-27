@@ -89,7 +89,7 @@ abstract public class LangAdapter extends BaseAdapter {
 
         public TextView getLangFlag() {
             if(mlangFlagTextView == null) {
-                mlangFlagTextView = (TextView) mItemView.findViewById(R.id.langFlag);
+                mlangFlagTextView = mItemView.findViewById(R.id.langFlag);
             }
 
             return mlangFlagTextView;
@@ -97,7 +97,7 @@ abstract public class LangAdapter extends BaseAdapter {
 
         public TextView getLangName() {
             if(mLangNameTextView == null) {
-                mLangNameTextView = (TextView) mItemView.findViewById(R.id.langName);
+                mLangNameTextView = mItemView.findViewById(R.id.langName);
             }
 
             return mLangNameTextView;
