@@ -17,9 +17,19 @@
         android:textAppearance="?attr/textAppearanceListItem"
         tools:text="voiture"/>
 
-    <ImageView
+    <com.mikepenz.iconics.view.IconicsImageView
         android:id="@+id/edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/all_edit" />
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:iiv_color="@android:color/black"
+        app:iiv_icon="gmd-edit" />
+
+    <com.mikepenz.iconics.view.IconicsImageView
+        android:id="@+id/delete"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        app:iiv_color="@android:color/black"
+        app:iiv_icon="gmd-delete" />
+
 </LinearLayout>

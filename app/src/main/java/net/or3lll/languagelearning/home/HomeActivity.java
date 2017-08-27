@@ -3,6 +3,7 @@ package net.or3lll.languagelearning.home;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.orm.SugarRecord;
 
 import net.or3lll.languagelearning.test.VocabularyTestActivity;
@@ -44,6 +46,10 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.lang_src) Spinner mLangSrc;
     @BindView(R.id.lang_dst) Spinner mLangDst;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

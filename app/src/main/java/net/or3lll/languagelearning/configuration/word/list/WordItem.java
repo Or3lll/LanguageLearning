@@ -46,32 +46,12 @@ public class WordItem extends GenericAbstractItem<Word, WordItem, WordItem.ViewH
 
         Word word = getModel();
         holder.mContentView.setText(word.text);
-
-        /*holder.mContentView.setOnClickListener(v -> {
-            if (mListener != null) {
-                mListener.onClick(holder.mItem);
-            }
-        });
-
-        holder.mEdit.setOnClickListener(v -> {
-            if (mListener != null) {
-                mListener.onEditClick(holder.mItem);
-            }
-        });
-
-        holder.mContentView.setOnLongClickListener(v -> {
-            if(mListener != null) {
-                mListener.onLongClick(holder.mItem);
-                return true;
-            }
-
-            return false;
-        });*/
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.content) TextView mContentView;
         @BindView(R.id.edit) ImageView mEdit;
+        @BindView(R.id.delete) ImageView mDelete;
 
         public ViewHolder(View view) {
             super(view);

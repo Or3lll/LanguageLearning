@@ -1,5 +1,6 @@
 package net.or3lll.languagelearning.configuration.lang.list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.orm.SugarRecord;
 
 import net.or3lll.languagelearning.R;
@@ -43,6 +45,11 @@ public class LangListActivity extends AppCompatActivity
 
     @BindView(R.id.emptyList) TextView emptyListText;
     @Nullable @BindView(R.id.edit_container) FrameLayout editContainer;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

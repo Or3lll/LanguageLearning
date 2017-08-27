@@ -30,5 +30,6 @@ ext {
     targetCompatibilityVersion = JavaVersion.VERSION_1_8
     butterknifeVersion = '8.8.1'
     fastadapterVersion = '2.5.2'
+    iconicsVersion = '2.9.3'
     supportLibrariesVersion = '25.3.1'
 }

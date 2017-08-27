@@ -57,6 +57,10 @@ dependencies {
     }
     compile "com.mikepenz:fastadapter-commons:$fastadapterVersion@aar"
 
+    compile "com.mikepenz:iconics-core:$iconicsVersion@aar"
+    compile "com.mikepenz:iconics-views:$iconicsVersion@aar"
+    compile "com.mikepenz:google-material-typeface:3.0.1.1.original@aar"
+
     annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1"
     androidTestCompile "junit:junit:4.12"
 }

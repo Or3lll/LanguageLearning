@@ -1,5 +1,6 @@
 package net.or3lll.languagelearning.configuration.word.list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import android.widget.TextView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.GenericItemAdapter;
 import com.mikepenz.fastadapter.listeners.ClickEventHook;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
+import com.mikepenz.iconics.context.IconicsLayoutInflater;
 
 import net.or3lll.languagelearning.R;
 import net.or3lll.languagelearning.configuration.lang.edit.EditLangActivity;
@@ -62,6 +66,11 @@ public class WordListActivity extends AppCompatActivity
     private TextToSpeech mTts;
     private boolean mIsTtsInit = false;
     private Word mWordTts;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,17 +149,27 @@ public class WordListActivity extends AppCompatActivity
             }
         });
 
-        fastAdapter.withOnLongClickListener((v, adapter, item, position) -> {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DELETE_DIALOG);
-            if (prev != null) {
-                ft.remove(prev);
+        fastAdapter.withItemEvent(new ClickEventHook<WordItem>() {
+            @Nullable
+            @Override
+            public View onBind(@NonNull RecyclerView.ViewHolder viewHolder) {
+                if (viewHolder instanceof WordItem.ViewHolder) {
+                    return ((WordItem.ViewHolder) viewHolder).mDelete;
+                }
+                return super.onBind(viewHolder);
             }
 
-            DialogFragment newFragment = DeleteWordDialogFragment.newInstance(item.getModel());
-            newFragment.show(ft, TAG_DELETE_DIALOG);
+            @Override
+            public void onClick(View v, int position, FastAdapter<WordItem> fastAdapter, WordItem item) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment prev = getSupportFragmentManager().findFragmentByTag(TAG_DELETE_DIALOG);
+                if (prev != null) {
+                    ft.remove(prev);
+                }
 
-            return true;
+                DialogFragment newFragment = DeleteWordDialogFragment.newInstance(item.getModel());
+                newFragment.show(ft, TAG_DELETE_DIALOG);
+            }
         });
 
         recyclerView.setAdapter(wordAdapter.wrap(fastAdapter));
