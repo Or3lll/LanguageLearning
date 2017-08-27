@@ -1,0 +1,53 @@
+{
+  "langs": [{
+    "isoCode": "fr_FR",
+    "name": "Français",
+    "flag": ""
+  }, {
+    "isoCode": "ja_JP",
+    "name": "Japonais",
+    "flag": ""
+  }],
+  "words": [{
+    "isoCode": "fr_FR",
+    "text": "je",
+    "subText": "",
+    "desc": ""
+  }, {
+    "isoCode": "ja_JP",
+    "text": "わたし",
+    "subText": "",
+    "desc": ""
+  }, {
+    "isoCode": "fr_FR",
+    "text": "moi",
+    "subText": "",
+    "desc": ""
+  }, {
+    "isoCode": "fr_FR",
+    "text": "nous",
+    "subText": "",
+    "desc": ""
+  }, {
+    "isoCode": "ja_JP",
+    "text": "わたしたち",
+    "subText": "",
+    "desc": ""
+  }],
+  "translations": [{
+    "isoCode1": "je",
+    "text1": "fr_FR",
+    "isoCode2": "わたし",
+    "text2": "ja_JP"
+  }, {
+    "isoCode1": "ja_JP",
+    "text1": "わたし",
+    "isoCode2": "fr_FR",
+    "text2": "moi"
+  }, {
+    "isoCode1": "fr_FR",
+    "text1": "nous",
+    "isoCode2": "ja_JP",
+    "text2": "わたしたち"
+  }]
+}

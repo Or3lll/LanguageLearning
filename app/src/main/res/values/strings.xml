@@ -66,4 +66,8 @@
     <string name="all_no">Non</string>
     <string name="all_cancel">Annuler</string>
     <string name="all_search_hint">Rechercher</string>
+    <string name="all_data_import_success">Succès de l\'import</string>
+    <string name="all_data_import_error">Echec de l\'import</string>
+    <string name="all_data_export_success">Succès de l\'export</string>
+    <string name="all_data_export_error">Echec de l\'export</string>
 </resources>
