@@ -103,6 +103,11 @@ public class HomeActivity extends AppCompatActivity {
     private void setSpinnerLangs() {
         mLangSrc.setAdapter(new UserLangAdapter());
         mLangDst.setAdapter(new UserLangAdapter());
+
+        if (SugarRecord.count(Lang.class) >= 2) {
+            mLangSrc.setSelection(0);
+            mLangDst.setSelection(1);
+        }
     }
 
     @OnClick(R.id.test_launch)
